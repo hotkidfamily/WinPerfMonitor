@@ -36,13 +36,15 @@
             // btnShotProcess
             // 
             btnShotProcess.BackgroundImage = Properties.Resources.game_game_shooting1;
+            btnShotProcess.BackgroundImageLayout = ImageLayout.Zoom;
             btnShotProcess.Cursor = Cursors.Cross;
             btnShotProcess.DialogResult = DialogResult.OK;
             btnShotProcess.FlatStyle = FlatStyle.Popup;
             btnShotProcess.Image = Properties.Resources.game_game_shooting1;
-            btnShotProcess.Location = new Point(855, 12);
+            btnShotProcess.Location = new Point(544, 8);
+            btnShotProcess.Margin = new Padding(2);
             btnShotProcess.Name = "btnShotProcess";
-            btnShotProcess.Size = new Size(71, 64);
+            btnShotProcess.Size = new Size(45, 45);
             btnShotProcess.TabIndex = 0;
             btnShotProcess.Text = "Find";
             btnShotProcess.UseVisualStyleBackColor = true;
@@ -53,21 +55,23 @@
             // labelCpuAndMem
             // 
             labelCpuAndMem.BorderStyle = BorderStyle.FixedSingle;
-            labelCpuAndMem.Location = new Point(522, 571);
+            labelCpuAndMem.Location = new Point(332, 404);
+            labelCpuAndMem.Margin = new Padding(2);
             labelCpuAndMem.Name = "labelCpuAndMem";
             labelCpuAndMem.ReadOnly = true;
-            labelCpuAndMem.Size = new Size(646, 30);
+            labelCpuAndMem.Size = new Size(412, 23);
             labelCpuAndMem.TabIndex = 1;
             labelCpuAndMem.TextAlign = HorizontalAlignment.Right;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(11F, 24F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1180, 620);
+            ClientSize = new Size(751, 439);
             Controls.Add(labelCpuAndMem);
             Controls.Add(btnShotProcess);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(2);
             Name = "MainForm";
             Text = "MainForm";
             ResumeLayout(false);

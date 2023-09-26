@@ -22,8 +22,7 @@ namespace Perfmon
         private PerformanceCounter? ramUsed;
 
         private uint pid = 0;
-
-
+        private string pid_name;
         public MainForm()
         {
             InitializeComponent();
@@ -55,13 +54,14 @@ namespace Perfmon
 
         private void btnShotProcess_MouseUp(object sender, MouseEventArgs e)
         {
-            this.Opacity = 1;
-
             Point v;
             GetCursorPos(out v);
             var Handle = WindowFromPoint(v);
             GetWindowThreadProcessId(Handle, out pid);
+            var s = System.Diagnostics.Process.GetProcessById((int)pid);
+            pid_name = s.ProcessName;
 
+            this.Opacity = 1;
         }
 
         async Task update()
@@ -71,7 +71,7 @@ namespace Perfmon
                 await Task.Delay(TimeSpan.FromSeconds(1));
                 var v1 = $"{cpuTotal.NextValue():F2}" + "% | ";
                 var v2 = $"{(ramUsed.NextValue() + ramAva.NextValue()) / 1000 / 1000:F2}" + "MB | ";
-                var v3 = $"{ramAva.NextValue() / 1000 / 1000:F2}" + "MB | " + $"{pid}";
+                var v3 = $"{ramAva.NextValue() / 1000 / 1000:F2}" + "MB | " + $"{pid},{pid_name}";
                 labelCpuAndMem.Text = v1 + v2 + v3;
             }
         }
