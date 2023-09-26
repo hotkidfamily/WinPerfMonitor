@@ -25,7 +25,7 @@ namespace Perfmon
             cpuProc = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             ramAva = new PerformanceCounter("Memory", "Available Bytes");
-            ramUsed = new PerformanceCounter("Memory", "% Committed Bytes In Use");
+            ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
             update();
         }
 

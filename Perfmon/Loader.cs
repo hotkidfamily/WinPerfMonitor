@@ -1,6 +1,6 @@
 ﻿namespace Perfmon
 {
-    public class Class1
+    public class Loader
     {
         static void Main(string[] args)
         {

@@ -52,12 +52,13 @@
             // 
             // labelCpuAndMem
             // 
-            labelCpuAndMem.BorderStyle = BorderStyle.None;
-            labelCpuAndMem.Location = new Point(467, 571);
+            labelCpuAndMem.BorderStyle = BorderStyle.FixedSingle;
+            labelCpuAndMem.Location = new Point(522, 571);
             labelCpuAndMem.Name = "labelCpuAndMem";
             labelCpuAndMem.ReadOnly = true;
-            labelCpuAndMem.Size = new Size(646, 23);
+            labelCpuAndMem.Size = new Size(646, 30);
             labelCpuAndMem.TabIndex = 1;
+            labelCpuAndMem.TextAlign = HorizontalAlignment.Right;
             // 
             // MainForm
             // 
