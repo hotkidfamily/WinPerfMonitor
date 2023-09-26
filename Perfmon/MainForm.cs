@@ -76,18 +76,22 @@ namespace Perfmon
             string[] v = new string[5] { "进程名", "PID", "vMem", "phyMem", "GPU" };
             for (int i = 0; i < 5; i++)
             {
-                ColumnHeader ch = new();
-                ch.Width = 120;
-                ch.TextAlign = HorizontalAlignment.Left;
-                ch.Text = v[i];
+                ColumnHeader ch = new()
+                {
+                    Width = 120,
+                    TextAlign = HorizontalAlignment.Left,
+                    Text = v[i]
+                };
                 listViewDetail.Columns.Add(ch);
             }
 
             listViewDetail.BeginUpdate();
             for (int i = 0; i < 10; i++)
             {
-                ListViewItem lvi = new();
-                lvi.Text = _mproc.procName;
+                ListViewItem lvi = new()
+                {
+                    Text = _mproc.procName
+                };
                 lvi.SubItems.Add(_mproc.pid.ToString());
                 lvi.SubItems.Add(_mproc.vMem.ToString());
                 lvi.SubItems.Add(_mproc.phyMem.ToString());
