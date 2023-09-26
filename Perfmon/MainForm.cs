@@ -75,5 +75,23 @@ namespace Perfmon
                 labelCpuAndMem.Text = v1 + v2 + v3;
             }
         }
+
+        private void textBoxPID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r')
+            {
+                uint pi;
+                if (uint.TryParse(textBoxPID.Text.ToString(), out pi))
+                {
+                    pid = pi;
+                    var s = System.Diagnostics.Process.GetProcessById((int)pid);
+                    pid_name = s.ProcessName;
+                }
+                else
+                {
+                    MessageBox.Show("Bad PID, PID wrong or has been exit", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                }
+            }
+        }
     }
 }
