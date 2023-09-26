@@ -40,6 +40,9 @@ namespace Perfmon
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
 
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out Point lpPoint);
+
         private void btnShotProcess_Click(object sender, EventArgs e)
         {
 
@@ -54,8 +57,8 @@ namespace Perfmon
         {
             this.Opacity = 1;
 
-            Point v = e.Location;
-
+            Point v;
+            GetCursorPos(out v);
             var Handle = WindowFromPoint(v);
             GetWindowThreadProcessId(Handle, out pid);
 
