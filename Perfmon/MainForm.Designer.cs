@@ -31,15 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             btnShotProcess = new Button();
             labelCpuAndMem = new TextBox();
-            listView1 = new ListView();
-            procName = new ColumnHeader();
-            cpu = new ColumnHeader();
-            vMem = new ColumnHeader();
-            phyMem = new ColumnHeader();
-            GPU = new ColumnHeader();
+            listViewDetail = new ListView();
             label1 = new Label();
             textBoxPID = new TextBox();
             label2 = new Label();
+            ProcName = new ColumnHeader();
+            PID = new ColumnHeader();
+            vMem = new ColumnHeader();
+            phyMem = new ColumnHeader();
+            GPU = new ColumnHeader();
             SuspendLayout();
             // 
             // btnShotProcess
@@ -56,9 +56,8 @@
             btnShotProcess.Size = new Size(41, 30);
             btnShotProcess.TabIndex = 0;
             btnShotProcess.UseVisualStyleBackColor = true;
-            btnShotProcess.Click += btnShotProcess_Click;
-            btnShotProcess.MouseDown += btnShotProcess_MouseDown;
-            btnShotProcess.MouseUp += btnShotProcess_MouseUp;
+            btnShotProcess.MouseDown += BtnShotProcess_MouseDown;
+            btnShotProcess.MouseUp += BtnShotProcess_MouseUp;
             // 
             // labelCpuAndMem
             // 
@@ -71,17 +70,19 @@
             labelCpuAndMem.TabIndex = 1;
             labelCpuAndMem.TextAlign = HorizontalAlignment.Right;
             // 
-            // listView1
+            // listViewDetail
             // 
-            listView1.BorderStyle = BorderStyle.FixedSingle;
-            listView1.Columns.AddRange(new ColumnHeader[] { procName, cpu, vMem, phyMem, GPU });
-            listView1.FullRowSelect = true;
-            listView1.GridLines = true;
-            listView1.Location = new Point(13, 98);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(726, 280);
-            listView1.TabIndex = 3;
-            listView1.UseCompatibleStateImageBehavior = false;
+            listViewDetail.BorderStyle = BorderStyle.FixedSingle;
+            listViewDetail.Columns.AddRange(new ColumnHeader[] { ProcName, PID, vMem, phyMem, GPU });
+            listViewDetail.FullRowSelect = true;
+            listViewDetail.GridLines = true;
+            listViewDetail.Location = new Point(13, 98);
+            listViewDetail.MultiSelect = false;
+            listViewDetail.Name = "listViewDetail";
+            listViewDetail.Size = new Size(726, 280);
+            listViewDetail.TabIndex = 3;
+            listViewDetail.UseCompatibleStateImageBehavior = false;
+            listViewDetail.View = View.Details;
             // 
             // label1
             // 
@@ -98,7 +99,7 @@
             textBoxPID.Name = "textBoxPID";
             textBoxPID.Size = new Size(100, 23);
             textBoxPID.TabIndex = 5;
-            textBoxPID.KeyPress += textBoxPID_KeyPress;
+            textBoxPID.KeyPress += TextBoxPID_KeyPress;
             // 
             // label2
             // 
@@ -117,7 +118,7 @@
             Controls.Add(label2);
             Controls.Add(textBoxPID);
             Controls.Add(label1);
-            Controls.Add(listView1);
+            Controls.Add(listViewDetail);
             Controls.Add(labelCpuAndMem);
             Controls.Add(btnShotProcess);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -132,14 +133,14 @@
 
         private Button btnShotProcess;
         private TextBox labelCpuAndMem;
-        private ListView listView1;
-        private ColumnHeader procName;
-        private ColumnHeader cpu;
-        private ColumnHeader vMem;
-        private ColumnHeader phyMem;
-        private ColumnHeader GPU;
+        private ListView listViewDetail;
         private Label label1;
         private TextBox textBoxPID;
         private Label label2;
+        private ColumnHeader ProcName;
+        private ColumnHeader PID;
+        private ColumnHeader vMem;
+        private ColumnHeader phyMem;
+        private ColumnHeader GPU;
     }
 }
