@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-using Windows.Win32;
+﻿using System.Diagnostics;
 using System.Management;
-
+using System.Text;
+using System.Xml.Linq;
+using Windows.Win32;
+using static Perfmon.RunStatusItem;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Perfmon
 {
@@ -22,24 +14,9 @@ namespace Perfmon
         private readonly PerformanceCounter? ramAva;
         private readonly PerformanceCounter? ramUsed;
 
-        class RunStatusItem
-        {
-            public uint pid = 0;
-            public string procName = "undefined";
-            public float cpu = 0;
-            public float vMem = 0;
-            public float phyMem = 0;
-            public float totalMem = 0;
-            public float downLink = 0;
-            public float upLink = 0;
-            public float totoalLinkFlow = 0;
-            public uint excuteStatus = 0;
-        }
-
-        private readonly RunStatusItem _mproc = new();
         private static int _phyMemTotal = 0;
+        List<RunStatusItem> _monitor = new();
 
-        
         public MainForm()
         {
             InitializeComponent();
@@ -64,15 +41,26 @@ namespace Perfmon
                 _ = PInvoke.GetWindowThreadProcessId(Handle, &pid);
             }
             var s = System.Diagnostics.Process.GetProcessById((int)pid);
+            string procName = s.ProcessName;
 
-            _mproc.pid = pid;
-            _mproc.procName = s.ProcessName;
-            UpdateListView();
+            UpdateListView(pid, ref procName);
+            uint pid2 = pid;
+            Task.Run(() => {
+                ProcessMonitor monitor = new(pid2, 1000, onUpdateMonitorStatus);
+            });
 
             this.Opacity = 1;
         }
 
-        void UpdateListView()
+        void onUpdateMonitorStatus(uint pid, ref RunStatusItem status)
+        {
+            lock(_monitor)
+            {
+                _monitor.Add(status);
+            }
+        }
+
+        void UpdateListView(uint pid, ref string name)
         {
             listViewDetail.Columns.Clear();
 
@@ -94,14 +82,12 @@ namespace Perfmon
             for (int i = 0; i < 10; i++)
             {
                 var lvi = new ListViewItem(new string[] {
-                    _mproc.pid.ToString(),
-                    _mproc.procName, _mproc.vMem.ToString(),_mproc.phyMem.ToString(),_mproc.totalMem.ToString()});
+                    pid.ToString(),
+                    name, "0", "0", "0", "0", "0", "0", "0", "0"});
 
                 listViewDetail.Items.Add(lvi);
             }
             listViewDetail.EndUpdate();
-
-            listViewDetail.Items[0].Selected = true;
         }
 
         async Task MachineUpdate()
@@ -123,6 +109,29 @@ namespace Perfmon
                 sb.Append($"{ram} MB | {rama} MB | {_phyMemTotal} MB | {curProcess.Id},{curProcess.ProcessName}");
 
                 labelCpuAndMem.Text = sb.ToString();
+
+                {
+                    List<RunStatusItem> ress;
+                    {
+                        lock (_monitor)
+                        {
+                            ress = new List<RunStatusItem>(_monitor.ToArray());
+                            _monitor.Clear();
+                        }
+                        
+                    }
+
+                    listViewDetail.BeginUpdate();
+                    if(ress.Count > 0) 
+                    {
+                        listViewDetail.Items.Clear();
+
+                        var lvi = new ListViewItem(ress[0].info());
+                        listViewDetail.Items.Insert( 0, lvi);
+                    }
+                    listViewDetail.EndUpdate();
+                }
+
             }
         }
 
@@ -132,10 +141,10 @@ namespace Perfmon
             {
                 if (uint.TryParse(textBoxPID.Text.ToString(), out uint pi))
                 {
-                    _mproc.pid = pi;
+                    uint pid = pi;
                     var s = System.Diagnostics.Process.GetProcessById((int)pi);
-                    _mproc.procName = s.ProcessName;
-                    UpdateListView();
+                    string procName = s.ProcessName;
+                    UpdateListView(pid, ref procName);
                 }
                 else
                 {
@@ -190,5 +199,9 @@ namespace Perfmon
             return (int)(capacity >> 20);
         }
 
+        private void listViewDetail_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

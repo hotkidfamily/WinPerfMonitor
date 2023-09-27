@@ -63,9 +63,9 @@ namespace Perfmon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap _break {
+        internal static System.Drawing.Bitmap break_icon {
             get {
-                object obj = ResourceManager.GetObject("break", resourceCulture);
+                object obj = ResourceManager.GetObject("break_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -75,7 +75,7 @@ namespace Perfmon.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap disable_icon {
             get {
-                object obj = ResourceManager.GetObject("disable-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("disable_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -85,7 +85,7 @@ namespace Perfmon.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap restart_icon {
             get {
-                object obj = ResourceManager.GetObject("restart-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("restart_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Perfmon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap shot_icon_2 {
+        internal static System.Drawing.Bitmap shot_icon {
             get {
-                object obj = ResourceManager.GetObject("shot-icon-2", resourceCulture);
+                object obj = ResourceManager.GetObject("shot_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -105,7 +105,7 @@ namespace Perfmon.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap stop_icon {
             get {
-                object obj = ResourceManager.GetObject("stop-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("stop_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
