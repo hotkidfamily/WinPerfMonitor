@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using Windows.Win32;
+using System.Net.Sockets;
 
 namespace Perfmon
 {
@@ -27,7 +29,11 @@ namespace Perfmon
             public float cpu;
             public float vMem;
             public float phyMem;
-            public float gpu;
+            public float totalMem;
+            public float downLink;
+            public float upLink;
+            public float totoalLinkFlow;
+            public uint excuteStatus;
         }
 
         private readonly ProcListItem _mproc = new();
@@ -41,14 +47,14 @@ namespace Perfmon
             _ = MachineUpdate();
         }
 
-        [DllImport("user32.dll")]
-        static extern IntPtr WindowFromPoint(Point pt);
+        /*        [DllImport("user32.dll")]
+                static extern IntPtr WindowFromPoint(Point pt);
 
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+                [DllImport("user32.dll", SetLastError = true)]
+                static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
 
-        [DllImport("user32.dll")]
-        static extern bool GetCursorPos(out Point lpPoint);
+                [DllImport("user32.dll")]
+                static extern bool GetCursorPos(out Point lpPoint);*/
 
         private void BtnShotProcess_MouseDown(object sender, MouseEventArgs e)
         {
@@ -57,9 +63,13 @@ namespace Perfmon
 
         private void BtnShotProcess_MouseUp(object sender, MouseEventArgs e)
         {
-            GetCursorPos(out Point v);
-            var Handle = WindowFromPoint(v);
-            GetWindowThreadProcessId(Handle, out uint pid);
+            PInvoke.GetCursorPos(out Point v);
+            var Handle = PInvoke.WindowFromPoint(v);
+            uint pid;
+            unsafe
+            {
+                _ = PInvoke.GetWindowThreadProcessId(Handle, &pid);
+            }
             var s = System.Diagnostics.Process.GetProcessById((int)pid);
 
             _mproc.pid = pid;
@@ -73,12 +83,14 @@ namespace Perfmon
         {
             listViewDetail.Columns.Clear();
 
-            string[] v = new string[5] { "进程名", "PID", "vMem", "phyMem", "GPU" };
-            for (int i = 0; i < 5; i++)
+            string[] v = new string[] { "进程ID", "进程名", "CPU使用率", "虚拟内存", "物理内存", "总内存", "下行（KB/s）", "上行（KB/s）", "流量", "状态" };
+            int[] colsize = new int[] { 60, 80, 60, 100, 100, 100, 120, 120, 120, 60 };
+
+            for (int i = 0; i < v.Length; i++)
             {
                 ColumnHeader ch = new()
                 {
-                    Width = 120,
+                    Width = colsize[i],
                     TextAlign = HorizontalAlignment.Left,
                     Text = v[i]
                 };
@@ -88,14 +100,10 @@ namespace Perfmon
             listViewDetail.BeginUpdate();
             for (int i = 0; i < 10; i++)
             {
-                ListViewItem lvi = new()
-                {
-                    Text = _mproc.procName
-                };
-                lvi.SubItems.Add(_mproc.pid.ToString());
-                lvi.SubItems.Add(_mproc.vMem.ToString());
-                lvi.SubItems.Add(_mproc.phyMem.ToString());
-                lvi.SubItems.Add(_mproc.gpu.ToString());
+                var lvi = new ListViewItem(new string[] {
+                    _mproc.pid.ToString(),
+                    _mproc.procName, _mproc.vMem.ToString(),_mproc.phyMem.ToString(),_mproc.totalMem.ToString()});
+
                 listViewDetail.Items.Add(lvi);
             }
             listViewDetail.EndUpdate();
@@ -132,5 +140,26 @@ namespace Perfmon
                 }
             }
         }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDisable_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBreak_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
