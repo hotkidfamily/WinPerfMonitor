@@ -20,7 +20,9 @@ namespace Perfmon
         private static int _phyMemTotal = 0;
         private static List<RunStatusItem> _monitor = new();
 
-        Dictionary<uint, ProcessMonitor> _monitorTasks = new();
+        private Dictionary<uint, ProcessMonitor> _monitorTasks = new();
+        private Dictionary<uint, int> _linePidMap = new();
+        private int _pidsCount = 0;
 
         public MainForm()
         {
@@ -47,15 +49,22 @@ namespace Perfmon
             {
                 _ = PInvoke.GetWindowThreadProcessId(Handle, &pid);
             }
-            var s = System.Diagnostics.Process.GetProcessById((int)pid);
-            string procName = s.ProcessName;
-
             uint pid2 = pid;
 
             if (!_monitorTasks.ContainsKey(pid2))
             {
                 ProcessMonitor monitor = new(pid2, 1000, onUpdateMonitorStatus);
                 _monitorTasks.Add(pid2, monitor);
+                int index = _pidsCount++;
+                _linePidMap[pid2] = index;
+
+                MonitorDetailLV.BeginUpdate();
+                var lvi = new ListViewItem(new string[] {
+                "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0"});
+
+                MonitorDetailLV.Items.Insert(index, lvi);
+                MonitorDetailLV.Items[index].Selected = true;
+                MonitorDetailLV.EndUpdate();
             }
 
             this.Opacity = 1;
@@ -86,14 +95,6 @@ namespace Perfmon
                 };
                 MonitorDetailLV.Columns.Add(ch);
             }
-
-            MonitorDetailLV.BeginUpdate();
-            var lvi = new ListViewItem(new string[] {
-                "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0"});
-
-            MonitorDetailLV.Items.Add(lvi);
-            MonitorDetailLV.Items[0].Selected = true;
-            MonitorDetailLV.EndUpdate();
         }
 
         async Task RefreshListView()
@@ -108,13 +109,16 @@ namespace Perfmon
                 }
 
                 MonitorDetailLV.BeginUpdate();
-                if (ress.Count > 0)
+                foreach (RunStatusItem item in ress)
                 {
-                    var lvi = new ListViewItem(ress[0].info());
-                    MonitorDetailLV.Items[0] = lvi;
-                    MonitorDetailLV.Items[0].Selected = true;
+                    var lvi = new ListViewItem(item.info());
+                    if(_linePidMap.ContainsKey(item.pid))
+                    {
+                        var index = _linePidMap[item.pid];
+                        MonitorDetailLV.Items[index] = lvi;
+                    }
                 }
-
+               
                 MonitorDetailLV.EndUpdate();
 
                 await Task.Delay(TimeSpan.FromSeconds(1));
@@ -150,8 +154,21 @@ namespace Perfmon
                 if (uint.TryParse(textBoxPID.Text.ToString(), out uint pi))
                 {
                     uint pid = pi;
-                    var s = System.Diagnostics.Process.GetProcessById((int)pi);
-                    string procName = s.ProcessName;
+                    if (!_monitorTasks.ContainsKey(pid))
+                    {
+                        ProcessMonitor monitor = new(pid, 1000, onUpdateMonitorStatus);
+                        _monitorTasks.Add(pid, monitor);
+                        int index = _pidsCount++;
+                        _linePidMap[pid] = index;
+
+                        MonitorDetailLV.BeginUpdate();
+                        var lvi = new ListViewItem(new string[] {
+                "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0"});
+
+                        MonitorDetailLV.Items.Insert(index, lvi);
+                        MonitorDetailLV.Items[index].Selected = true;
+                        MonitorDetailLV.EndUpdate();
+                    }
                 }
                 else
                 {

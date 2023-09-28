@@ -25,10 +25,10 @@ namespace Perfmon
             string uposfix = " Kbps";
             string dposfix = " Kbps";
             double total = totalLinkFlow /= 1024.0f;
-            double up = upLink;
-            double down = downLink;
+            double up = upLink * 8;
+            double down = downLink * 8;
 
-            if(upLink > 1 << 10)
+            if(up > 1 << 10)
             {
                 up /= 1024.0f;
                 uposfix = " Mbps";
@@ -49,7 +49,7 @@ namespace Perfmon
                 $"{totalMem/1024 :F2} GB",
                 $"{up :F2}{uposfix}",
                 $"{down :F2}{dposfix}",
-                $"{total :F2} Mb",
+                $"{total :F2} MB",
                 $"{excuteStatus}"
             };
         }
