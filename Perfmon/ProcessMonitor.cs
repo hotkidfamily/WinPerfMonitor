@@ -1,7 +1,7 @@
 ﻿using Microsoft.Diagnostics.Tracing.Parsers;
 using Microsoft.Diagnostics.Tracing.Session;
-using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Perfmon
 {
@@ -18,7 +18,7 @@ namespace Perfmon
         public double downLink = 0;
         public double upLink = 0;
         public double totalLinkFlow = 0;
-        public uint excuteStatus = 0;
+        public string excuteStatus = "no exist";
 
         public string[] info()
         {
@@ -55,92 +55,112 @@ namespace Perfmon
         }
     }
 
-    internal class TcpipTrace {
+    internal class NetspeedTrace {
         public long send = 0;
         public long received = 0;
     };
 
-    internal class ProcessMonitor: IDisposable
+    internal class ProcessMonitor : IDisposable
     {
         private readonly uint _pid = 0;
+
         private readonly int _interval = 1000;
+        private bool _endTask = true;
+        private readonly Task? _task;
 
         private RunStatusItem _onceRes = new();
 
-        private Process _process;
+        private readonly Process? _process;
 
-        private UpdateMonitorStatusDelegate _updateMonitorStatus;
-
-        private bool _endTask = true;
-        private readonly Task _task;
+        private readonly UpdateMonitorStatusDelegate? _updateMonitorStatus;
 
         private TraceEventSession? _netTraceSession;
-        private TcpipTrace _netTraceDetail = new();
-        private TcpipTrace _netTraceOld = new();
+        private NetspeedTrace _netspeedDetail = new();
+        private NetspeedTrace _netspeedDetailOld = new();
+
+        void ProcessExitEventHandler(object? sender, EventArgs e)
+        {
+            _endTask = true;
+            _task?.Wait();
+            _onceRes.excuteStatus = "exit";
+
+            _updateMonitorStatus?.Invoke(ref _onceRes);
+        }
 
         public ProcessMonitor(uint pid, int interval, UpdateMonitorStatusDelegate UpdateHandle) 
         {
             _pid = pid;
             _interval = interval;
-            _process = System.Diagnostics.Process.GetProcessById((int)pid);
+            _onceRes.excuteStatus = "running";
 
-            _endTask = false;
-            _onceRes.pid = _pid;
-            _onceRes.procName = _process.ProcessName;
-
-            _updateMonitorStatus = UpdateHandle;
-
-            _task = new Task(() =>
+            try
             {
-                long lastMonitorTicks = 0;
-                double lastProcessorTime = 0;
-                double cores = 100.0f / Environment.ProcessorCount;
-                TcpipTrace tcpipTrace = new TcpipTrace();
+                _process = Process.GetProcessById((int)pid);
+            }
+            catch (ArgumentException)
+            {
+                _onceRes.excuteStatus = "no exist";
+            }
+            if (_process != null)
+            {
+                _endTask = false;
+                _onceRes.pid = _pid;
+                _onceRes.procName = _process.ProcessName;
 
-                while (!_endTask)
+                _updateMonitorStatus = UpdateHandle;
+                _process.EnableRaisingEvents = true;
+                _process.Exited += new EventHandler(ProcessExitEventHandler);
+
+                _task = new Task(() =>
                 {
-                    _onceRes.vMem = _process.VirtualMemorySize64 / 1048576.0f;
-                    _onceRes.phyMem = _process.WorkingSet64 / 1048576.0f;
-                    _onceRes.totalMem = _onceRes.vMem + _onceRes.phyMem;
+                    long lastMonitorTicks = 0;
+                    double lastProcessorTime = 0;
+                    double cores = 100.0f / Environment.ProcessorCount;
+                    NetspeedTrace netspeedTracer = new();
 
-                    double nowProcessorTime = _process.TotalProcessorTime.TotalMilliseconds;
-                    long nowTicks = Environment.TickCount64;
-                    if (lastMonitorTicks == 0)
+                    while (!_endTask)
                     {
-                        lastMonitorTicks = nowTicks - 1000;
+                        _onceRes.vMem = _process.VirtualMemorySize64 / 1048576.0f;
+                        _onceRes.phyMem = _process.WorkingSet64 / 1048576.0f;
+                        _onceRes.totalMem = _onceRes.vMem + _onceRes.phyMem;
+
+                        double nowProcessorTime = _process.TotalProcessorTime.TotalMilliseconds;
+                        long nowTicks = Environment.TickCount64;
+                        if (lastMonitorTicks == 0)
+                        {
+                            lastMonitorTicks = nowTicks - 1000;
+                            lastProcessorTime = nowProcessorTime;
+                        }
+                    
+                        _onceRes.cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
+
+                        lastMonitorTicks = nowTicks;
                         lastProcessorTime = nowProcessorTime;
+
+                        {
+                            netspeedTracer.send = _netspeedDetail.send;
+                            netspeedTracer.received = _netspeedDetail.received;
+
+                            _onceRes.upLink = (netspeedTracer.send - _netspeedDetailOld.send) / 1024.0f;
+                            _onceRes.downLink = (netspeedTracer.received - _netspeedDetailOld.received) / 1024.0f;
+                            _onceRes.totalLinkFlow = (netspeedTracer.send + _netspeedDetailOld.received) / 1024.0f;
+
+                            _netspeedDetailOld.send = netspeedTracer.send;
+                            _netspeedDetailOld.received = netspeedTracer.received;
+                        }
+
+                        _updateMonitorStatus?.Invoke(ref _onceRes);
+
+                        Thread.Sleep(TimeSpan.FromMilliseconds(_interval));
                     }
-                    
-                    _onceRes.cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
+                });
 
-                    lastMonitorTicks = nowTicks;
-                    lastProcessorTime = nowProcessorTime;
+                _task.Start();
 
-                    {
-                        tcpipTrace.send = _netTraceDetail.send;
-                        tcpipTrace.received = _netTraceDetail.received;
-
-                        _onceRes.upLink = (tcpipTrace.send - _netTraceOld.send) / 1024.0f;
-                        _onceRes.downLink = (tcpipTrace.received - _netTraceOld.received) / 1024.0f;
-                        _onceRes.totalLinkFlow = (tcpipTrace.send + _netTraceOld.received) / 1024.0f;
-
-                        _netTraceOld.send = tcpipTrace.send;
-                        _netTraceOld.received = tcpipTrace.received;
-                    }
-                    
-                    _updateMonitorStatus(ref _onceRes);
-                    
-
-                    Thread.Sleep(TimeSpan.FromMilliseconds(_interval));
-
-                    System.Console.WriteLine("monitor running...");
-                }
-            });
-
-            _task.Start();
-
-            Task.Run(() => { StartEtwSession(); });
+                Task.Run(() => { StartEtwSession(); });
+            }
         }
+
         private void StartEtwSession()
         {
             try
@@ -155,7 +175,7 @@ namespace Perfmon
                     {
                         if (data.ProcessID == processId)
                         {
-                            _netTraceDetail.received += data.size;
+                            _netspeedDetail.received += data.size;
                         }
                     };
 
@@ -163,7 +183,7 @@ namespace Perfmon
                     {
                         if (data.ProcessID == processId)
                         {
-                            _netTraceDetail.send += data.size;
+                            _netspeedDetail.send += data.size;
                         }
                     };
 
@@ -171,7 +191,7 @@ namespace Perfmon
                     {
                         if (data.ProcessID == processId)
                         {
-                            _netTraceDetail.received += data.size;
+                            _netspeedDetail.received += data.size;
                         }
                     };
 
@@ -179,7 +199,7 @@ namespace Perfmon
                     {
                         if (data.ProcessID == processId)
                         {
-                            _netTraceDetail.send += data.size;
+                            _netspeedDetail.send += data.size;
                         }
                     };
 
@@ -188,15 +208,15 @@ namespace Perfmon
             }
             catch
             {
-                _netTraceDetail.send = 0;
-                _netTraceDetail.received = 0;
+                _netspeedDetail.send = 0;
+                _netspeedDetail.received = 0;
             }
         }
 
         public void Dispose()
         {
             _endTask = true;
-            _task.Wait();
+            _task?.Wait();
             _netTraceSession?.Dispose();
         }
     }
