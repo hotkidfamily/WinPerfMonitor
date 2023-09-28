@@ -24,7 +24,7 @@ namespace Perfmon
         {
             string uposfix = " Kbps";
             string dposfix = " Kbps";
-            double total = totalLinkFlow /= 1024.0f;
+            double total = totalLinkFlow / 1024.0f;
             double up = upLink * 8;
             double down = downLink * 8;
 
