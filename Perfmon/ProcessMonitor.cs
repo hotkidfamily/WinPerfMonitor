@@ -182,6 +182,7 @@ namespace Perfmon
                             _netTraceDetail.send += data.size;
                         }
                     };
+
                     _netTraceSession.Source.Process();
                 }
             }
