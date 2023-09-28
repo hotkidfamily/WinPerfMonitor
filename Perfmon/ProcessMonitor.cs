@@ -167,6 +167,21 @@ namespace Perfmon
                         }
                     };
 
+                    _netTraceSession.Source.Kernel.UdpIpRecv += data =>
+                    {
+                        if (data.ProcessID == processId)
+                        {
+                            _netTraceDetail.received += data.size;
+                        }
+                    };
+
+                    _netTraceSession.Source.Kernel.UdpIpSend += data =>
+                    {
+                        if (data.ProcessID == processId)
+                        {
+                            _netTraceDetail.send += data.size;
+                        }
+                    };
                     _netTraceSession.Source.Process();
                 }
             }
