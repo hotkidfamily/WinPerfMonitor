@@ -1,10 +1,13 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.Diagnostics.Tracing.Parsers.Kernel;
+using System.Diagnostics;
 using System.Management;
 using System.Text;
+using System.Threading;
 using System.Xml.Linq;
 using Windows.Win32;
 using static Perfmon.RunStatusItem;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace Perfmon
 {
@@ -15,7 +18,9 @@ namespace Perfmon
         private readonly PerformanceCounter? ramUsed;
 
         private static int _phyMemTotal = 0;
-        List<RunStatusItem> _monitor = new();
+        private static List<RunStatusItem> _monitor = new();
+
+        Dictionary<uint, ProcessMonitor> _monitorTasks = new();
 
         public MainForm()
         {
@@ -25,7 +30,7 @@ namespace Perfmon
             ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
             ConstructListView();
             _ = QurySystemInfo();
-            
+            _ = RefreshListView();
         }
 
         private void BtnShotProcess_MouseDown(object sender, MouseEventArgs e)
@@ -46,15 +51,17 @@ namespace Perfmon
             string procName = s.ProcessName;
 
             uint pid2 = pid;
-            Task.Run(() =>
+
+            if (!_monitorTasks.ContainsKey(pid2))
             {
                 ProcessMonitor monitor = new(pid2, 1000, onUpdateMonitorStatus);
-            });
+                _monitorTasks.Add(pid2, monitor);
+            }
 
             this.Opacity = 1;
         }
 
-        void onUpdateMonitorStatus(uint pid, ref RunStatusItem status)
+        void onUpdateMonitorStatus(ref RunStatusItem status)
         {
             lock (_monitor)
             {
@@ -64,7 +71,7 @@ namespace Perfmon
 
         void ConstructListView()
         {
-            listViewDetail.Columns.Clear();
+            MonitorDetailLV.Columns.Clear();
 
             string[] v = new string[] { "进程ID", "进程名", "CPU使用率", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "状态" };
             int[] colsize = new int[] { 60, 80, 60, 100, 100, 100, 120, 120, 120, 60 };
@@ -77,15 +84,41 @@ namespace Perfmon
                     TextAlign = HorizontalAlignment.Left,
                     Text = v[i]
                 };
-                listViewDetail.Columns.Add(ch);
+                MonitorDetailLV.Columns.Add(ch);
             }
 
-            listViewDetail.BeginUpdate();
+            MonitorDetailLV.BeginUpdate();
             var lvi = new ListViewItem(new string[] {
                 "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0"});
 
-            listViewDetail.Items.Add(lvi);
-            listViewDetail.EndUpdate();
+            MonitorDetailLV.Items.Add(lvi);
+            MonitorDetailLV.Items[0].Selected = true;
+            MonitorDetailLV.EndUpdate();
+        }
+
+        async Task RefreshListView()
+        {
+            while (!IsDisposed)
+            {
+                List<RunStatusItem> ress;
+                lock (_monitor)
+                {
+                    ress = new List<RunStatusItem>(_monitor.ToArray());
+                    _monitor.Clear();
+                }
+
+                MonitorDetailLV.BeginUpdate();
+                if (ress.Count > 0)
+                {
+                    var lvi = new ListViewItem(ress[0].info());
+                    MonitorDetailLV.Items[0] = lvi;
+                    MonitorDetailLV.Items[0].Selected = true;
+                }
+
+                MonitorDetailLV.EndUpdate();
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
         }
 
         async Task QurySystemInfo()
@@ -107,27 +140,6 @@ namespace Perfmon
                 sb.Append($"{ram} MB | {rama} MB | {_phyMemTotal} MB | {curProcess.Id},{curProcess.ProcessName}");
 
                 labelCpuAndMem.Text = sb.ToString();
-
-                {
-                    List<RunStatusItem> ress;
-                    {
-                        lock (_monitor)
-                        {
-                            ress = new List<RunStatusItem>(_monitor.ToArray());
-                            _monitor.Clear();
-                        }
-
-                    }
-
-                    listViewDetail.BeginUpdate();
-                    if (ress.Count > 0)
-                    {
-                        var lvi = new ListViewItem(ress[0].info());
-                        listViewDetail.Items[0] = lvi;
-                    }
-                    listViewDetail.EndUpdate();
-                }
-
             }
         }
 
@@ -150,7 +162,19 @@ namespace Perfmon
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-
+            int index = 0;
+            if (MonitorDetailLV.SelectedIndices.Count > 0)
+            {
+                index = MonitorDetailLV.SelectedIndices[0];
+            }
+            var item = MonitorDetailLV.Items[index];
+            uint pid = uint.Parse(item.Text);
+            if (_monitorTasks.ContainsKey(pid))
+            {
+                var v = _monitorTasks[pid];
+                v.Dispose();
+                _monitorTasks.Remove(pid);
+            }
         }
 
         private void btnDisable_Click(object sender, EventArgs e)

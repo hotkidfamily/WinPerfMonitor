@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Perfmon
 {
-    delegate void UpdateMonitorStatusDelegate(uint pid, ref RunStatusItem status);
+    delegate void UpdateMonitorStatusDelegate(ref RunStatusItem status);
 
     internal class RunStatusItem
     {
@@ -128,7 +128,7 @@ namespace Perfmon
                         _netTraceOld.received = tcpipTrace.received;
                     }
                     
-                    _updateMonitorStatus(_pid, ref _onceRes);
+                    _updateMonitorStatus(ref _onceRes);
                     
 
                     Thread.Sleep(TimeSpan.FromMilliseconds(_interval));

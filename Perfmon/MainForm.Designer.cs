@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             btnShotProcess = new Button();
             labelCpuAndMem = new TextBox();
-            listViewDetail = new ListView();
+            MonitorDetailLV = new ListView();
             PID = new ColumnHeader();
             procName = new ColumnHeader();
             cpuUsage = new ColumnHeader();
@@ -60,7 +60,6 @@
             btnShotProcess.BackgroundImage = Properties.Resources.shot_icon;
             btnShotProcess.BackgroundImageLayout = ImageLayout.Zoom;
             btnShotProcess.Cursor = Cursors.Cross;
-            btnShotProcess.DialogResult = DialogResult.OK;
             btnShotProcess.FlatStyle = FlatStyle.Popup;
             btnShotProcess.ImageKey = "(无)";
             btnShotProcess.Location = new Point(402, 18);
@@ -82,22 +81,22 @@
             labelCpuAndMem.TabIndex = 1;
             labelCpuAndMem.TextAlign = HorizontalAlignment.Right;
             // 
-            // listViewDetail
+            // MonitorDetailLV
             // 
-            listViewDetail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            listViewDetail.BorderStyle = BorderStyle.FixedSingle;
-            listViewDetail.Columns.AddRange(new ColumnHeader[] { PID, procName, cpuUsage, vMem, phyMem, totalMem, downLink, upLink, totalLink, monitorStatus });
-            listViewDetail.FullRowSelect = true;
-            listViewDetail.GridLines = true;
-            listViewDetail.Location = new Point(20, 138);
-            listViewDetail.Margin = new Padding(5, 4, 5, 4);
-            listViewDetail.MultiSelect = false;
-            listViewDetail.Name = "listViewDetail";
-            listViewDetail.Size = new Size(1418, 313);
-            listViewDetail.TabIndex = 3;
-            listViewDetail.UseCompatibleStateImageBehavior = false;
-            listViewDetail.View = View.Details;
-            listViewDetail.Enter += listViewDetail_Enter;
+            MonitorDetailLV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            MonitorDetailLV.BorderStyle = BorderStyle.FixedSingle;
+            MonitorDetailLV.Columns.AddRange(new ColumnHeader[] { PID, procName, cpuUsage, vMem, phyMem, totalMem, downLink, upLink, totalLink, monitorStatus });
+            MonitorDetailLV.FullRowSelect = true;
+            MonitorDetailLV.GridLines = true;
+            MonitorDetailLV.Location = new Point(20, 138);
+            MonitorDetailLV.Margin = new Padding(5, 4, 5, 4);
+            MonitorDetailLV.MultiSelect = false;
+            MonitorDetailLV.Name = "MonitorDetailLV";
+            MonitorDetailLV.Size = new Size(1418, 313);
+            MonitorDetailLV.TabIndex = 3;
+            MonitorDetailLV.UseCompatibleStateImageBehavior = false;
+            MonitorDetailLV.View = View.Details;
+            MonitorDetailLV.Enter += listViewDetail_Enter;
             // 
             // PID
             // 
@@ -191,7 +190,6 @@
             btnStop.BackgroundImage = Properties.Resources.stop_icon;
             btnStop.BackgroundImageLayout = ImageLayout.Zoom;
             btnStop.Cursor = Cursors.Hand;
-            btnStop.DialogResult = DialogResult.OK;
             btnStop.FlatStyle = FlatStyle.Popup;
             btnStop.ImageKey = "(无)";
             btnStop.Location = new Point(6, 6);
@@ -206,7 +204,6 @@
             btnDisable.BackgroundImage = Properties.Resources.disable_icon;
             btnDisable.BackgroundImageLayout = ImageLayout.Zoom;
             btnDisable.Cursor = Cursors.Hand;
-            btnDisable.DialogResult = DialogResult.OK;
             btnDisable.FlatStyle = FlatStyle.Popup;
             btnDisable.ImageKey = "(无)";
             btnDisable.Location = new Point(76, 6);
@@ -221,7 +218,6 @@
             btnRestart.BackgroundImage = Properties.Resources.restart_icon;
             btnRestart.BackgroundImageLayout = ImageLayout.Zoom;
             btnRestart.Cursor = Cursors.Hand;
-            btnRestart.DialogResult = DialogResult.OK;
             btnRestart.FlatStyle = FlatStyle.Popup;
             btnRestart.ImageKey = "(无)";
             btnRestart.Location = new Point(146, 6);
@@ -236,7 +232,6 @@
             btnBreak.BackgroundImage = Properties.Resources.break_icon;
             btnBreak.BackgroundImageLayout = ImageLayout.Zoom;
             btnBreak.Cursor = Cursors.Hand;
-            btnBreak.DialogResult = DialogResult.OK;
             btnBreak.FlatStyle = FlatStyle.Popup;
             btnBreak.ImageKey = "(无)";
             btnBreak.Location = new Point(6, 6);
@@ -266,7 +261,7 @@
             Controls.Add(label2);
             Controls.Add(textBoxPID);
             Controls.Add(label1);
-            Controls.Add(listViewDetail);
+            Controls.Add(MonitorDetailLV);
             Controls.Add(labelCpuAndMem);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
@@ -281,7 +276,7 @@
 
         private Button btnShotProcess;
         private TextBox labelCpuAndMem;
-        private ListView listViewDetail;
+        private ListView MonitorDetailLV;
         private Label label1;
         private TextBox textBoxPID;
         private Label label2;
