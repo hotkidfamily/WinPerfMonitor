@@ -121,7 +121,7 @@ namespace Perfmon
                
                 MonitorDetailLV.EndUpdate();
 
-                await Task.Delay(TimeSpan.FromSeconds(1));
+                await Task.Delay(TimeSpan.FromMilliseconds(1000));
             }
         }
 
@@ -135,15 +135,15 @@ namespace Perfmon
 
             while (!IsDisposed)
             {
-                await Task.Delay(TimeSpan.FromSeconds(1));
                 StringBuilder sb = new();
                 int rama = (int)((long)Math.Round(ramAva.NextValue()) >> 20);
                 int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
 
-                sb.Append($"{cpuTotal?.NextValue():F2} % | {mnam} | {os} | {core} | ");
+                sb.Append($"{cpuTotal?.NextValue() :F2} % | {mnam} | {os} | {core} | ");
                 sb.Append($"{ram} MB | {rama} MB | {_phyMemTotal} MB | {curProcess.Id},{curProcess.ProcessName}");
 
                 labelCpuAndMem.Text = sb.ToString();
+                await Task.Delay(TimeSpan.FromMilliseconds(1000));
             }
         }
 
