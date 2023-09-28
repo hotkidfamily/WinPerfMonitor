@@ -27,7 +27,20 @@ namespace Perfmon
         public MainForm()
         {
             InitializeComponent();
-            cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            cpuTotal = new PerformanceCounter();
+            if(Environment.OSVersion.Version.Major >= 10)
+            {
+                cpuTotal.CategoryName = "Processor Information";
+                cpuTotal.CounterName = "% Processor Utility";
+            }
+            else
+            {
+                cpuTotal.CategoryName = "Processor";
+                cpuTotal.CounterName = "% Processor Time";
+            }
+            
+            cpuTotal.InstanceName = "_Total";
+
             ramAva = new PerformanceCounter("Memory", "Available Bytes");
             ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
             ConstructListView();
