@@ -34,7 +34,7 @@ namespace Perfmon
                 uposfix = " Mbps";
             }
 
-            if (downLink > 1 << 10)
+            if (down > 1 << 10)
             {
                 down /= 1024.0f;
                 dposfix = " Mbps";
