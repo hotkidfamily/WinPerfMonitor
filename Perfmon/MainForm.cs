@@ -16,9 +16,9 @@ namespace Perfmon
 {
     public partial class MainForm : Form
     {
-        private readonly PerformanceCounter? cpuTotal;
-        private readonly PerformanceCounter? ramAva;
-        private readonly PerformanceCounter? ramUsed;
+        private readonly PerformanceCounter cpuTotal;
+        private readonly PerformanceCounter ramAva;
+        private readonly PerformanceCounter ramUsed;
 
         private static int _phyMemTotal = 0;
         private static List<RunStatusItem> _monitorResult = new();
@@ -139,7 +139,6 @@ namespace Perfmon
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
             var os = Environment.OSVersion.Version.ToString();
-            Process curProcess = Process.GetCurrentProcess();
 
             while (!IsDisposed)
             {
@@ -148,7 +147,7 @@ namespace Perfmon
                 int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
 
                 sb.Append($"{cpuTotal?.NextValue():F2} % | {mnam} | {os} | {core} | ");
-                sb.Append($"{ram} MB | {rama} MB | {_phyMemTotal} MB | {curProcess.Id},{curProcess.ProcessName}");
+                sb.Append($"{ram} MB | {rama} MB | {_phyMemTotal} MB");
 
                 labelCpuAndMem.Text = sb.ToString();
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
@@ -218,11 +217,12 @@ namespace Perfmon
                 {
                     try
                     {
-                        capacity += long.Parse(baseObj.Properties["Capacity"].Value.ToString());
+                        long.TryParse(baseObj.Properties["Capacity"].Value.ToString(), out long cap);
+                        capacity += cap;
                     }
                     catch
                     {
-                        return 0;
+                        continue;
                     }
                 }
             }
