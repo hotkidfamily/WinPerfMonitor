@@ -25,11 +25,15 @@ namespace Perfmon
         private Dictionary<uint, int> _linePidMap = new();
         private int _pidsCount = 0;
 
+        private static string[] _colHeaders = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
+        private static string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
+        private static int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 60, 60 };
+
         public MainForm()
         {
             InitializeComponent();
             cpuTotal = new PerformanceCounter();
-            if(Environment.OSVersion.Version.Major >= 10)
+            if (Environment.OSVersion.Version.Major >= 10)
             {
                 cpuTotal.CategoryName = "Processor Information";
                 cpuTotal.CounterName = "% Processor Utility";
@@ -39,7 +43,7 @@ namespace Perfmon
                 cpuTotal.CategoryName = "Processor";
                 cpuTotal.CounterName = "% Processor Time";
             }
-            
+
             cpuTotal.InstanceName = "_Total";
 
             ramAva = new PerformanceCounter("Memory", "Available Bytes");
@@ -73,8 +77,7 @@ namespace Perfmon
                 _linePidMap[pid2] = index;
 
                 MonitorDetailLV.BeginUpdate();
-                var lvi = new ListViewItem(new string[] {
-                "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0"});
+                var lvi = new ListViewItem(_colDefaultValues);
 
                 MonitorDetailLV.Items.Insert(index, lvi);
                 MonitorDetailLV.Items[index].Selected = true;
@@ -96,16 +99,13 @@ namespace Perfmon
         {
             MonitorDetailLV.Columns.Clear();
 
-            string[] v = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "状态" };
-            int[] colsize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 60 };
-
-            for (int i = 0; i < v.Length; i++)
+            for (int i = 0; i < _colSize.Length; i++)
             {
                 ColumnHeader ch = new()
                 {
-                    Width = colsize[i],
+                    Width = _colSize[i],
                     TextAlign = HorizontalAlignment.Left,
-                    Text = v[i]
+                    Text = _colHeaders[i],
                 };
                 MonitorDetailLV.Columns.Add(ch);
             }
@@ -125,17 +125,17 @@ namespace Perfmon
                 MonitorDetailLV.BeginUpdate();
                 foreach (RunStatusItem item in ress)
                 {
-                    if(_linePidMap.ContainsKey(item.pid))
+                    if (_linePidMap.ContainsKey(item.pid))
                     {
                         var index = _linePidMap[item.pid];
                         var values = item.info();
-                        for (int i = 0; i < 10; i++)
+                        for (int i = 0; i < _colHeaders.Length; i++)
                         {
                             MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
                         }
                     }
                 }
-               
+
                 MonitorDetailLV.EndUpdate();
 
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
@@ -156,7 +156,7 @@ namespace Perfmon
                 int rama = (int)((long)Math.Round(ramAva.NextValue()) >> 20);
                 int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
 
-                sb.Append($"{cpuTotal?.NextValue() :F2} % | {mnam} | {os} | {core} | ");
+                sb.Append($"{cpuTotal?.NextValue():F2} % | {mnam} | {os} | {core} | ");
                 sb.Append($"{ram} MB | {rama} MB | {_phyMemTotal} MB | {curProcess.Id},{curProcess.ProcessName}");
 
                 labelCpuAndMem.Text = sb.ToString();
@@ -179,8 +179,7 @@ namespace Perfmon
                         _linePidMap[pid] = index;
 
                         MonitorDetailLV.BeginUpdate();
-                        var lvi = new ListViewItem(new string[] {
-                "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0"});
+                        var lvi = new ListViewItem(_colDefaultValues);
 
                         MonitorDetailLV.Items.Insert(index, lvi);
                         MonitorDetailLV.Items[index].Selected = true;

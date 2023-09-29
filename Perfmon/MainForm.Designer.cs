@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             btnShotProcess = new Button();
             labelCpuAndMem = new TextBox();
@@ -41,6 +42,7 @@
             downLink = new ColumnHeader();
             upLink = new ColumnHeader();
             totalLink = new ColumnHeader();
+            runningSeconds = new ColumnHeader();
             monitorStatus = new ColumnHeader();
             label1 = new Label();
             textBoxPID = new TextBox();
@@ -51,6 +53,7 @@
             btnRestart = new Button();
             btnBreak = new Button();
             flowLayoutPanel2 = new FlowLayoutPanel();
+            toolTip1 = new ToolTip(components);
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             SuspendLayout();
@@ -63,10 +66,11 @@
             btnShotProcess.FlatStyle = FlatStyle.Popup;
             btnShotProcess.ImageKey = "(无)";
             btnShotProcess.Location = new Point(256, 13);
-            btnShotProcess.Margin = new Padding(2, 2, 2, 2);
+            btnShotProcess.Margin = new Padding(2);
             btnShotProcess.Name = "btnShotProcess";
             btnShotProcess.Size = new Size(41, 45);
             btnShotProcess.TabIndex = 0;
+            toolTip1.SetToolTip(btnShotProcess, "Shot");
             btnShotProcess.UseVisualStyleBackColor = true;
             btnShotProcess.MouseDown += BtnShotProcess_MouseDown;
             btnShotProcess.MouseUp += BtnShotProcess_MouseUp;
@@ -76,18 +80,19 @@
             labelCpuAndMem.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             labelCpuAndMem.BorderStyle = BorderStyle.FixedSingle;
             labelCpuAndMem.Location = new Point(13, 343);
-            labelCpuAndMem.Margin = new Padding(2, 2, 2, 2);
+            labelCpuAndMem.Margin = new Padding(2);
             labelCpuAndMem.Name = "labelCpuAndMem";
             labelCpuAndMem.ReadOnly = true;
             labelCpuAndMem.Size = new Size(903, 23);
             labelCpuAndMem.TabIndex = 1;
             labelCpuAndMem.TextAlign = HorizontalAlignment.Right;
+            toolTip1.SetToolTip(labelCpuAndMem, "LocalMachineStatus");
             // 
             // MonitorDetailLV
             // 
             MonitorDetailLV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             MonitorDetailLV.BorderStyle = BorderStyle.FixedSingle;
-            MonitorDetailLV.Columns.AddRange(new ColumnHeader[] { PID, procName, cpuUsage, vMem, phyMem, totalMem, downLink, upLink, totalLink, monitorStatus });
+            MonitorDetailLV.Columns.AddRange(new ColumnHeader[] { PID, procName, cpuUsage, vMem, phyMem, totalMem, downLink, upLink, totalLink, runningSeconds, monitorStatus });
             MonitorDetailLV.FullRowSelect = true;
             MonitorDetailLV.GridLines = true;
             MonitorDetailLV.Location = new Point(13, 98);
@@ -139,8 +144,12 @@
             // 
             // totalLink
             // 
-            totalLink.Text = "总流量（KB）";
+            totalLink.Text = "总流量";
             totalLink.Width = 120;
+            // 
+            // runningSeconds
+            // 
+            runningSeconds.Text = "运行时间";
             // 
             // monitorStatus
             // 
@@ -161,6 +170,7 @@
             textBoxPID.Name = "textBoxPID";
             textBoxPID.Size = new Size(100, 23);
             textBoxPID.TabIndex = 5;
+            toolTip1.SetToolTip(textBoxPID, "输入PID");
             textBoxPID.KeyPress += TextBoxPID_KeyPress;
             // 
             // label2
@@ -178,9 +188,9 @@
             flowLayoutPanel1.Controls.Add(btnDisable);
             flowLayoutPanel1.Controls.Add(btnRestart);
             flowLayoutPanel1.Location = new Point(323, 8);
-            flowLayoutPanel1.Margin = new Padding(2, 2, 2, 2);
+            flowLayoutPanel1.Margin = new Padding(2);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Padding = new Padding(2, 2, 2, 2);
+            flowLayoutPanel1.Padding = new Padding(2);
             flowLayoutPanel1.Size = new Size(141, 54);
             flowLayoutPanel1.TabIndex = 7;
             // 
@@ -192,10 +202,11 @@
             btnStop.FlatStyle = FlatStyle.Popup;
             btnStop.ImageKey = "(无)";
             btnStop.Location = new Point(4, 4);
-            btnStop.Margin = new Padding(2, 2, 2, 2);
+            btnStop.Margin = new Padding(2);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(41, 45);
             btnStop.TabIndex = 8;
+            toolTip1.SetToolTip(btnStop, "Stop");
             btnStop.UseVisualStyleBackColor = true;
             btnStop.Click += btnStop_Click;
             // 
@@ -207,10 +218,11 @@
             btnDisable.FlatStyle = FlatStyle.Popup;
             btnDisable.ImageKey = "(无)";
             btnDisable.Location = new Point(49, 4);
-            btnDisable.Margin = new Padding(2, 2, 2, 2);
+            btnDisable.Margin = new Padding(2);
             btnDisable.Name = "btnDisable";
             btnDisable.Size = new Size(41, 45);
             btnDisable.TabIndex = 10;
+            toolTip1.SetToolTip(btnDisable, "Remove");
             btnDisable.UseVisualStyleBackColor = true;
             btnDisable.Click += btnDisable_Click;
             // 
@@ -222,10 +234,11 @@
             btnRestart.FlatStyle = FlatStyle.Popup;
             btnRestart.ImageKey = "(无)";
             btnRestart.Location = new Point(94, 4);
-            btnRestart.Margin = new Padding(2, 2, 2, 2);
+            btnRestart.Margin = new Padding(2);
             btnRestart.Name = "btnRestart";
             btnRestart.Size = new Size(41, 45);
             btnRestart.TabIndex = 11;
+            toolTip1.SetToolTip(btnRestart, "Restart");
             btnRestart.UseVisualStyleBackColor = true;
             btnRestart.Click += btnRestart_Click;
             // 
@@ -237,10 +250,11 @@
             btnBreak.FlatStyle = FlatStyle.Popup;
             btnBreak.ImageKey = "(无)";
             btnBreak.Location = new Point(4, 4);
-            btnBreak.Margin = new Padding(2, 2, 2, 2);
+            btnBreak.Margin = new Padding(2);
             btnBreak.Name = "btnBreak";
             btnBreak.Size = new Size(41, 45);
             btnBreak.TabIndex = 9;
+            toolTip1.SetToolTip(btnBreak, "暂停");
             btnBreak.UseVisualStyleBackColor = true;
             btnBreak.Click += btnBreak_Click;
             // 
@@ -248,9 +262,9 @@
             // 
             flowLayoutPanel2.Controls.Add(btnBreak);
             flowLayoutPanel2.Location = new Point(524, 8);
-            flowLayoutPanel2.Margin = new Padding(2, 2, 2, 2);
+            flowLayoutPanel2.Margin = new Padding(2);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Padding = new Padding(2, 2, 2, 2);
+            flowLayoutPanel2.Padding = new Padding(2);
             flowLayoutPanel2.Size = new Size(115, 54);
             flowLayoutPanel2.TabIndex = 8;
             // 
@@ -268,7 +282,7 @@
             Controls.Add(MonitorDetailLV);
             Controls.Add(labelCpuAndMem);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             MinimumSize = new Size(944, 416);
             Name = "MainForm";
             Text = "PerfMonitor";
@@ -295,6 +309,7 @@
         private ColumnHeader upLink;
         private ColumnHeader totalLink;
         private ColumnHeader PID;
+        private ColumnHeader runningSeconds;
         private ColumnHeader monitorStatus;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnStop;
@@ -302,5 +317,6 @@
         private Button btnDisable;
         private Button btnRestart;
         private FlowLayoutPanel flowLayoutPanel2;
+        private ToolTip toolTip1;
     }
 }
