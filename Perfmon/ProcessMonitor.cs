@@ -18,7 +18,7 @@ namespace Perfmon
         public double downLink = 0;
         public double upLink = 0;
         public double totalLinkFlow = 0;
-        public long excuteMillseconds = 0;
+        public long excuteSeconds = 0;
         public string excuteStatus = "no exist";
         
         public string[] info()
@@ -51,7 +51,7 @@ namespace Perfmon
                 $"{up :F2}{uposfix}",
                 $"{down :F2}{dposfix}",
                 $"{total :F2} MB",
-                $"{TimeSpan.FromSeconds(excuteMillseconds).ToString()} s",
+                $"{TimeSpan.FromSeconds(excuteSeconds).ToString()} s",
                 $"{excuteStatus}"
             };
         }
@@ -136,7 +136,7 @@ namespace Perfmon
                         }
                     
                         _onceRes.cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
-                        _onceRes.excuteMillseconds = (nowTicks - firstMonitorTicks)/1000;
+                        _onceRes.excuteSeconds = (nowTicks - firstMonitorTicks)/1000;
                         lastMonitorTicks = nowTicks;
                         lastProcessorTime = nowProcessorTime;
 
