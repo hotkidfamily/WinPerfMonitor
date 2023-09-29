@@ -276,5 +276,15 @@ namespace Perfmon
         {
 
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            foreach(var it in _monitorManager)
+            {
+                it.Value.Monitor?.Dispose();
+                it.Value.ResWriter?.Dispose();
+            }
+            _monitorManager.Clear();
+        }
     }
 }

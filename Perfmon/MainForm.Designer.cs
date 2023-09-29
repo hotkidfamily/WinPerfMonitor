@@ -308,6 +308,7 @@ namespace Perfmon
             MinimumSize = new Size(944, 416);
             Name = "MainForm";
             Text = "PerfMonitor";
+            FormClosing += MainForm_FormClosing;
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
