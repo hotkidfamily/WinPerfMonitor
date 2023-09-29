@@ -27,7 +27,7 @@ namespace Perfmon
 
         private static string[] _colHeaders = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
         private static string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
-        private static int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 60, 60 };
+        private static int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
 
         public MainForm()
         {
@@ -132,6 +132,10 @@ namespace Perfmon
                         for (int i = 0; i < _colHeaders.Length; i++)
                         {
                             MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
+                        }
+                        if(item.excuteStatus == "exit")
+                        {
+                            MonitorDetailLV.Items[index].BackColor = Color.Red;
                         }
                     }
                 }

@@ -1,4 +1,6 @@
-﻿namespace Perfmon
+﻿using System.Security.Cryptography;
+
+namespace Perfmon
 {
     partial class MainForm
     {
@@ -105,22 +107,24 @@
             MonitorDetailLV.Enter += listViewDetail_Enter;
             // 
             // PID
-            // 
+            //
             PID.Text = "进程ID";
+            PID.Width = 50;
             // 
             // procName
             // 
             procName.Text = "进程名";
-            procName.Width = 80;
+            procName.Width = 100;
             // 
             // cpuUsage
             // 
             cpuUsage.Text = "CPU使用率";
+            cpuUsage.Width = 40;
             // 
             // vMem
             // 
             vMem.Text = "虚拟内存";
-            vMem.Width = 100;
+            vMem.Width = 80;
             // 
             // phyMem
             // 
@@ -130,30 +134,32 @@
             // totalMem
             // 
             totalMem.Text = "进程总内存";
-            totalMem.Width = 100;
+            totalMem.Width = 80;
             // 
             // downLink
             // 
             downLink.Text = "下行（KB/s）";
-            downLink.Width = 120;
+            downLink.Width = 100;
             // 
             // upLink
             // 
             upLink.Text = "上行（KB/s）";
-            upLink.Width = 120;
+            upLink.Width = 100;
             // 
             // totalLink
             // 
             totalLink.Text = "总流量";
-            totalLink.Width = 120;
+            totalLink.Width = 80;
             // 
             // runningSeconds
             // 
             runningSeconds.Text = "运行时间";
+            runningSeconds.Width = 80;
             // 
             // monitorStatus
             // 
             monitorStatus.Text = "状态";
+            monitorStatus.Width = 60;
             // 
             // label1
             // 
