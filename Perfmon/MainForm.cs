@@ -1,6 +1,8 @@
 ﻿using Microsoft.Diagnostics.Tracing.Parsers.Kernel;
+using System;
 using System.Diagnostics;
 using System.Management;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Xml.Linq;
@@ -19,11 +21,10 @@ namespace Perfmon
         private readonly PerformanceCounter? ramUsed;
 
         private static int _phyMemTotal = 0;
-        private static List<RunStatusItem> _monitor = new();
+        private static List<RunStatusItem> _monitorResult = new();
 
         private Dictionary<uint, ProcessMonitor> _monitorTasks = new();
         private Dictionary<uint, int> _linePidMap = new();
-        private int _pidsCount = 0;
 
         private static string[] _colHeaders = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
         private static string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
@@ -67,31 +68,17 @@ namespace Perfmon
             {
                 _ = PInvoke.GetWindowThreadProcessId(Handle, &pid);
             }
-            uint pid2 = pid;
 
-            if (!_monitorTasks.ContainsKey(pid2))
-            {
-                ProcessMonitor monitor = new(pid2, 1000, onUpdateMonitorStatus);
-                _monitorTasks.Add(pid2, monitor);
-                int index = _pidsCount++;
-                _linePidMap[pid2] = index;
-
-                MonitorDetailLV.BeginUpdate();
-                var lvi = new ListViewItem(_colDefaultValues);
-
-                MonitorDetailLV.Items.Insert(index, lvi);
-                MonitorDetailLV.Items[index].Selected = true;
-                MonitorDetailLV.EndUpdate();
-            }
+            CreateNewMonitor(pid);
 
             this.Opacity = 1;
         }
 
         void onUpdateMonitorStatus(ref RunStatusItem status)
         {
-            lock (_monitor)
+            lock (_monitorResult)
             {
-                _monitor.Add(status);
+                _monitorResult.Add(status);
             }
         }
 
@@ -116,10 +103,10 @@ namespace Perfmon
             while (!IsDisposed)
             {
                 List<RunStatusItem> ress;
-                lock (_monitor)
+                lock (_monitorResult)
                 {
-                    ress = new List<RunStatusItem>(_monitor.ToArray());
-                    _monitor.Clear();
+                    ress = new List<RunStatusItem>(_monitorResult.ToArray());
+                    _monitorResult.Clear();
                 }
 
                 MonitorDetailLV.BeginUpdate();
@@ -175,20 +162,7 @@ namespace Perfmon
                 if (uint.TryParse(textBoxPID.Text.ToString(), out uint pi))
                 {
                     uint pid = pi;
-                    if (!_monitorTasks.ContainsKey(pid))
-                    {
-                        ProcessMonitor monitor = new(pid, 1000, onUpdateMonitorStatus);
-                        _monitorTasks.Add(pid, monitor);
-                        int index = _pidsCount++;
-                        _linePidMap[pid] = index;
-
-                        MonitorDetailLV.BeginUpdate();
-                        var lvi = new ListViewItem(_colDefaultValues);
-
-                        MonitorDetailLV.Items.Insert(index, lvi);
-                        MonitorDetailLV.Items[index].Selected = true;
-                        MonitorDetailLV.EndUpdate();
-                    }
+                    CreateNewMonitor(pid);
                 }
                 else
                 {
@@ -253,6 +227,22 @@ namespace Perfmon
                 }
             }
             return (int)(capacity >> 20);
+        }
+
+        private void CreateNewMonitor(uint pid)
+        {
+            if (!_monitorTasks.ContainsKey(pid))
+            {
+                ProcessMonitor monitor = new(pid, 1000, onUpdateMonitorStatus);
+                _monitorTasks.Add(pid, monitor);
+
+                MonitorDetailLV.BeginUpdate();
+                var lvi = new ListViewItem(_colDefaultValues);
+                var it = MonitorDetailLV.Items.Add(lvi);
+                _linePidMap[pid] = it.Index;
+                MonitorDetailLV.Items[it.Index].Selected = true;
+                MonitorDetailLV.EndUpdate();
+            }
         }
 
         private void listViewDetail_Enter(object sender, EventArgs e)
