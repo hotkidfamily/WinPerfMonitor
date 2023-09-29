@@ -178,6 +178,8 @@ namespace Perfmon
                 index = MonitorDetailLV.SelectedIndices[0];
             }
             var item = MonitorDetailLV.Items[index];
+            item.BackColor = Color.Black;
+            item.ForeColor = Color.White;
             uint pid = uint.Parse(item.Text);
             if (_monitorTasks.ContainsKey(pid))
             {
