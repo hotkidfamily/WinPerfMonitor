@@ -19,7 +19,7 @@ namespace Perfmon
         public double upLink = 0;
         public double totalLinkFlow = 0;
         public string excuteStatus = "no exist";
-
+        
         public string[] info()
         {
             string uposfix = " Kbps";

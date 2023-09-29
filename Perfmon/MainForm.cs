@@ -6,6 +6,7 @@ using System.Threading;
 using System.Xml.Linq;
 using Windows.Win32;
 using static Perfmon.RunStatusItem;
+using static System.Windows.Forms.ListViewItem;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
@@ -95,8 +96,8 @@ namespace Perfmon
         {
             MonitorDetailLV.Columns.Clear();
 
-            string[] v = new string[] { "进程ID", "进程名", "CPU使用率", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "状态" };
-            int[] colsize = new int[] { 60, 80, 60, 100, 100, 100, 120, 120, 120, 60 };
+            string[] v = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "状态" };
+            int[] colsize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 60 };
 
             for (int i = 0; i < v.Length; i++)
             {
@@ -124,11 +125,14 @@ namespace Perfmon
                 MonitorDetailLV.BeginUpdate();
                 foreach (RunStatusItem item in ress)
                 {
-                    var lvi = new ListViewItem(item.info());
                     if(_linePidMap.ContainsKey(item.pid))
                     {
                         var index = _linePidMap[item.pid];
-                        MonitorDetailLV.Items[index] = lvi;
+                        var values = item.info();
+                        for (int i = 0; i < 10; i++)
+                        {
+                            MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
+                        }
                     }
                 }
                
