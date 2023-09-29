@@ -287,7 +287,7 @@ namespace Perfmon
             button1.Name = "button1";
             button1.Size = new Size(41, 45);
             button1.TabIndex = 10;
-            toolTip1.SetToolTip(button1, "暂停");
+            toolTip1.SetToolTip(button1, "查看数据");
             button1.UseVisualStyleBackColor = true;
             // 
             // MainForm
