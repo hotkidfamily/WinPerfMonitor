@@ -120,7 +120,7 @@ namespace Perfmon
                         {
                             MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
                         }
-                        if(item.excuteStatus == "exit")
+                        if (item.excuteStatus == "exit")
                         {
                             MonitorDetailLV.Items[index].BackColor = Color.Red;
                         }

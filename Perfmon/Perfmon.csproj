@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>designer\game-game-shooting.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\game-game-shooting.ico</ApplicationIcon>
     <IsPublishable>False</IsPublishable>
     <OutputType>WinExe</OutputType>
     <StartupObject>Perfmon.Loader</StartupObject>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="designer\game-game-shooting.ico" />
+    <Content Include="Resources\game-game-shooting.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,10 +38,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

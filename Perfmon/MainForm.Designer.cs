@@ -55,6 +55,7 @@ namespace Perfmon
             btnRestart = new Button();
             btnBreak = new Button();
             flowLayoutPanel2 = new FlowLayoutPanel();
+            button1 = new Button();
             toolTip1 = new ToolTip(components);
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
@@ -62,7 +63,7 @@ namespace Perfmon
             // 
             // btnShotProcess
             // 
-            btnShotProcess.BackgroundImage = Properties.Resources.shot_icon;
+            btnShotProcess.BackgroundImage = Properties.Resources.target;
             btnShotProcess.BackgroundImageLayout = ImageLayout.Zoom;
             btnShotProcess.Cursor = Cursors.Cross;
             btnShotProcess.FlatStyle = FlatStyle.Popup;
@@ -107,7 +108,7 @@ namespace Perfmon
             MonitorDetailLV.Enter += listViewDetail_Enter;
             // 
             // PID
-            //
+            // 
             PID.Text = "进程ID";
             PID.Width = 50;
             // 
@@ -159,7 +160,6 @@ namespace Perfmon
             // monitorStatus
             // 
             monitorStatus.Text = "状态";
-            monitorStatus.Width = 60;
             // 
             // label1
             // 
@@ -202,7 +202,7 @@ namespace Perfmon
             // 
             // btnStop
             // 
-            btnStop.BackgroundImage = Properties.Resources.stop_icon;
+            btnStop.BackgroundImage = Properties.Resources.stop;
             btnStop.BackgroundImageLayout = ImageLayout.Zoom;
             btnStop.Cursor = Cursors.Hand;
             btnStop.FlatStyle = FlatStyle.Popup;
@@ -218,7 +218,7 @@ namespace Perfmon
             // 
             // btnDisable
             // 
-            btnDisable.BackgroundImage = Properties.Resources.disable_icon;
+            btnDisable.BackgroundImage = Properties.Resources.remove;
             btnDisable.BackgroundImageLayout = ImageLayout.Zoom;
             btnDisable.Cursor = Cursors.Hand;
             btnDisable.FlatStyle = FlatStyle.Popup;
@@ -234,7 +234,7 @@ namespace Perfmon
             // 
             // btnRestart
             // 
-            btnRestart.BackgroundImage = Properties.Resources.restart_icon;
+            btnRestart.BackgroundImage = Properties.Resources.reloading;
             btnRestart.BackgroundImageLayout = ImageLayout.Zoom;
             btnRestart.Cursor = Cursors.Hand;
             btnRestart.FlatStyle = FlatStyle.Popup;
@@ -250,7 +250,7 @@ namespace Perfmon
             // 
             // btnBreak
             // 
-            btnBreak.BackgroundImage = Properties.Resources.break_icon;
+            btnBreak.BackgroundImage = Properties.Resources.sleep;
             btnBreak.BackgroundImageLayout = ImageLayout.Zoom;
             btnBreak.Cursor = Cursors.Hand;
             btnBreak.FlatStyle = FlatStyle.Popup;
@@ -267,12 +267,28 @@ namespace Perfmon
             // flowLayoutPanel2
             // 
             flowLayoutPanel2.Controls.Add(btnBreak);
+            flowLayoutPanel2.Controls.Add(button1);
             flowLayoutPanel2.Location = new Point(524, 8);
             flowLayoutPanel2.Margin = new Padding(2);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Padding = new Padding(2);
             flowLayoutPanel2.Size = new Size(115, 54);
             flowLayoutPanel2.TabIndex = 8;
+            // 
+            // button1
+            // 
+            button1.BackgroundImage = Properties.Resources.details;
+            button1.BackgroundImageLayout = ImageLayout.Zoom;
+            button1.Cursor = Cursors.Hand;
+            button1.FlatStyle = FlatStyle.Popup;
+            button1.ImageKey = "(无)";
+            button1.Location = new Point(49, 4);
+            button1.Margin = new Padding(2);
+            button1.Name = "button1";
+            button1.Size = new Size(41, 45);
+            button1.TabIndex = 10;
+            toolTip1.SetToolTip(button1, "暂停");
+            button1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -324,5 +340,6 @@ namespace Perfmon
         private Button btnRestart;
         private FlowLayoutPanel flowLayoutPanel2;
         private ToolTip toolTip1;
+        private Button button1;
     }
 }

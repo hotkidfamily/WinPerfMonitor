@@ -63,9 +63,9 @@ namespace Perfmon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap break_icon {
+        internal static System.Drawing.Bitmap details {
             get {
-                object obj = ResourceManager.GetObject("break_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("details", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Perfmon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap disable_icon {
+        internal static System.Drawing.Bitmap reloading {
             get {
-                object obj = ResourceManager.GetObject("disable_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("reloading", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Perfmon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap restart_icon {
+        internal static System.Drawing.Bitmap remove {
             get {
-                object obj = ResourceManager.GetObject("restart_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("remove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Perfmon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap shot_icon {
+        internal static System.Drawing.Bitmap sleep {
             get {
-                object obj = ResourceManager.GetObject("shot_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("sleep", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,19 @@ namespace Perfmon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap stop_icon {
+        internal static System.Drawing.Bitmap stop {
             get {
-                object obj = ResourceManager.GetObject("stop_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap target {
+            get {
+                object obj = ResourceManager.GetObject("target", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
