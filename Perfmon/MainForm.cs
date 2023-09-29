@@ -21,14 +21,14 @@ namespace Perfmon
         private readonly PerformanceCounter ramUsed;
 
         private static int _phyMemTotal = 0;
-        private static List<RunStatusItem> _monitorResult = new();
+        private static readonly List<RunStatusItem> _monitorResult = new();
 
-        private Dictionary<uint, ProcessMonitor> _monitorTasks = new();
-        private Dictionary<uint, int> _linePidMap = new();
+        private readonly Dictionary<uint, ProcessMonitor> _monitorTasks = new();
+        private readonly Dictionary<uint, int> _linePidMap = new();
 
-        private static string[] _colHeaders = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
-        private static string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
-        private static int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
+        private static readonly string[] _colHeaders = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
+        private static readonly string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
+        private static readonly int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
 
         public MainForm()
         {
@@ -50,6 +50,7 @@ namespace Perfmon
             ramAva = new PerformanceCounter("Memory", "Available Bytes");
             ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
             ConstructListView();
+            _phyMemTotal = GetPhisicalMemory();
             _ = QurySystemInfo();
             _ = RefreshListView();
         }
@@ -135,7 +136,6 @@ namespace Perfmon
 
         async Task QurySystemInfo()
         {
-            _phyMemTotal = GetPhisicalMemory();
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
             var os = Environment.OSVersion.Version.ToString();
