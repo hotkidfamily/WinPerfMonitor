@@ -9,25 +9,37 @@ namespace Perfmon
 
     internal class RunStatusItem
     {
-        public uint pid = 0;
-        public string procName = "undefined";
-        public double cpu = 0;
-        public double vMem = 0;
-        public double phyMem = 0;
-        public double totalMem = 0;
-        public double downLink = 0;
-        public double upLink = 0;
-        public double totalLinkFlow = 0;
-        public long excuteSeconds = 0;
-        public string excuteStatus = "no exist";
-        
+        private uint pid = 0;
+        private string procName = "undefined";
+        private double cpu = 0;
+        private double vMem = 0;
+        private double phyMem = 0;
+        private double totalMem = 0;
+        private double downLink = 0;
+        private double upLink = 0;
+        private double totalLinkFlow = 0;
+        private long excuteSeconds = 0;
+        private string excuteStatus = "no exist";
+
+        public uint Pid { get => pid; set => pid = value; }
+        public string ProcName { get => procName; set => procName = value; }
+        public double Cpu { get => cpu; set => cpu = value; }
+        public double VMem { get => vMem; set => vMem = value; }
+        public double PhyMem { get => phyMem; set => phyMem = value; }
+        public double TotalMem { get => totalMem; set => totalMem = value; }
+        public double DownLink { get => downLink; set => downLink = value; }
+        public double UpLink { get => upLink; set => upLink = value; }
+        public double TotalLinkFlow { get => totalLinkFlow; set => totalLinkFlow = value; }
+        public long ExcuteSeconds { get => excuteSeconds; set => excuteSeconds = value; }
+        public string ExcuteStatus { get => excuteStatus; set => excuteStatus = value; }
+
         public string[] info()
         {
             string uposfix = " Kbps";
             string dposfix = " Kbps";
-            double total = totalLinkFlow / 1024.0f;
-            double up = upLink * 8;
-            double down = downLink * 8;
+            double total = TotalLinkFlow / 1024.0f;
+            double up = UpLink * 8;
+            double down = DownLink * 8;
 
             if(up > 1 << 10)
             {
@@ -42,17 +54,17 @@ namespace Perfmon
             }
 
             return new string[] {
-                $"{pid}",
-                procName,
-                $"{cpu :F2}",
-                $"{vMem/1024 :F2} GB",
-                $"{phyMem :F2} MB",
-                $"{totalMem/1024 :F2} GB",
+                $"{Pid}",
+                ProcName,
+                $"{Cpu :F2}",
+                $"{VMem/1024 :F2} GB",
+                $"{PhyMem :F2} MB",
+                $"{TotalMem/1024 :F2} GB",
                 $"{up :F2}{uposfix}",
                 $"{down :F2}{dposfix}",
                 $"{total :F2} MB",
-                $"{TimeSpan.FromSeconds(excuteSeconds).ToString()} s",
-                $"{excuteStatus}"
+                $"{TimeSpan.FromSeconds(ExcuteSeconds).ToString()} s",
+                $"{ExcuteStatus}"
             };
         }
     }
@@ -84,7 +96,7 @@ namespace Perfmon
         {
             _endTask = true;
             _task?.Wait();
-            _onceRes.excuteStatus = "exit";
+            _onceRes.ExcuteStatus = "exit";
 
             _updateMonitorStatus?.Invoke(ref _onceRes);
         }
@@ -93,7 +105,7 @@ namespace Perfmon
         {
             _pid = pid;
             _interval = interval;
-            _onceRes.excuteStatus = "running";
+            _onceRes.ExcuteStatus = "running";
 
             try
             {
@@ -101,13 +113,13 @@ namespace Perfmon
             }
             catch (ArgumentException)
             {
-                _onceRes.excuteStatus = "no exist";
+                _onceRes.ExcuteStatus = "no exist";
             }
             if (_process != null)
             {
                 _endTask = false;
-                _onceRes.pid = _pid;
-                _onceRes.procName = _process.ProcessName;
+                _onceRes.Pid = _pid;
+                _onceRes.ProcName = _process.ProcessName;
 
                 _updateMonitorStatus = UpdateHandle;
                 _process.EnableRaisingEvents = true;
@@ -123,9 +135,9 @@ namespace Perfmon
 
                     while (!_endTask)
                     {
-                        _onceRes.vMem = _process.VirtualMemorySize64 / 1048576.0f;
-                        _onceRes.phyMem = _process.WorkingSet64 / 1048576.0f;
-                        _onceRes.totalMem = _onceRes.vMem + _onceRes.phyMem;
+                        _onceRes.VMem = _process.VirtualMemorySize64 / 1048576.0f;
+                        _onceRes.PhyMem = _process.WorkingSet64 / 1048576.0f;
+                        _onceRes.TotalMem = _onceRes.VMem + _onceRes.PhyMem;
 
                         double nowProcessorTime = _process.TotalProcessorTime.TotalMilliseconds;
                         long nowTicks = Environment.TickCount64;
@@ -135,8 +147,8 @@ namespace Perfmon
                             lastProcessorTime = nowProcessorTime;
                         }
                     
-                        _onceRes.cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
-                        _onceRes.excuteSeconds = (nowTicks - firstMonitorTicks)/1000;
+                        _onceRes.Cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
+                        _onceRes.ExcuteSeconds = (nowTicks - firstMonitorTicks)/1000;
                         lastMonitorTicks = nowTicks;
                         lastProcessorTime = nowProcessorTime;
 
@@ -144,9 +156,9 @@ namespace Perfmon
                             netspeedTracer.send = _netspeedDetail.send;
                             netspeedTracer.received = _netspeedDetail.received;
 
-                            _onceRes.upLink = (netspeedTracer.send - _netspeedDetailOld.send) / 1024.0f;
-                            _onceRes.downLink = (netspeedTracer.received - _netspeedDetailOld.received) / 1024.0f;
-                            _onceRes.totalLinkFlow = (netspeedTracer.send + _netspeedDetailOld.received) / 1024.0f;
+                            _onceRes.UpLink = (netspeedTracer.send - _netspeedDetailOld.send) / 1024.0f;
+                            _onceRes.DownLink = (netspeedTracer.received - _netspeedDetailOld.received) / 1024.0f;
+                            _onceRes.TotalLinkFlow = (netspeedTracer.send + _netspeedDetailOld.received) / 1024.0f;
 
                             _netspeedDetailOld.send = netspeedTracer.send;
                             _netspeedDetailOld.received = netspeedTracer.received;
