@@ -4,8 +4,6 @@ using System.Text;
 using Windows.Win32;
 using CsvHelper;
 using System.Globalization;
-using Microsoft.Diagnostics.Tracing.AutomatedAnalysis;
-using CsvHelper.Configuration;
 
 namespace Perfmon
 {
@@ -31,7 +29,7 @@ namespace Perfmon
         private static readonly string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
         private static readonly int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
 
-        private static readonly System.Diagnostics.Process _selfProcess = System.Diagnostics.Process.GetCurrentProcess();
+        private static readonly Process _selfProcess = Process.GetCurrentProcess();
 
         public MainForm()
         {
@@ -196,14 +194,28 @@ namespace Perfmon
             {
                 var v = _monitorManager[pid];
                 v.Monitor?.Dispose();
-                _monitorManager.Remove(pid);
                 v.ResWriter?.Dispose();
             }
         }
 
-        private void btnDisable_Click(object sender, EventArgs e)
+        private void BtnRemove_Click(object sender, EventArgs e)
         {
+            int index = 0;
+            if (MonitorDetailLV.SelectedIndices.Count > 0)
+            {
+                index = MonitorDetailLV.SelectedIndices[0];
+            }
+            var item = MonitorDetailLV.Items[index];
+            item.BackColor = Color.Black;
+            item.ForeColor = Color.White;
 
+            uint pid = uint.Parse(item.Text);
+            if (_monitorManager.ContainsKey(pid))
+            {
+                var v = _monitorManager[pid];
+                _monitorManager.Remove(pid);
+                //MonitorDetailLV.Items.RemoveAt(index);
+            }
         }
 
         private void btnRestart_Click(object sender, EventArgs e)
@@ -247,7 +259,7 @@ namespace Perfmon
         {
             if (!_monitorManager.ContainsKey(pid))
             {
-                System.Diagnostics.Process p = System.Diagnostics.Process.GetProcessById((int)pid);
+                Process p = Process.GetProcessById((int)pid);
                 string name = p.ProcessName;
                 ProcessMonitor monitor = new(pid, 1000, onUpdateMonitorStatus);
                 var mainPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);
@@ -300,14 +312,19 @@ namespace Perfmon
                 index = MonitorDetailLV.SelectedIndices[0];
             }
             var item = MonitorDetailLV.Items[index];
-            if(uint.TryParse(item.Text, out uint pid))
+            if (uint.TryParse(item.Text, out uint pid))
             {
-                if(_monitorManager.ContainsKey(pid))
+                if (_monitorManager.ContainsKey(pid))
                 {
                     var monitor = _monitorManager[pid];
                     var path = monitor.ResPath;
-                    if(path != null)
-                        System.Diagnostics.Process.Start(path);
+                    if (path != null)
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo();
+                        psi.FileName = path;
+                        psi.UseShellExecute = true;
+                        Process.Start(psi);
+                    }
                 }
             }
 
