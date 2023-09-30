@@ -207,6 +207,10 @@ namespace Perfmon
             {
                 index = MonitorDetailLV.SelectedIndices[0];
             }
+            else
+            {
+                return;
+            }
             var item = MonitorDetailLV.Items[index];
             uint pid = uint.Parse(item.Text);
             if (_monitorManager.ContainsKey(pid))
@@ -315,6 +319,10 @@ namespace Perfmon
             if (MonitorDetailLV.SelectedIndices.Count > 0)
             {
                 index = MonitorDetailLV.SelectedIndices[0];
+            }
+            else
+            {
+                return;
             }
             var item = MonitorDetailLV.Items[index];
             if (uint.TryParse(item.Text, out uint pid))
