@@ -247,8 +247,8 @@ namespace Perfmon
             if (!_monitorManager.ContainsKey(pid))
             {
                 ProcessMonitor monitor = new(pid, 1000, onUpdateMonitorStatus);
-                var mainPath = Path.GetDirectoryName(_selfProcess.MainModule.FileName);
-                var csvpath = Path.Combine(mainPath, "output");
+                var mainPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);
+                var csvpath = Path.Combine(mainPath??Environment.CurrentDirectory, "output");
 
                 if (!Directory.Exists($"{csvpath}"))
                     Directory.CreateDirectory($"{csvpath}");
