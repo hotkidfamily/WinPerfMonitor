@@ -21,8 +21,9 @@ namespace Perfmon
         internal class ProcessMonitorManager
         {
             public ProcessMonitor? Monitor;
-            public int LiveVideIndex;
+            public int LiveVideIndex = 0;
             public CsvWriter? ResWriter;
+            public string? ResPath;
         }
 
         private readonly Dictionary<uint, ProcessMonitorManager> _monitorManager = new();
@@ -246,6 +247,8 @@ namespace Perfmon
         {
             if (!_monitorManager.ContainsKey(pid))
             {
+                System.Diagnostics.Process p = System.Diagnostics.Process.GetProcessById((int)pid);
+                string name = p.ProcessName;
                 ProcessMonitor monitor = new(pid, 1000, onUpdateMonitorStatus);
                 var mainPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);
                 var csvpath = Path.Combine(mainPath??Environment.CurrentDirectory, "output");
@@ -253,11 +256,13 @@ namespace Perfmon
                 if (!Directory.Exists($"{csvpath}"))
                     Directory.CreateDirectory($"{csvpath}");
 
-                var writer = new StreamWriter($"{csvpath}{Path.DirectorySeparatorChar}{pid}.{DateTime.Now.ToString("yyyyMMdd.hhmmss")}.csv");
+                string resPath = $"{csvpath}{Path.DirectorySeparatorChar}{name}.{pid}.{DateTime.Now.ToString("yyyy.MMdd.HHmm.ss")}.csv";
+                var writer = new StreamWriter(resPath);
                 var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                 ProcessMonitorManager monitorMgr = new();
                 monitorMgr.Monitor = monitor;
                 monitorMgr.ResWriter = csv;
+                monitorMgr.ResPath = resPath;
                 csv.WriteHeader<RunStatusItem>();
                 csv.NextRecord();
 
