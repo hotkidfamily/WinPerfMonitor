@@ -55,8 +55,9 @@ namespace Perfmon
             btnRestart = new Button();
             btnBreak = new Button();
             flowLayoutPanel2 = new FlowLayoutPanel();
-            button1 = new Button();
+            BtnOpenResult = new Button();
             toolTip1 = new ToolTip(components);
+            BtnAnalysis = new Button();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             SuspendLayout();
@@ -267,28 +268,45 @@ namespace Perfmon
             // flowLayoutPanel2
             // 
             flowLayoutPanel2.Controls.Add(btnBreak);
-            flowLayoutPanel2.Controls.Add(button1);
+            flowLayoutPanel2.Controls.Add(BtnOpenResult);
+            flowLayoutPanel2.Controls.Add(BtnAnalysis);
             flowLayoutPanel2.Location = new Point(524, 8);
             flowLayoutPanel2.Margin = new Padding(2);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Padding = new Padding(2);
-            flowLayoutPanel2.Size = new Size(115, 54);
+            flowLayoutPanel2.Size = new Size(145, 54);
             flowLayoutPanel2.TabIndex = 8;
             // 
-            // button1
+            // BtnOpenResult
             // 
-            button1.BackgroundImage = Properties.Resources.details;
-            button1.BackgroundImageLayout = ImageLayout.Zoom;
-            button1.Cursor = Cursors.Hand;
-            button1.FlatStyle = FlatStyle.Popup;
-            button1.ImageKey = "(无)";
-            button1.Location = new Point(49, 4);
-            button1.Margin = new Padding(2);
-            button1.Name = "button1";
-            button1.Size = new Size(41, 45);
-            button1.TabIndex = 10;
-            toolTip1.SetToolTip(button1, "查看数据");
-            button1.UseVisualStyleBackColor = true;
+            BtnOpenResult.BackgroundImage = Properties.Resources.details;
+            BtnOpenResult.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnOpenResult.Cursor = Cursors.Hand;
+            BtnOpenResult.FlatStyle = FlatStyle.Popup;
+            BtnOpenResult.ImageKey = "(无)";
+            BtnOpenResult.Location = new Point(49, 4);
+            BtnOpenResult.Margin = new Padding(2);
+            BtnOpenResult.Name = "BtnOpenResult";
+            BtnOpenResult.Size = new Size(41, 45);
+            BtnOpenResult.TabIndex = 10;
+            toolTip1.SetToolTip(BtnOpenResult, "查看数据");
+            BtnOpenResult.UseVisualStyleBackColor = true;
+            BtnOpenResult.Click += BtnOpenResult_Click;
+            // 
+            // BtnAnalysis
+            // 
+            BtnAnalysis.BackgroundImage = Properties.Resources.analyzing;
+            BtnAnalysis.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnAnalysis.Cursor = Cursors.Hand;
+            BtnAnalysis.FlatStyle = FlatStyle.Popup;
+            BtnAnalysis.ImageKey = "(无)";
+            BtnAnalysis.Location = new Point(94, 4);
+            BtnAnalysis.Margin = new Padding(2);
+            BtnAnalysis.Name = "BtnAnalysis";
+            BtnAnalysis.Size = new Size(41, 45);
+            BtnAnalysis.TabIndex = 11;
+            toolTip1.SetToolTip(BtnAnalysis, "分析数据");
+            BtnAnalysis.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -341,6 +359,7 @@ namespace Perfmon
         private Button btnRestart;
         private FlowLayoutPanel flowLayoutPanel2;
         private ToolTip toolTip1;
-        private Button button1;
+        private Button BtnOpenResult;
+        private Button BtnAnalysis;
     }
 }

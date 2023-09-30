@@ -63,6 +63,16 @@ namespace Perfmon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap analyzing {
+            get {
+                object obj = ResourceManager.GetObject("analyzing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap details {
             get {
                 object obj = ResourceManager.GetObject("details", resourceCulture);

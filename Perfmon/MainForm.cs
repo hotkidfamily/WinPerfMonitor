@@ -251,7 +251,7 @@ namespace Perfmon
                 string name = p.ProcessName;
                 ProcessMonitor monitor = new(pid, 1000, onUpdateMonitorStatus);
                 var mainPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);
-                var csvpath = Path.Combine(mainPath??Environment.CurrentDirectory, "output");
+                var csvpath = Path.Combine(mainPath ?? Environment.CurrentDirectory, "output");
 
                 if (!Directory.Exists($"{csvpath}"))
                     Directory.CreateDirectory($"{csvpath}");
@@ -284,12 +284,33 @@ namespace Perfmon
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach(var it in _monitorManager)
+            foreach (var it in _monitorManager)
             {
                 it.Value.Monitor?.Dispose();
                 it.Value.ResWriter?.Dispose();
             }
             _monitorManager.Clear();
+        }
+
+        private void BtnOpenResult_Click(object sender, EventArgs e)
+        {
+            int index = 0;
+            if (MonitorDetailLV.SelectedIndices.Count > 0)
+            {
+                index = MonitorDetailLV.SelectedIndices[0];
+            }
+            var item = MonitorDetailLV.Items[index];
+            if(uint.TryParse(item.Text, out uint pid))
+            {
+                if(_monitorManager.ContainsKey(pid))
+                {
+                    var monitor = _monitorManager[pid];
+                    var path = monitor.ResPath;
+                    if(path != null)
+                        System.Diagnostics.Process.Start(path);
+                }
+            }
+
         }
     }
 }
