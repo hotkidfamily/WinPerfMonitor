@@ -51,8 +51,8 @@ namespace Perfmon
             label2 = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnStop = new Button();
-            BtnRemove = new Button();
             btnRestart = new Button();
+            BtnRemove = new Button();
             btnBreak = new Button();
             flowLayoutPanel2 = new FlowLayoutPanel();
             BtnOpenResult = new Button();
@@ -69,7 +69,7 @@ namespace Perfmon
             btnShotProcess.Cursor = Cursors.Cross;
             btnShotProcess.FlatStyle = FlatStyle.Popup;
             btnShotProcess.ImageKey = "(无)";
-            btnShotProcess.Location = new Point(256, 13);
+            btnShotProcess.Location = new Point(248, 13);
             btnShotProcess.Margin = new Padding(2);
             btnShotProcess.Name = "btnShotProcess";
             btnShotProcess.Size = new Size(41, 45);
@@ -194,8 +194,8 @@ namespace Perfmon
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(btnStop);
-            flowLayoutPanel1.Controls.Add(BtnRemove);
             flowLayoutPanel1.Controls.Add(btnRestart);
+            flowLayoutPanel1.Controls.Add(BtnRemove);
             flowLayoutPanel1.Location = new Point(323, 8);
             flowLayoutPanel1.Margin = new Padding(2);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -219,22 +219,6 @@ namespace Perfmon
             btnStop.UseVisualStyleBackColor = true;
             btnStop.Click += btnStop_Click;
             // 
-            // BtnRemove
-            // 
-            BtnRemove.BackgroundImage = Properties.Resources.remove;
-            BtnRemove.BackgroundImageLayout = ImageLayout.Zoom;
-            BtnRemove.Cursor = Cursors.Hand;
-            BtnRemove.FlatStyle = FlatStyle.Popup;
-            BtnRemove.ImageKey = "(无)";
-            BtnRemove.Location = new Point(49, 4);
-            BtnRemove.Margin = new Padding(2);
-            BtnRemove.Name = "BtnRemove";
-            BtnRemove.Size = new Size(41, 45);
-            BtnRemove.TabIndex = 10;
-            toolTip1.SetToolTip(BtnRemove, "Remove");
-            BtnRemove.UseVisualStyleBackColor = true;
-            BtnRemove.Click += BtnRemove_Click;
-            // 
             // btnRestart
             // 
             btnRestart.BackgroundImage = Properties.Resources.reloading;
@@ -242,7 +226,7 @@ namespace Perfmon
             btnRestart.Cursor = Cursors.Hand;
             btnRestart.FlatStyle = FlatStyle.Popup;
             btnRestart.ImageKey = "(无)";
-            btnRestart.Location = new Point(94, 4);
+            btnRestart.Location = new Point(49, 4);
             btnRestart.Margin = new Padding(2);
             btnRestart.Name = "btnRestart";
             btnRestart.Size = new Size(41, 45);
@@ -250,6 +234,22 @@ namespace Perfmon
             toolTip1.SetToolTip(btnRestart, "Restart");
             btnRestart.UseVisualStyleBackColor = true;
             btnRestart.Click += btnRestart_Click;
+            // 
+            // BtnRemove
+            // 
+            BtnRemove.BackgroundImage = Properties.Resources.remove;
+            BtnRemove.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnRemove.Cursor = Cursors.Hand;
+            BtnRemove.FlatStyle = FlatStyle.Popup;
+            BtnRemove.ImageKey = "(无)";
+            BtnRemove.Location = new Point(94, 4);
+            BtnRemove.Margin = new Padding(2);
+            BtnRemove.Name = "BtnRemove";
+            BtnRemove.Size = new Size(41, 45);
+            BtnRemove.TabIndex = 10;
+            toolTip1.SetToolTip(BtnRemove, "Remove");
+            BtnRemove.UseVisualStyleBackColor = true;
+            BtnRemove.Click += BtnRemove_Click;
             // 
             // btnBreak
             // 

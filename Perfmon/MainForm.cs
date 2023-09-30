@@ -186,15 +186,17 @@ namespace Perfmon
                 index = MonitorDetailLV.SelectedIndices[0];
             }
             var item = MonitorDetailLV.Items[index];
-            item.BackColor = Color.Black;
-            item.ForeColor = Color.White;
-
             uint pid = uint.Parse(item.Text);
             if (_monitorManager.ContainsKey(pid))
             {
                 var v = _monitorManager[pid];
                 v.Monitor?.Dispose();
                 v.ResWriter?.Dispose();
+                v.Monitor = null;
+                v.ResWriter = null;
+
+                item.BackColor = Color.Black;
+                item.ForeColor = Color.White;
             }
         }
 
@@ -206,14 +208,17 @@ namespace Perfmon
                 index = MonitorDetailLV.SelectedIndices[0];
             }
             var item = MonitorDetailLV.Items[index];
-            item.BackColor = Color.Black;
-            item.ForeColor = Color.White;
-
             uint pid = uint.Parse(item.Text);
             if (_monitorManager.ContainsKey(pid))
             {
                 var v = _monitorManager[pid];
-                _monitorManager.Remove(pid);
+                if (v.Monitor == null)
+                {
+                    _monitorManager.Remove(pid);
+                    item.BackColor = Color.White;
+                    item.ForeColor = Color.Red;
+                }
+
                 //MonitorDetailLV.Items.RemoveAt(index);
             }
         }
