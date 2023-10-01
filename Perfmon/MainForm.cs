@@ -277,7 +277,7 @@ namespace Perfmon
                 if (!Directory.Exists($"{csvpath}"))
                     Directory.CreateDirectory($"{csvpath}");
 
-                string resPath = $"{csvpath}{Path.DirectorySeparatorChar}{name}.{pid}.{DateTime.Now.ToString("yyyy.MMdd.HHmm.ss")}.csv";
+                string resPath = $"{csvpath}{Path.DirectorySeparatorChar}{name}({pid}).{DateTime.Now.ToString("yyyy.MMdd.HHmm.ss")}.csv";
                 var writer = new StreamWriter(resPath);
                 var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                 ProcessMonitorManager monitorMgr = new();
