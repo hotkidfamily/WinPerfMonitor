@@ -4,6 +4,8 @@ using System.Text;
 using Windows.Win32;
 using CsvHelper;
 using System.Globalization;
+using System.Configuration;
+using System.Windows.Forms;
 
 namespace Perfmon
 {
@@ -25,14 +27,34 @@ namespace Perfmon
         }
 
         private readonly Dictionary<uint, ProcessMonitorManager> _monitorManager = new();
-        private static readonly string[] _colHeaders = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
+        private static readonly string[] _colHeaders_zh_hans
+            = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
+        private static readonly string[] _colHeaders_en = new string[] { "PID", "Name", "CPU", "Virtual Memory", "Physical Memory", "Total Memory", "Up Link", "Down Link", "Link Flow", "Time", "Status" };
         private static readonly string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
+
+        private readonly string[]? _colHeaders;
         private static readonly int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
 
         private static readonly Process _selfProcess = Process.GetCurrentProcess();
 
         public MainForm()
         {
+            CultureInfo current = Thread.CurrentThread.CurrentUICulture;
+            if (current.TwoLetterISOLanguageName != "zh")
+            {
+                CultureInfo newCulture = CultureInfo.CreateSpecificCulture("en-US");
+                Thread.CurrentThread.CurrentUICulture = newCulture;
+                Thread.CurrentThread.CurrentCulture = newCulture;
+                _colHeaders = _colHeaders_en;
+            }
+            else
+            {
+                CultureInfo newCulture = CultureInfo.CreateSpecificCulture("zh-CN");
+                Thread.CurrentThread.CurrentUICulture = newCulture;
+                Thread.CurrentThread.CurrentCulture = newCulture;
+                _colHeaders = _colHeaders_zh_hans;
+            }
+
             InitializeComponent();
             cpuTotal = new PerformanceCounter();
             if (Environment.OSVersion.Version.Major >= 10)
@@ -100,7 +122,7 @@ namespace Perfmon
                 {
                     Width = _colSize[i],
                     TextAlign = HorizontalAlignment.Left,
-                    Text = _colHeaders[i],
+                    Text = _colHeaders?[i],
                 };
                 MonitorDetailLV.Columns.Add(ch);
             }
@@ -125,7 +147,7 @@ namespace Perfmon
                         var index = _monitorManager[item.Pid].LiveVideIndex;
 
                         var values = item.info();
-                        for (int i = 0; i < _colHeaders.Length; i++)
+                        for (int i = 0; i < _colHeaders?.Length; i++)
                         {
                             MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
                         }
@@ -341,6 +363,10 @@ namespace Perfmon
                 }
             }
 
+        }
+
+        private void BtnAnalysis_Click(object sender, EventArgs e)
+        {
         }
     }
 }
