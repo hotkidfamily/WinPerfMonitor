@@ -335,6 +335,39 @@ namespace Perfmon
             _monitorManager.Clear();
         }
 
+        private void BtnOpenFloder_Click(object sender, EventArgs e)
+        {
+            int index = 0;
+            if (MonitorDetailLV.SelectedIndices.Count > 0)
+            {
+                index = MonitorDetailLV.SelectedIndices[0];
+            }
+            else
+            {
+                return;
+            }
+            var item = MonitorDetailLV.Items[index];
+            if (uint.TryParse(item.Text, out uint pid))
+            {
+                if (_monitorManager.ContainsKey(pid))
+                {
+                    var monitor = _monitorManager[pid];
+                    var path = Path.GetDirectoryName(monitor.ResPath);
+                    if (path != null)
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo();
+                        psi.FileName = path;
+                        psi.UseShellExecute = true;
+                        Process.Start(psi);
+                    }
+                }
+            }
+        }
+
+        private void BtnAnalysis_Click(object sender, EventArgs e)
+        {
+        }
+
         private void BtnOpenResult_Click(object sender, EventArgs e)
         {
             int index = 0;
@@ -362,11 +395,6 @@ namespace Perfmon
                     }
                 }
             }
-
-        }
-
-        private void BtnAnalysis_Click(object sender, EventArgs e)
-        {
         }
     }
 }

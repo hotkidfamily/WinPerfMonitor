@@ -54,12 +54,12 @@ namespace Perfmon
             btnRestart = new Button();
             BtnRemove = new Button();
             btnBreak = new Button();
-            flowLayoutPanel2 = new FlowLayoutPanel();
+            BtnOpenFloder = new Button();
             BtnOpenResult = new Button();
             BtnAnalysis = new Button();
+            BtnVisual = new Button();
             toolTip1 = new ToolTip(components);
             flowLayoutPanel1.SuspendLayout();
-            flowLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // btnShotProcess
@@ -163,9 +163,15 @@ namespace Perfmon
             // flowLayoutPanel1
             // 
             resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
+            flowLayoutPanel1.Controls.Add(btnShotProcess);
             flowLayoutPanel1.Controls.Add(btnStop);
             flowLayoutPanel1.Controls.Add(btnRestart);
             flowLayoutPanel1.Controls.Add(BtnRemove);
+            flowLayoutPanel1.Controls.Add(btnBreak);
+            flowLayoutPanel1.Controls.Add(BtnVisual);
+            flowLayoutPanel1.Controls.Add(BtnOpenFloder);
+            flowLayoutPanel1.Controls.Add(BtnOpenResult);
+            flowLayoutPanel1.Controls.Add(BtnAnalysis);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             toolTip1.SetToolTip(flowLayoutPanel1, resources.GetString("flowLayoutPanel1.ToolTip"));
             // 
@@ -202,26 +208,27 @@ namespace Perfmon
             // btnBreak
             // 
             resources.ApplyResources(btnBreak, "btnBreak");
-            btnBreak.BackgroundImage = Properties.Resources.sleep;
+            btnBreak.BackgroundImage = Properties.Resources.pause;
             btnBreak.Cursor = Cursors.Hand;
             btnBreak.Name = "btnBreak";
             toolTip1.SetToolTip(btnBreak, resources.GetString("btnBreak.ToolTip"));
             btnBreak.UseVisualStyleBackColor = true;
             btnBreak.Click += btnBreak_Click;
             // 
-            // flowLayoutPanel2
+            // BtnOpenFloder
             // 
-            resources.ApplyResources(flowLayoutPanel2, "flowLayoutPanel2");
-            flowLayoutPanel2.Controls.Add(btnBreak);
-            flowLayoutPanel2.Controls.Add(BtnOpenResult);
-            flowLayoutPanel2.Controls.Add(BtnAnalysis);
-            flowLayoutPanel2.Name = "flowLayoutPanel2";
-            toolTip1.SetToolTip(flowLayoutPanel2, resources.GetString("flowLayoutPanel2.ToolTip"));
+            resources.ApplyResources(BtnOpenFloder, "BtnOpenFloder");
+            BtnOpenFloder.BackgroundImage = Properties.Resources.folder;
+            BtnOpenFloder.Cursor = Cursors.Hand;
+            BtnOpenFloder.Name = "BtnOpenFloder";
+            toolTip1.SetToolTip(BtnOpenFloder, resources.GetString("BtnOpenFloder.ToolTip"));
+            BtnOpenFloder.UseVisualStyleBackColor = true;
+            BtnOpenFloder.Click += BtnOpenFloder_Click;
             // 
             // BtnOpenResult
             // 
             resources.ApplyResources(BtnOpenResult, "BtnOpenResult");
-            BtnOpenResult.BackgroundImage = Properties.Resources.details;
+            BtnOpenResult.BackgroundImage = Properties.Resources.floppy;
             BtnOpenResult.Cursor = Cursors.Hand;
             BtnOpenResult.Name = "BtnOpenResult";
             toolTip1.SetToolTip(BtnOpenResult, resources.GetString("BtnOpenResult.ToolTip"));
@@ -231,19 +238,26 @@ namespace Perfmon
             // BtnAnalysis
             // 
             resources.ApplyResources(BtnAnalysis, "BtnAnalysis");
-            BtnAnalysis.BackgroundImage = Properties.Resources.analyzing;
+            BtnAnalysis.BackgroundImage = Properties.Resources.analysis;
             BtnAnalysis.Cursor = Cursors.Hand;
             BtnAnalysis.Name = "BtnAnalysis";
             toolTip1.SetToolTip(BtnAnalysis, resources.GetString("BtnAnalysis.ToolTip"));
             BtnAnalysis.UseVisualStyleBackColor = true;
             BtnAnalysis.Click += BtnAnalysis_Click;
             // 
+            // BtnVisual
+            // 
+            resources.ApplyResources(BtnVisual, "BtnVisual");
+            BtnVisual.BackgroundImage = Properties.Resources.data_visualization;
+            BtnVisual.Cursor = Cursors.Hand;
+            BtnVisual.Name = "BtnVisual";
+            toolTip1.SetToolTip(BtnVisual, resources.GetString("BtnVisual.ToolTip"));
+            BtnVisual.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btnShotProcess);
-            Controls.Add(flowLayoutPanel2);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label2);
             Controls.Add(textBoxPID);
@@ -254,7 +268,6 @@ namespace Perfmon
             toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             FormClosing += MainForm_FormClosing;
             flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -283,9 +296,10 @@ namespace Perfmon
         private Button btnBreak;
         private Button BtnRemove;
         private Button btnRestart;
-        private FlowLayoutPanel flowLayoutPanel2;
         private ToolTip toolTip1;
-        private Button BtnOpenResult;
+        private Button BtnOpenFloder;
         private Button BtnAnalysis;
+        private Button BtnVisual;
+        private Button BtnOpenResult;
     }
 }
