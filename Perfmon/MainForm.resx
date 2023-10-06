@@ -117,474 +117,110 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;flowLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="flowLayoutPanel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>524, 8</value>
   </data>
-  <data name="&gt;&gt;PID.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnStop.ToolTip" xml:space="preserve">
-    <value>Stop Capture</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="labelCpuAndMem.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="&gt;&gt;MonitorDetailLV.Name" xml:space="preserve">
+    <value>MonitorDetailLV</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnRestart.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BtnRemove.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
-  <data name="btnRestart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="&gt;&gt;monitorStatus.Name" xml:space="preserve">
-    <value>monitorStatus</value>
-  </data>
-  <data name="btnStop.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="runningSeconds.Text" xml:space="preserve">
-    <value>Run Time</value>
-  </data>
-  <data name="&gt;&gt;btnRestart.Name" xml:space="preserve">
-    <value>btnRestart</value>
-  </data>
-  <data name="btnRestart.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;btnStop.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btnShotProcess.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="&gt;&gt;totalMem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="BtnOpenResult.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 45</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 27</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 17</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>944, 416</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
-    <value>toolTip1</value>
-  </data>
-  <data name="MonitorDetailLV.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;MonitorDetailLV.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="BtnOpenResult.ImageKey" xml:space="preserve">
-    <value>(无)</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 17</value>
-  </data>
-  <data name="BtnRemove.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="&gt;&gt;vMem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="procName.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="&gt;&gt;textBoxPID.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="BtnOpenResult.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="btnShotProcess.ToolTip" xml:space="preserve">
-    <value>Capture Process</value>
-  </data>
-  <data name="labelCpuAndMem.ToolTip" xml:space="preserve">
-    <value>Local Machine Status</value>
-  </data>
-  <data name="&gt;&gt;textBoxPID.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="BtnRemove.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;PID.Name" xml:space="preserve">
-    <value>PID</value>
-  </data>
-  <data name="BtnAnalysis.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
-  <data name="&gt;&gt;vMem.Name" xml:space="preserve">
-    <value>vMem</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="flowLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
   <data name="downLink.Width" type="System.Int32, mscorlib">
     <value>100</value>
-  </data>
-  <data name="flowLayoutPanel2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnRestart.ImageKey" xml:space="preserve">
-    <value>(无)</value>
-  </data>
-  <data name="&gt;&gt;BtnAnalysis.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="BtnOpenFloder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>340, 4</value>
-  </data>
-  <data name="&gt;&gt;totalLink.Name" xml:space="preserve">
-    <value>totalLink</value>
-  </data>
-  <data name="&gt;&gt;labelCpuAndMem.Name" xml:space="preserve">
-    <value>labelCpuAndMem</value>
-  </data>
-  <data name="&gt;&gt;BtnRemove.Name" xml:space="preserve">
-    <value>BtnRemove</value>
-  </data>
-  <data name="&gt;&gt;phyMem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BtnAnalysis.ToolTip" xml:space="preserve">
-    <value>Analysis Result Data</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnBreak.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;totalMem.Name" xml:space="preserve">
-    <value>totalMem</value>
-  </data>
-  <data name="vMem.Width" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <data name="BtnAnalysis.Location" type="System.Drawing.Point, System.Drawing">
-    <value>94, 4</value>
-  </data>
-  <data name="BtnOpenResult.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnBreak.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="BtnOpenResult.Location" type="System.Drawing.Point, System.Drawing">
-    <value>49, 4</value>
-  </data>
-  <data name="BtnRemove.ImageKey" xml:space="preserve">
-    <value>(无)</value>
-  </data>
-  <data name="&gt;&gt;procName.Name" xml:space="preserve">
-    <value>procName</value>
-  </data>
-  <data name="&gt;&gt;BtnOpenResult.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="phyMem.Width" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnRestart.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;btnShotProcess.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MainForm</value>
   </data>
   <data name="BtnAnalysis.ImageKey" xml:space="preserve">
     <value>(无)</value>
   </data>
-  <data name="&gt;&gt;BtnAnalysis.Name" xml:space="preserve">
-    <value>BtnAnalysis</value>
-  </data>
-  <data name="&gt;&gt;btnStop.Name" xml:space="preserve">
-    <value>btnStop</value>
-  </data>
-  <data name="btnStop.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="btnBreak.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>PerfMonitor</value>
-  </data>
-  <data name="btnShotProcess.Location" type="System.Drawing.Point, System.Drawing">
-    <value>248, 13</value>
-  </data>
-  <data name="&gt;&gt;BtnAnalysis.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MonitorDetailLV.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnStop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="textBoxPID.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="BtnRemove.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 45</value>
-  </data>
-  <data name="&gt;&gt;BtnOpenFloder.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;downLink.Name" xml:space="preserve">
-    <value>downLink</value>
-  </data>
-  <data name="BtnOpenFloder.ToolTip" xml:space="preserve">
-    <value>打开数据文件夹</value>
-  </data>
-  <data name="&gt;&gt;runningSeconds.Type" xml:space="preserve">
+  <data name="&gt;&gt;phyMem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="runningSeconds.Width" type="System.Int32, mscorlib">
-    <value>80</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Input PID:</value>
-  </data>
-  <data name="textBoxPID.Location" type="System.Drawing.Point, System.Drawing">
-    <value>115, 25</value>
-  </data>
-  <data name="&gt;&gt;BtnRemove.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="BtnOpenResult.ToolTip" xml:space="preserve">
-    <value>Show Result Data</value>
-  </data>
-  <data name="cpuUsage.Width" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="&gt;&gt;btnRestart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="flowLayoutPanel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;upLink.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBoxPID.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="flowLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 54</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnBreak.ImageKey" xml:space="preserve">
-    <value>(无)</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel2.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="labelCpuAndMem.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 343</value>
   </data>
-  <data name="&gt;&gt;btnShotProcess.Name" xml:space="preserve">
-    <value>btnShotProcess</value>
+  <data name="&gt;&gt;btnStop.Name" xml:space="preserve">
+    <value>btnStop</value>
   </data>
-  <data name="&gt;&gt;labelCpuAndMem.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;cpuUsage.Name" xml:space="preserve">
-    <value>cpuUsage</value>
-  </data>
-  <data name="btnBreak.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
-  <data name="BtnOpenResult.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
-  <data name="&gt;&gt;procName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnStop.ImageKey" xml:space="preserve">
-    <value>(无)</value>
-  </data>
-  <data name="BtnVisual.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="btnRestart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 45</value>
-  </data>
-  <data name="MonitorDetailLV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>903, 222</value>
-  </data>
-  <data name="labelCpuAndMem.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 17</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="BtnAnalysis.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="btnShotProcess.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;btnRestart.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="vMem.Text" xml:space="preserve">
-    <value>Virtual Memory</value>
-  </data>
-  <data name="upLink.Width" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="label1.ToolTip" xml:space="preserve">
+  <data name="$this.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="flowLayoutPanel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;BtnOpenFloder.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="labelCpuAndMem.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="labelCpuAndMem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>903, 23</value>
   </data>
   <data name="btnBreak.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 45</value>
   </data>
-  <data name="&gt;&gt;btnBreak.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
+  <data name="&gt;&gt;vMem.Name" xml:space="preserve">
+    <value>vMem</value>
   </data>
-  <data name="flowLayoutPanel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="monitorStatus.Text" xml:space="preserve">
+    <value>Running Status</value>
   </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;btnShotProcess.Name" xml:space="preserve">
+    <value>btnShotProcess</value>
   </data>
-  <data name="BtnRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>94, 4</value>
+  <data name="MonitorDetailLV.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="btnBreak.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 4</value>
-  </data>
-  <data name="BtnVisual.ToolTip" xml:space="preserve">
-    <value>Show Data Visualization</value>
-  </data>
-  <data name="&gt;&gt;textBoxPID.Name" xml:space="preserve">
-    <value>textBoxPID</value>
-  </data>
-  <data name="cpuUsage.Text" xml:space="preserve">
-    <value>CPU Usage</value>
-  </data>
-  <data name="textBoxPID.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 23</value>
-  </data>
-  <data name="&gt;&gt;cpuUsage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="labelCpuAndMem.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;BtnOpenResult.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="downLink.Text" xml:space="preserve">
-    <value>Down Link Speed</value>
-  </data>
-  <data name="&gt;&gt;btnBreak.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="BtnOpenFloder.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="BtnRemove.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;BtnOpenFloder.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="btnRestart.ToolTip" xml:space="preserve">
-    <value>Restart Capture</value>
-  </data>
-  <data name="procName.Width" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="&gt;&gt;BtnVisual.Name" xml:space="preserve">
-    <value>BtnVisual</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Details:</value>
-  </data>
-  <data name="flowLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
+  <data name="btnStop.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
-  </data>
-  <data name="&gt;&gt;labelCpuAndMem.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;BtnVisual.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;BtnVisual.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnRestart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>49, 4</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 8</value>
   </data>
   <data name="&gt;&gt;monitorStatus.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BtnOpenResult.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="&gt;&gt;btnShotProcess.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;btnBreak.Name" xml:space="preserve">
-    <value>btnBreak</value>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnBreak.ToolTip" xml:space="preserve">
+    <value>Pause Capture</value>
+  </data>
+  <data name="btnBreak.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 4</value>
+  </data>
+  <data name="&gt;&gt;textBoxPID.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;totalLink.Name" xml:space="preserve">
+    <value>totalLink</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BtnOpenResult.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="&gt;&gt;labelCpuAndMem.Name" xml:space="preserve">
+    <value>labelCpuAndMem</value>
+  </data>
+  <data name="BtnAnalysis.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 45</value>
+  </data>
+  <data name="BtnRemove.ToolTip" xml:space="preserve">
+    <value>Remove Capture</value>
+  </data>
+  <data name="&gt;&gt;PID.Name" xml:space="preserve">
+    <value>PID</value>
+  </data>
+  <data name="btnRestart.ToolTip" xml:space="preserve">
+    <value>Restart Capture</value>
+  </data>
+  <data name="&gt;&gt;btnStop.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="BtnOpenResult.Location" type="System.Drawing.Point, System.Drawing">
+    <value>49, 4</value>
+  </data>
+  <data name="&gt;&gt;BtnOpenResult.Name" xml:space="preserve">
+    <value>BtnOpenResult</value>
+  </data>
+  <data name="&gt;&gt;procName.Name" xml:space="preserve">
+    <value>procName</value>
+  </data>
+  <data name="btnRestart.ImageKey" xml:space="preserve">
+    <value>(无)</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -5101,197 +4737,561 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 </value>
   </data>
-  <data name="BtnRemove.ToolTip" xml:space="preserve">
-    <value>Remove Capture</value>
-  </data>
-  <data name="&gt;&gt;labelCpuAndMem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="flowLayoutPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="flowLayoutPanel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>524, 8</value>
-  </data>
-  <data name="&gt;&gt;BtnRemove.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="totalLink.Text" xml:space="preserve">
-    <value>Total Net Cost</value>
-  </data>
   <data name="totalLink.Width" type="System.Int32, mscorlib">
     <value>80</value>
   </data>
-  <data name="BtnAnalysis.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="BtnAnalysis.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="&gt;&gt;BtnAnalysis.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="BtnAnalysis.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="BtnOpenResult.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 45</value>
   </data>
-  <data name="labelCpuAndMem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>903, 23</value>
+  <data name="BtnOpenFloder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>340, 4</value>
   </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="btnStop.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
   </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;BtnRemove.Name" xml:space="preserve">
+    <value>BtnRemove</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 17</value>
+  </data>
+  <data name="&gt;&gt;textBoxPID.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="upLink.Text" xml:space="preserve">
-    <value>Up Link Speed</value>
+  <data name="&gt;&gt;BtnOpenResult.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
-  <data name="&gt;&gt;btnShotProcess.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BtnOpenResult.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="MonitorDetailLV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 98</value>
-  </data>
-  <data name="MonitorDetailLV.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="PID.Width" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
-  <data name="MonitorDetailLV.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 78</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;runningSeconds.Name" xml:space="preserve">
-    <value>runningSeconds</value>
-  </data>
-  <data name="PID.Text" xml:space="preserve">
-    <value>PID</value>
-  </data>
-  <data name="btnStop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 45</value>
-  </data>
-  <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 4</value>
-  </data>
-  <data name="&gt;&gt;BtnOpenResult.Name" xml:space="preserve">
-    <value>BtnOpenResult</value>
-  </data>
-  <data name="flowLayoutPanel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnVisual.Location" type="System.Drawing.Point, System.Drawing">
-    <value>773, 14</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="flowLayoutPanel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="btnShotProcess.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 45</value>
   </data>
-  <data name="&gt;&gt;btnStop.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
+  <data name="MonitorDetailLV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>903, 222</value>
   </data>
-  <data name="flowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 54</value>
+  <data name="&gt;&gt;flowLayoutPanel2.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="totalMem.Width" type="System.Int32, mscorlib">
-    <value>80</value>
+  <data name="BtnAnalysis.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
   </data>
-  <data name="totalMem.Text" xml:space="preserve">
-    <value>Virtual + Physical Memory</value>
+  <data name="&gt;&gt;totalMem.Name" xml:space="preserve">
+    <value>totalMem</value>
   </data>
-  <data name="btnStop.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
+  <data name="upLink.Text" xml:space="preserve">
+    <value>Up Link Speed</value>
   </data>
-  <data name="&gt;&gt;totalLink.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="btnShotProcess.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
+  <data name="&gt;&gt;btnBreak.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BtnOpenFloder.Name" xml:space="preserve">
-    <value>BtnOpenFloder</value>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="btnRestart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnShotProcess.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel1.Name" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;MonitorDetailLV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>928, 377</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel2.Name" xml:space="preserve">
-    <value>flowLayoutPanel2</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;phyMem.Name" xml:space="preserve">
-    <value>phyMem</value>
-  </data>
-  <data name="&gt;&gt;downLink.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="labelCpuAndMem.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;upLink.Name" xml:space="preserve">
     <value>upLink</value>
   </data>
-  <data name="btnStop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 17</value>
   </data>
-  <data name="monitorStatus.Text" xml:space="preserve">
-    <value>Running Status</value>
+  <data name="&gt;&gt;monitorStatus.Name" xml:space="preserve">
+    <value>monitorStatus</value>
   </data>
-  <data name="label2.ToolTip" xml:space="preserve">
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 17</value>
+  </data>
+  <data name="MonitorDetailLV.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="btnBreak.ToolTip" xml:space="preserve">
-    <value>Pause Capture</value>
+  <data name="&gt;&gt;btnStop.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BtnRemove.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="flowLayoutPanel1.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="btnShotProcess.ImageKey" xml:space="preserve">
+  <data name="flowLayoutPanel2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="&gt;&gt;procName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnOpenResult.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="flowLayoutPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="BtnRemove.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 45</value>
+  </data>
+  <data name="cpuUsage.Width" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="BtnOpenResult.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnRestart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>49, 4</value>
+  </data>
+  <data name="&gt;&gt;upLink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnVisual.Location" type="System.Drawing.Point, System.Drawing">
+    <value>773, 14</value>
+  </data>
+  <data name="btnBreak.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="procName.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="&gt;&gt;labelCpuAndMem.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;btnShotProcess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnRestart.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;textBoxPID.Name" xml:space="preserve">
+    <value>textBoxPID</value>
+  </data>
+  <data name="PID.Text" xml:space="preserve">
+    <value>PID</value>
+  </data>
+  <data name="BtnVisual.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;BtnAnalysis.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="totalLink.Text" xml:space="preserve">
+    <value>Total Net Cost</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainForm</value>
+  </data>
+  <data name="BtnVisual.ToolTip" xml:space="preserve">
+    <value>Show Data Visualization</value>
+  </data>
+  <data name="BtnRemove.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnStop.ImageKey" xml:space="preserve">
     <value>(无)</value>
+  </data>
+  <data name="&gt;&gt;MonitorDetailLV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="textBoxPID.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="btnRestart.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="BtnRemove.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;cpuUsage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnVisual.Name" xml:space="preserve">
+    <value>BtnVisual</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>PerfMonitor</value>
   </data>
   <data name="&gt;&gt;btnShotProcess.Parent" xml:space="preserve">
     <value>flowLayoutPanel1</value>
   </data>
+  <data name="btnShotProcess.ImageKey" xml:space="preserve">
+    <value>(无)</value>
+  </data>
+  <data name="btnBreak.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;btnBreak.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;BtnRemove.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;runningSeconds.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnOpenResult.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="&gt;&gt;MonitorDetailLV.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="BtnRemove.ImageKey" xml:space="preserve">
+    <value>(无)</value>
+  </data>
+  <data name="BtnRemove.Location" type="System.Drawing.Point, System.Drawing">
+    <value>94, 4</value>
+  </data>
+  <data name="btnStop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
   <data name="phyMem.Text" xml:space="preserve">
     <value>Physical Memory</value>
   </data>
-  <data name="&gt;&gt;BtnVisual.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="phyMem.Width" type="System.Int32, mscorlib">
+    <value>100</value>
   </data>
-  <data name="&gt;&gt;MonitorDetailLV.Name" xml:space="preserve">
-    <value>MonitorDetailLV</value>
+  <data name="textBoxPID.Location" type="System.Drawing.Point, System.Drawing">
+    <value>115, 25</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="MonitorDetailLV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 98</value>
+  </data>
+  <data name="BtnAnalysis.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="flowLayoutPanel2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;BtnAnalysis.Name" xml:space="preserve">
+    <value>BtnAnalysis</value>
+  </data>
+  <data name="BtnAnalysis.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
   </data>
   <data name="textBoxPID.ToolTip" xml:space="preserve">
     <value>Input PID</value>
   </data>
-  <data name="&gt;&gt;btnBreak.Type" xml:space="preserve">
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Details:</value>
+  </data>
+  <data name="&gt;&gt;totalMem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel2.Name" xml:space="preserve">
+    <value>flowLayoutPanel2</value>
+  </data>
+  <data name="btnStop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 45</value>
+  </data>
+  <data name="BtnOpenResult.ToolTip" xml:space="preserve">
+    <value>Show Result Data</value>
+  </data>
+  <data name="&gt;&gt;btnRestart.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="totalMem.Text" xml:space="preserve">
+    <value>Virtual + Physical Memory</value>
+  </data>
+  <data name="btnRestart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="BtnOpenResult.ImageKey" xml:space="preserve">
+    <value>(无)</value>
+  </data>
+  <data name="&gt;&gt;BtnVisual.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;runningSeconds.Name" xml:space="preserve">
+    <value>runningSeconds</value>
+  </data>
+  <data name="totalMem.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="&gt;&gt;BtnAnalysis.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;labelCpuAndMem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>928, 377</value>
+  </data>
+  <data name="runningSeconds.Text" xml:space="preserve">
+    <value>Run Time</value>
+  </data>
+  <data name="&gt;&gt;MonitorDetailLV.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnStop.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="&gt;&gt;BtnRemove.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="labelCpuAndMem.ToolTip" xml:space="preserve">
+    <value>Local Machine Status</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;downLink.Name" xml:space="preserve">
+    <value>downLink</value>
+  </data>
+  <data name="&gt;&gt;btnBreak.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="BtnAnalysis.Location" type="System.Drawing.Point, System.Drawing">
+    <value>94, 4</value>
+  </data>
+  <data name="vMem.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="labelCpuAndMem.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="MonitorDetailLV.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;BtnVisual.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;BtnOpenFloder.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="btnRestart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="textBoxPID.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnRemove.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="BtnAnalysis.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnShotProcess.ToolTip" xml:space="preserve">
+    <value>Capture Process</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Input PID:</value>
+  </data>
+  <data name="&gt;&gt;btnRestart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnShotProcess.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnBreak.ImageKey" xml:space="preserve">
+    <value>(无)</value>
+  </data>
+  <data name="&gt;&gt;btnBreak.Name" xml:space="preserve">
+    <value>btnBreak</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnVisual.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;BtnOpenResult.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnAnalysis.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnRemove.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;btnStop.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="btnBreak.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="&gt;&gt;downLink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnOpenFloder.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;BtnOpenFloder.Name" xml:space="preserve">
+    <value>BtnOpenFloder</value>
+  </data>
+  <data name="&gt;&gt;btnRestart.Name" xml:space="preserve">
+    <value>btnRestart</value>
+  </data>
+  <data name="&gt;&gt;totalLink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 27</value>
+  </data>
+  <data name="&gt;&gt;btnRestart.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="procName.Width" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="BtnOpenFloder.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="flowLayoutPanel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="labelCpuAndMem.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;labelCpuAndMem.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>944, 416</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 78</value>
+  </data>
+  <data name="&gt;&gt;phyMem.Name" xml:space="preserve">
+    <value>phyMem</value>
+  </data>
+  <data name="flowLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 54</value>
+  </data>
+  <data name="&gt;&gt;BtnOpenFloder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnShotProcess.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cpuUsage.Name" xml:space="preserve">
+    <value>cpuUsage</value>
+  </data>
+  <data name="btnRestart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 45</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="flowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 54</value>
+  </data>
+  <data name="BtnRemove.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="flowLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="upLink.Width" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="btnShotProcess.Location" type="System.Drawing.Point, System.Drawing">
+    <value>248, 13</value>
+  </data>
+  <data name="downLink.Text" xml:space="preserve">
+    <value>Down Link Speed</value>
+  </data>
+  <data name="vMem.Text" xml:space="preserve">
+    <value>Virtual Memory</value>
+  </data>
+  <data name="&gt;&gt;textBoxPID.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 4</value>
+  </data>
+  <data name="btnShotProcess.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="&gt;&gt;vMem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cpuUsage.Text" xml:space="preserve">
+    <value>CPU Usage</value>
+  </data>
+  <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>323, 8</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="btnBreak.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="&gt;&gt;PID.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnOpenResult.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="flowLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BtnOpenFloder.ToolTip" xml:space="preserve">
+    <value>打开数据文件夹</value>
+  </data>
+  <data name="PID.Width" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="labelCpuAndMem.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="runningSeconds.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="BtnAnalysis.ToolTip" xml:space="preserve">
+    <value>Analysis Result Data</value>
+  </data>
+  <data name="btnShotProcess.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Name" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="btnStop.ToolTip" xml:space="preserve">
+    <value>Stop Capture</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -5299,10 +5299,10 @@
   <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
     <value>zh-CN</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>92</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
 </root>

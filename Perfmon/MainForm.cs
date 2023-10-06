@@ -18,6 +18,9 @@ namespace Perfmon
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
 
+        private readonly Size _formSize;
+        private readonly Size _formMaxSize;
+
         internal class ProcessMonitorManager
         {
             public ProcessMonitor? Monitor;
@@ -76,6 +79,8 @@ namespace Perfmon
             _phyMemTotal = GetPhisicalMemory();
             _ = QurySystemInfo();
             _ = RefreshListView();
+            _formSize = Size;
+            _formMaxSize = new Size(Size.Width, 820);
         }
 
         private void BtnShotProcess_MouseDown(object sender, MouseEventArgs e)
@@ -394,6 +399,18 @@ namespace Perfmon
                         Process.Start(psi);
                     }
                 }
+            }
+        }
+
+        private void BtnVisual_Click(object sender, EventArgs e)
+        {
+            if (Size == _formMaxSize)
+            {
+                Size = _formSize;
+            }
+            else
+            {
+                Size = _formMaxSize;
             }
         }
     }

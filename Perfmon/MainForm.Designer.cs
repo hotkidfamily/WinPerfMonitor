@@ -54,10 +54,10 @@ namespace Perfmon
             btnRestart = new Button();
             BtnRemove = new Button();
             btnBreak = new Button();
+            BtnVisual = new Button();
             BtnOpenFloder = new Button();
             BtnOpenResult = new Button();
             BtnAnalysis = new Button();
-            BtnVisual = new Button();
             toolTip1 = new ToolTip(components);
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -215,6 +215,16 @@ namespace Perfmon
             btnBreak.UseVisualStyleBackColor = true;
             btnBreak.Click += btnBreak_Click;
             // 
+            // BtnVisual
+            // 
+            resources.ApplyResources(BtnVisual, "BtnVisual");
+            BtnVisual.BackgroundImage = Properties.Resources.data_visualization;
+            BtnVisual.Cursor = Cursors.Hand;
+            BtnVisual.Name = "BtnVisual";
+            toolTip1.SetToolTip(BtnVisual, resources.GetString("BtnVisual.ToolTip"));
+            BtnVisual.UseVisualStyleBackColor = true;
+            BtnVisual.Click += BtnVisual_Click;
+            // 
             // BtnOpenFloder
             // 
             resources.ApplyResources(BtnOpenFloder, "BtnOpenFloder");
@@ -244,15 +254,6 @@ namespace Perfmon
             toolTip1.SetToolTip(BtnAnalysis, resources.GetString("BtnAnalysis.ToolTip"));
             BtnAnalysis.UseVisualStyleBackColor = true;
             BtnAnalysis.Click += BtnAnalysis_Click;
-            // 
-            // BtnVisual
-            // 
-            resources.ApplyResources(BtnVisual, "BtnVisual");
-            BtnVisual.BackgroundImage = Properties.Resources.data_visualization;
-            BtnVisual.Cursor = Cursors.Hand;
-            BtnVisual.Name = "BtnVisual";
-            toolTip1.SetToolTip(BtnVisual, resources.GetString("BtnVisual.ToolTip"));
-            BtnVisual.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
