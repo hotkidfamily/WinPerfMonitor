@@ -76,21 +76,15 @@ namespace Perfmon
         {
             if (Environment.OSVersion.Version.Major >= 10)
             {
-                cpuTotal = new PerformanceCounter()
-                {
-                    CategoryName = "Processor Information",
-                    CounterName = "% Processor Utility",
-                    InstanceName = "_Total",
-                };
+                cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
+                try { float usage = cpuTotal?.NextValue() ?? 0; }
+                catch (Exception) {
+                    cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+                }
             }
             else
             {
-                cpuTotal = new PerformanceCounter()
-                {
-                    CategoryName = "Processor",
-                    CounterName = "% Processor Time",
-                    InstanceName = "_Total",
-                };
+                cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             }
             ramAva = new PerformanceCounter("Memory", "Available Bytes");
             ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
@@ -267,8 +261,9 @@ namespace Perfmon
                 int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
                 int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
                 int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
+                float usage = cpuTotal?.NextValue() ?? 0;
 
-                sb.Append($"{cpuTotal?.NextValue():F2}%, {mnam}, {os}, {core} C, ");
+                sb.Append($"{usage :F2}%, {mnam}, {os}, {core} C, ");
                 sb.Append($"{ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB");
 
                 labelCpuAndMem.Text = sb.ToString();
