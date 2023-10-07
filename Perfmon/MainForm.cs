@@ -8,6 +8,7 @@ using ScottPlot;
 using ScottPlot.Renderable;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Printing;
+using System.Windows.Forms;
 
 namespace Perfmon
 {
@@ -39,6 +40,16 @@ namespace Perfmon
 
         private readonly string[] _colHeaders = default!;
         private static readonly int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
+
+        private static readonly string TAB_HEADER_CPU = "CPU";
+        private static readonly string TAB_HEADER_MEMORY = "Memory";
+        private static readonly string TAB_HEADER_UPLINK = "UpLink";
+        private static readonly string TAB_HEADER_SYSTEM = "System";
+        private static TabPage _CPUTab = default!;
+        private static TabPage _MemTab = default!;
+        private static TabPage _UpLinkTab = default!;
+        private static TabPage _SysTab = default!;
+        private ScottPlot.Plottable.DataLogger _sysLogger = default!;
 
         private static readonly Process _selfProcess = Process.GetCurrentProcess();
 
@@ -76,8 +87,11 @@ namespace Perfmon
         {
             if (Environment.OSVersion.Version.Major >= 10)
             {
-                cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
-                try { float usage = cpuTotal?.NextValue() ?? 0; }
+                try
+                {
+                    cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
+                    float usage = cpuTotal?.NextValue() ?? 0; 
+                }
                 catch (Exception) {
                     cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
                 }
@@ -126,69 +140,72 @@ namespace Perfmon
 
         private void ConstructTabControl()
         {
-            var tabCpu = new TabPage() { Text = "CPU" };
-            var tabMem = new TabPage() { Text = "Memory" };
-            var tabNetwork = new TabPage() { Text = "Network" };
-            var tabSystem = new TabPage() { Text = "System" };
+            _CPUTab = new TabPage() { Text = TAB_HEADER_CPU };
+            _MemTab = new TabPage() { Text = TAB_HEADER_MEMORY };
+            _UpLinkTab = new TabPage() { Text = TAB_HEADER_UPLINK};
+            _SysTab = new TabPage() { Text = TAB_HEADER_SYSTEM };
 
             Size tabSize = new Size(tabControlDataSheet.DisplayRectangle.Width, tabControlDataSheet.DisplayRectangle.Height);
-            tabCpu.Controls.Add(new ScottPlot.FormsPlot
+            _CPUTab.Controls.Add(new ScottPlot.FormsPlot
             {
-                Name = "Cpu",
+                Name = TAB_HEADER_CPU,
                 Size = tabSize,
                 BorderStyle = BorderStyle.FixedSingle,
                 Location = new System.Drawing.Point(0, 0),
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
             });
-            ScottPlot.FormsPlot plt = (FormsPlot)tabCpu.Controls["Cpu"];
+            ScottPlot.FormsPlot plt = (FormsPlot)_CPUTab.Controls[TAB_HEADER_CPU];
             plt.Plot.SetAxisLimits(-20, 80, 0, 100);
             plt.Plot.Title("CPU usage");
             plt.Plot.XLabel("Time");
             plt.Plot.YLabel("%");
 
-            tabMem.Controls.Add(new ScottPlot.FormsPlot
+            _MemTab.Controls.Add(new ScottPlot.FormsPlot
             {
-                Name = "Mem",
+                Name = TAB_HEADER_MEMORY,
                 Size = tabSize,
                 BorderStyle = BorderStyle.FixedSingle,
                 Location = new System.Drawing.Point(0, 0),
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
             });
-            ScottPlot.FormsPlot plt2 = (FormsPlot)tabMem.Controls["Mem"];
+            ScottPlot.FormsPlot plt2 = (FormsPlot)_MemTab.Controls[TAB_HEADER_MEMORY];
             plt2.Plot.SetAxisLimits(-20, 80, 0, 100);
             plt2.Plot.Title("Memory usage");
             plt2.Plot.XLabel("Time");
             plt2.Plot.YLabel("MB");
 
-            tabNetwork.Controls.Add(new ScottPlot.FormsPlot
+            _UpLinkTab.Controls.Add(new ScottPlot.FormsPlot
             {
-                Name = "Net",
+                Name = TAB_HEADER_UPLINK,
                 Size = tabSize,
                 BorderStyle = BorderStyle.FixedSingle,
                 Location = new System.Drawing.Point(0, 0),
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
             });
-            ScottPlot.FormsPlot plt3 = (FormsPlot)tabNetwork.Controls["Net"];
+            ScottPlot.FormsPlot plt3 = (FormsPlot)_UpLinkTab.Controls[TAB_HEADER_UPLINK];
             plt3.Plot.SetAxisLimits(-20, 80, 0, 100);
             plt3.Plot.Title("Uplink Speed");
             plt3.Plot.XLabel("Time");
             plt3.Plot.YLabel("kbps");
 
-            tabSystem.Controls.Add(new ScottPlot.FormsPlot
+            _SysTab.Controls.Add(new ScottPlot.FormsPlot
             {
-                Name = "System",
+                Name = TAB_HEADER_SYSTEM,
                 Size = tabSize,
                 BorderStyle = BorderStyle.FixedSingle,
                 Location = new System.Drawing.Point(0, 0),
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
             });
-            ScottPlot.FormsPlot plt4 = (FormsPlot)tabSystem.Controls["System"];
-            plt4.Plot.SetAxisLimits(-20, 80, 0, 100);
+            
+            ScottPlot.FormsPlot plt4 = (FormsPlot)_SysTab.Controls[TAB_HEADER_SYSTEM];
+            plt4.Plot.SetAxisLimits(0, 100, 0, 100);
             plt4.Plot.Title("System CPU usage");
             plt4.Plot.XLabel("Time");
             plt4.Plot.YLabel("%");
+            _sysLogger = plt4.Plot.AddDataLogger();
+            _sysLogger.ViewSlide();
 
-            TabPage[] tabPages = { tabCpu, tabMem, tabNetwork, tabSystem };
+            TabPage[] tabPages = { _CPUTab, _MemTab, _UpLinkTab, _SysTab };
 
             tabControlDataSheet.Size = new Size(MonitorDetailLV.Width, 400);
             tabControlDataSheet.TabPages.Clear();
@@ -253,6 +270,7 @@ namespace Perfmon
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
             var os = Environment.OSVersion.Version.ToString();
+            int ticks = 0;
 
             while (!IsDisposed)
             {
@@ -266,8 +284,13 @@ namespace Perfmon
                 sb.Append($"{usage :F2}%, {mnam}, {os}, {core} C, ");
                 sb.Append($"{ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB");
 
+                ScottPlot.FormsPlot plt4 = (FormsPlot)_SysTab.Controls[TAB_HEADER_SYSTEM];
+                _sysLogger.Add(_sysLogger.Count, usage);
+                plt4.Refresh();
+
                 labelCpuAndMem.Text = sb.ToString();
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                ticks ++;
             }
         }
 
@@ -419,6 +442,9 @@ namespace Perfmon
                 it.Value.ResWriter?.Dispose();
             }
             _monitorManager.Clear();
+            cpuTotal.Dispose();
+            ramAva.Dispose();
+            ramUsed.Dispose();
         }
 
         private void BtnOpenFloder_Click(object sender, EventArgs e)
