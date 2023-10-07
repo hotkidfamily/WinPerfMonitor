@@ -116,7 +116,7 @@ namespace Perfmon
             this.Opacity = 1;
         }
 
-        void onUpdateMonitorStatus(ref RunStatusItem status)
+        void OnUpdateMonitorStatus(ref RunStatusItem status)
         {
             lock (_monitorResult)
             {
@@ -292,7 +292,7 @@ namespace Perfmon
             }
         }
 
-        private void btnStop_Click(object sender, EventArgs e)
+        private void BtnStop_Click(object sender, EventArgs e)
         {
             int index = 0;
             if (MonitorDetailLV.SelectedIndices.Count > 0)
@@ -341,12 +341,12 @@ namespace Perfmon
             }
         }
 
-        private void btnRestart_Click(object sender, EventArgs e)
+        private void BtnRestart_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void btnBreak_Click(object sender, EventArgs e)
+        private void BtnBreak_Click(object sender, EventArgs e)
         {
 
         }
@@ -386,7 +386,7 @@ namespace Perfmon
             {
                 Process p = Process.GetProcessById((int)pid);
                 string name = p.ProcessName;
-                ProcessMonitor monitor = new(pid, 1000, onUpdateMonitorStatus);
+                ProcessMonitor monitor = new(pid, 1000, OnUpdateMonitorStatus);
                 var mainPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);
                 var csvpath = Path.Combine(mainPath ?? Environment.CurrentDirectory, "output");
 
@@ -414,11 +414,6 @@ namespace Perfmon
                 monitorMgr.LiveVideIndex = it.Index;
                 _monitorManager.Add(pid, monitorMgr);
             }
-        }
-
-        private void listViewDetail_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -508,14 +503,6 @@ namespace Perfmon
             {
                 Size = _formMaxSize;
                 tabControlDataSheet.Show();
-                /*                var plt = CpuFormPlot.Plot;
-
-                                plt.Title("CPU usage");
-                                plt.XLabel("Time");
-                                plt.YLabel("%");
-                                plt.SetAxisLimits(-20, 80, 0, 100);
-
-                                CpuFormPlot.Show();*/
             }
         }
     }

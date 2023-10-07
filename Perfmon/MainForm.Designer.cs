@@ -99,7 +99,6 @@ namespace Perfmon
             toolTip1.SetToolTip(MonitorDetailLV, resources.GetString("MonitorDetailLV.ToolTip"));
             MonitorDetailLV.UseCompatibleStateImageBehavior = false;
             MonitorDetailLV.View = View.Details;
-            MonitorDetailLV.Enter += listViewDetail_Enter;
             // 
             // PID
             // 
@@ -187,7 +186,7 @@ namespace Perfmon
             btnStop.Name = "btnStop";
             toolTip1.SetToolTip(btnStop, resources.GetString("btnStop.ToolTip"));
             btnStop.UseVisualStyleBackColor = true;
-            btnStop.Click += btnStop_Click;
+            btnStop.Click += BtnStop_Click;
             // 
             // btnRestart
             // 
@@ -197,7 +196,7 @@ namespace Perfmon
             btnRestart.Name = "btnRestart";
             toolTip1.SetToolTip(btnRestart, resources.GetString("btnRestart.ToolTip"));
             btnRestart.UseVisualStyleBackColor = true;
-            btnRestart.Click += btnRestart_Click;
+            btnRestart.Click += BtnRestart_Click;
             // 
             // BtnRemove
             // 
@@ -217,7 +216,7 @@ namespace Perfmon
             btnBreak.Name = "btnBreak";
             toolTip1.SetToolTip(btnBreak, resources.GetString("btnBreak.ToolTip"));
             btnBreak.UseVisualStyleBackColor = true;
-            btnBreak.Click += btnBreak_Click;
+            btnBreak.Click += BtnBreak_Click;
             // 
             // BtnVisual
             // 
