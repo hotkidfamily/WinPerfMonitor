@@ -4,16 +4,18 @@ using System.Text;
 using Windows.Win32;
 using CsvHelper;
 using System.Globalization;
-using System.Configuration;
-using System.Windows.Forms;
+using ScottPlot;
+using ScottPlot.Renderable;
+using System.Diagnostics.CodeAnalysis;
+using System.Drawing.Printing;
 
 namespace Perfmon
 {
     public partial class MainForm : Form
     {
-        private readonly PerformanceCounter cpuTotal;
-        private readonly PerformanceCounter ramAva;
-        private readonly PerformanceCounter ramUsed;
+        private PerformanceCounter cpuTotal = default!;
+        private PerformanceCounter ramAva = default!;
+        private PerformanceCounter ramUsed = default!;
 
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
@@ -35,7 +37,7 @@ namespace Perfmon
         private static readonly string[] _colHeaders_en = new string[] { "PID", "Name", "CPU", "Virtual Memory", "Physical Memory", "Total Memory", "Up Link", "Down Link", "Link Flow", "Time", "Status" };
         private static readonly string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
 
-        private readonly string[]? _colHeaders;
+        private readonly string[] _colHeaders = default!;
         private static readonly int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
 
         private static readonly Process _selfProcess = Process.GetCurrentProcess();
@@ -59,28 +61,39 @@ namespace Perfmon
             }
 
             InitializeComponent();
-            cpuTotal = new PerformanceCounter();
-            if (Environment.OSVersion.Version.Major >= 10)
-            {
-                cpuTotal.CategoryName = "Processor Information";
-                cpuTotal.CounterName = "% Processor Utility";
-            }
-            else
-            {
-                cpuTotal.CategoryName = "Processor";
-                cpuTotal.CounterName = "% Processor Time";
-            }
-
-            cpuTotal.InstanceName = "_Total";
-
-            ramAva = new PerformanceCounter("Memory", "Available Bytes");
-            ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
+            ConstructTabControl();
             ConstructListView();
+
+            ConstructSystemMonitor();
             _phyMemTotal = GetPhisicalMemory();
             _ = QurySystemInfo();
             _ = RefreshListView();
             _formSize = Size;
             _formMaxSize = new Size(Size.Width, 820);
+        }
+
+        private void ConstructSystemMonitor()
+        {
+            if (Environment.OSVersion.Version.Major >= 10)
+            {
+                cpuTotal = new PerformanceCounter()
+                {
+                    CategoryName = "Processor Information",
+                    CounterName = "% Processor Utility",
+                    InstanceName = "_Total",
+                };
+            }
+            else
+            {
+                cpuTotal = new PerformanceCounter()
+                {
+                    CategoryName = "Processor",
+                    CounterName = "% Processor Time",
+                    InstanceName = "_Total",
+                };
+            }
+            ramAva = new PerformanceCounter("Memory", "Available Bytes");
+            ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
         }
 
         private void BtnShotProcess_MouseDown(object sender, MouseEventArgs e)
@@ -117,7 +130,79 @@ namespace Perfmon
             }
         }
 
-        void ConstructListView()
+        private void ConstructTabControl()
+        {
+            var tabCpu = new TabPage() { Text = "CPU" };
+            var tabMem = new TabPage() { Text = "Memory" };
+            var tabNetwork = new TabPage() { Text = "Network" };
+            var tabSystem = new TabPage() { Text = "System" };
+
+            Size tabSize = new Size(tabControlDataSheet.DisplayRectangle.Width, tabControlDataSheet.DisplayRectangle.Height);
+            tabCpu.Controls.Add(new ScottPlot.FormsPlot
+            {
+                Name = "Cpu",
+                Size = tabSize,
+                BorderStyle = BorderStyle.FixedSingle,
+                Location = new System.Drawing.Point(0, 0),
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
+            });
+            ScottPlot.FormsPlot plt = (FormsPlot)tabCpu.Controls["Cpu"];
+            plt.Plot.SetAxisLimits(-20, 80, 0, 100);
+            plt.Plot.Title("CPU usage");
+            plt.Plot.XLabel("Time");
+            plt.Plot.YLabel("%");
+
+            tabMem.Controls.Add(new ScottPlot.FormsPlot
+            {
+                Name = "Mem",
+                Size = tabSize,
+                BorderStyle = BorderStyle.FixedSingle,
+                Location = new System.Drawing.Point(0, 0),
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
+            });
+            ScottPlot.FormsPlot plt2 = (FormsPlot)tabMem.Controls["Mem"];
+            plt2.Plot.SetAxisLimits(-20, 80, 0, 100);
+            plt2.Plot.Title("Memory usage");
+            plt2.Plot.XLabel("Time");
+            plt2.Plot.YLabel("MB");
+
+            tabNetwork.Controls.Add(new ScottPlot.FormsPlot
+            {
+                Name = "Net",
+                Size = tabSize,
+                BorderStyle = BorderStyle.FixedSingle,
+                Location = new System.Drawing.Point(0, 0),
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
+            });
+            ScottPlot.FormsPlot plt3 = (FormsPlot)tabNetwork.Controls["Net"];
+            plt3.Plot.SetAxisLimits(-20, 80, 0, 100);
+            plt3.Plot.Title("Uplink Speed");
+            plt3.Plot.XLabel("Time");
+            plt3.Plot.YLabel("kbps");
+
+            tabSystem.Controls.Add(new ScottPlot.FormsPlot
+            {
+                Name = "System",
+                Size = tabSize,
+                BorderStyle = BorderStyle.FixedSingle,
+                Location = new System.Drawing.Point(0, 0),
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
+            });
+            ScottPlot.FormsPlot plt4 = (FormsPlot)tabSystem.Controls["System"];
+            plt4.Plot.SetAxisLimits(-20, 80, 0, 100);
+            plt4.Plot.Title("System CPU usage");
+            plt4.Plot.XLabel("Time");
+            plt4.Plot.YLabel("%");
+
+            TabPage[] tabPages = { tabCpu, tabMem, tabNetwork, tabSystem };
+
+            tabControlDataSheet.Size = new Size(MonitorDetailLV.Width, 400);
+            tabControlDataSheet.TabPages.Clear();
+            tabControlDataSheet.TabPages.AddRange(tabPages);
+            tabControlDataSheet.SelectedIndex = 3;
+        }
+
+        private void ConstructListView()
         {
             MonitorDetailLV.Columns.Clear();
 
@@ -126,7 +211,7 @@ namespace Perfmon
                 ColumnHeader ch = new()
                 {
                     Width = _colSize[i],
-                    TextAlign = HorizontalAlignment.Left,
+                    TextAlign = System.Windows.Forms.HorizontalAlignment.Left,
                     Text = _colHeaders?[i],
                 };
                 MonitorDetailLV.Columns.Add(ch);
@@ -292,7 +377,7 @@ namespace Perfmon
                     }
                 }
             }
-            return (int)(capacity / (1024*1024*1000));
+            return (int)(capacity / (1024 * 1024 * 1000));
         }
 
         private void CreateNewMonitor(uint pid)
@@ -417,10 +502,20 @@ namespace Perfmon
             if (Size == _formMaxSize)
             {
                 Size = _formSize;
+                tabControlDataSheet.Hide();
             }
             else
             {
                 Size = _formMaxSize;
+                tabControlDataSheet.Show();
+                /*                var plt = CpuFormPlot.Plot;
+
+                                plt.Title("CPU usage");
+                                plt.XLabel("Time");
+                                plt.YLabel("%");
+                                plt.SetAxisLimits(-20, 80, 0, 100);
+
+                                CpuFormPlot.Show();*/
             }
         }
     }

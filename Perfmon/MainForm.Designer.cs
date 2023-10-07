@@ -59,7 +59,11 @@ namespace Perfmon
             BtnOpenResult = new Button();
             BtnAnalysis = new Button();
             toolTip1 = new ToolTip(components);
+            tabControlDataSheet = new TabControl();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
             flowLayoutPanel1.SuspendLayout();
+            tabControlDataSheet.SuspendLayout();
             SuspendLayout();
             // 
             // btnShotProcess
@@ -255,10 +259,34 @@ namespace Perfmon
             BtnAnalysis.UseVisualStyleBackColor = true;
             BtnAnalysis.Click += BtnAnalysis_Click;
             // 
+            // tabControlDataSheet
+            // 
+            resources.ApplyResources(tabControlDataSheet, "tabControlDataSheet");
+            tabControlDataSheet.Controls.Add(tabPage1);
+            tabControlDataSheet.Controls.Add(tabPage2);
+            tabControlDataSheet.Name = "tabControlDataSheet";
+            tabControlDataSheet.SelectedIndex = 0;
+            toolTip1.SetToolTip(tabControlDataSheet, resources.GetString("tabControlDataSheet.ToolTip"));
+            // 
+            // tabPage1
+            // 
+            resources.ApplyResources(tabPage1, "tabPage1");
+            tabPage1.Name = "tabPage1";
+            toolTip1.SetToolTip(tabPage1, resources.GetString("tabPage1.ToolTip"));
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            resources.ApplyResources(tabPage2, "tabPage2");
+            tabPage2.Name = "tabPage2";
+            toolTip1.SetToolTip(tabPage2, resources.GetString("tabPage2.ToolTip"));
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(tabControlDataSheet);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label2);
             Controls.Add(textBoxPID);
@@ -269,6 +297,7 @@ namespace Perfmon
             toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             FormClosing += MainForm_FormClosing;
             flowLayoutPanel1.ResumeLayout(false);
+            tabControlDataSheet.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -302,5 +331,8 @@ namespace Perfmon
         private Button BtnAnalysis;
         private Button BtnVisual;
         private Button BtnOpenResult;
+        private TabControl tabControlDataSheet;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
     }
 }
