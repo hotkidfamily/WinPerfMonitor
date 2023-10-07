@@ -151,7 +151,7 @@ namespace Perfmon
                     {
                         var index = _monitorManager[item.Pid].LiveVideIndex;
 
-                        var values = item.info();
+                        var values = item.Info();
                         for (int i = 0; i < _colHeaders?.Length; i++)
                         {
                             MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
@@ -180,9 +180,11 @@ namespace Perfmon
                 StringBuilder sb = new();
                 int rama = (int)((long)Math.Round(ramAva.NextValue()) >> 20);
                 int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
+                int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
+                int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
 
-                sb.Append($"{cpuTotal?.NextValue():F2} % | {mnam} | {os} | {core} | ");
-                sb.Append($"{ram} MB | {rama} MB | {_phyMemTotal} MB");
+                sb.Append($"{cpuTotal?.NextValue():F2}%, {mnam}, {os}, {core} C, ");
+                sb.Append($"{ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB");
 
                 labelCpuAndMem.Text = sb.ToString();
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
@@ -266,9 +268,11 @@ namespace Perfmon
 
         private static int GetPhisicalMemory()
         {
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(); //用于查询一些如系统信息的管理对象 
-            searcher.Query = new SelectQuery("Win32_PhysicalMemory ", "", new[] { "Capacity" }); //设置查询条件 
-            ManagementObjectCollection collection = searcher.Get(); //获取内存容量 
+            ManagementObjectSearcher searcher = new()
+            {
+                Query = new SelectQuery("Win32_PhysicalMemory ", "", new[] { "Capacity" })
+            };
+            ManagementObjectCollection collection = searcher.Get();
             ManagementObjectCollection.ManagementObjectEnumerator em = collection.GetEnumerator();
 
             long capacity = 0;
@@ -279,7 +283,7 @@ namespace Perfmon
                 {
                     try
                     {
-                        long.TryParse(baseObj.Properties["Capacity"].Value.ToString(), out long cap);
+                        _ = long.TryParse(baseObj.Properties["Capacity"].Value.ToString(), out long cap);
                         capacity += cap;
                     }
                     catch
@@ -288,7 +292,7 @@ namespace Perfmon
                     }
                 }
             }
-            return (int)(capacity >> 20);
+            return (int)(capacity / (1024*1024*1000));
         }
 
         private void CreateNewMonitor(uint pid)
@@ -304,13 +308,15 @@ namespace Perfmon
                 if (!Directory.Exists($"{csvpath}"))
                     Directory.CreateDirectory($"{csvpath}");
 
-                string resPath = $"{csvpath}{Path.DirectorySeparatorChar}{name}({pid}).{DateTime.Now.ToString("yyyy.MMdd.HHmm.ss")}.csv";
+                string resPath = $"{csvpath}{Path.DirectorySeparatorChar}{name}({pid}).{DateTime.Now:yyyy.MMdd.HHmm.ss}.csv";
                 var writer = new StreamWriter(resPath);
                 var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-                ProcessMonitorManager monitorMgr = new();
-                monitorMgr.Monitor = monitor;
-                monitorMgr.ResWriter = csv;
-                monitorMgr.ResPath = resPath;
+                ProcessMonitorManager monitorMgr = new()
+                {
+                    Monitor = monitor,
+                    ResWriter = csv,
+                    ResPath = resPath
+                };
                 csv.WriteHeader<RunStatusItem>();
                 csv.NextRecord();
 
@@ -360,9 +366,11 @@ namespace Perfmon
                     var path = Path.GetDirectoryName(monitor.ResPath);
                     if (path != null)
                     {
-                        ProcessStartInfo psi = new ProcessStartInfo();
-                        psi.FileName = path;
-                        psi.UseShellExecute = true;
+                        ProcessStartInfo psi = new()
+                        {
+                            FileName = path,
+                            UseShellExecute = true
+                        };
                         Process.Start(psi);
                     }
                 }
@@ -393,9 +401,11 @@ namespace Perfmon
                     var path = monitor.ResPath;
                     if (path != null)
                     {
-                        ProcessStartInfo psi = new ProcessStartInfo();
-                        psi.FileName = path;
-                        psi.UseShellExecute = true;
+                        ProcessStartInfo psi = new()
+                        {
+                            FileName = path,
+                            UseShellExecute = true
+                        };
                         Process.Start(psi);
                     }
                 }

@@ -33,7 +33,7 @@ namespace Perfmon
         public long ExcuteSeconds { get => excuteSeconds; set => excuteSeconds = value; }
         public string ExcuteStatus { get => excuteStatus; set => excuteStatus = value; }
 
-        public string[] info()
+        public string[] Info()
         {
             string uposfix = " Kbps";
             string dposfix = " Kbps";
@@ -63,7 +63,7 @@ namespace Perfmon
                 $"{up :F2}{uposfix}",
                 $"{down :F2}{dposfix}",
                 $"{total :F2} MB",
-                $"{TimeSpan.FromSeconds(ExcuteSeconds).ToString()} s",
+                $"{TimeSpan.FromSeconds(ExcuteSeconds)} s",
                 $"{ExcuteStatus}"
             };
         }
@@ -89,8 +89,8 @@ namespace Perfmon
         private readonly UpdateMonitorStatusDelegate? _updateMonitorStatus;
 
         private TraceEventSession? _netTraceSession;
-        private NetspeedTrace _netspeedDetail = new();
-        private NetspeedTrace _netspeedDetailOld = new();
+        private readonly NetspeedTrace _netspeedDetail = new();
+        private readonly NetspeedTrace _netspeedDetailOld = new();
 
         void ProcessExitEventHandler(object? sender, EventArgs e)
         {
