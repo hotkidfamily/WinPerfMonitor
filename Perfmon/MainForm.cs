@@ -5,10 +5,9 @@ using Windows.Win32;
 using CsvHelper;
 using System.Globalization;
 using ScottPlot;
-using ScottPlot.Renderable;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing.Printing;
-using System.Windows.Forms;
+using System;
+using System.IO;
+using Perfmon.Properties;
 
 namespace Perfmon
 {
@@ -20,10 +19,6 @@ namespace Perfmon
 
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
-
-        private readonly Size _formSize;
-        private readonly Size _formMaxSize;
-
         internal class ProcessMonitorManager
         {
             public ProcessMonitor? Monitor;
@@ -40,16 +35,6 @@ namespace Perfmon
 
         private readonly string[] _colHeaders = default!;
         private static readonly int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
-
-        private static readonly string TAB_HEADER_CPU = "CPU";
-        private static readonly string TAB_HEADER_MEMORY = "Memory";
-        private static readonly string TAB_HEADER_UPLINK = "UpLink";
-        private static readonly string TAB_HEADER_SYSTEM = "System";
-        private static TabPage _CPUTab = default!;
-        private static TabPage _MemTab = default!;
-        private static TabPage _UpLinkTab = default!;
-        private static TabPage _SysTab = default!;
-        private ScottPlot.Plottable.DataLogger _sysLogger = default!;
 
         private static readonly Process _selfProcess = Process.GetCurrentProcess();
 
@@ -72,15 +57,12 @@ namespace Perfmon
             }
 
             InitializeComponent();
-            ConstructTabControl();
             ConstructListView();
 
             ConstructSystemMonitor();
             _phyMemTotal = GetPhisicalMemory();
             _ = QurySystemInfo();
             _ = RefreshListView();
-            _formSize = Size;
-            _formMaxSize = new Size(Size.Width, 820);
         }
 
         private void ConstructSystemMonitor()
@@ -90,9 +72,10 @@ namespace Perfmon
                 try
                 {
                     cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
-                    float usage = cpuTotal?.NextValue() ?? 0; 
+                    float usage = cpuTotal?.NextValue() ?? 0;
                 }
-                catch (Exception) {
+                catch (Exception)
+                {
                     cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
                 }
             }
@@ -135,82 +118,8 @@ namespace Perfmon
                 var it = _monitorManager[status.Pid];
                 it.ResWriter?.WriteRecord(status);
                 it.ResWriter?.NextRecord();
+                it.ResWriter?.FlushAsync();
             }
-        }
-
-        private void ConstructTabControl()
-        {
-            _CPUTab = new TabPage() { Text = TAB_HEADER_CPU };
-            _MemTab = new TabPage() { Text = TAB_HEADER_MEMORY };
-            _UpLinkTab = new TabPage() { Text = TAB_HEADER_UPLINK};
-            _SysTab = new TabPage() { Text = TAB_HEADER_SYSTEM };
-
-            Size tabSize = new Size(tabControlDataSheet.DisplayRectangle.Width, tabControlDataSheet.DisplayRectangle.Height);
-            _CPUTab.Controls.Add(new ScottPlot.FormsPlot
-            {
-                Name = TAB_HEADER_CPU,
-                Size = tabSize,
-                BorderStyle = BorderStyle.FixedSingle,
-                Location = new System.Drawing.Point(0, 0),
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
-            });
-            ScottPlot.FormsPlot plt = (FormsPlot)_CPUTab.Controls[TAB_HEADER_CPU];
-            plt.Plot.SetAxisLimits(-20, 80, 0, 100);
-            plt.Plot.Title("CPU usage");
-            plt.Plot.XLabel("Time");
-            plt.Plot.YLabel("%");
-
-            _MemTab.Controls.Add(new ScottPlot.FormsPlot
-            {
-                Name = TAB_HEADER_MEMORY,
-                Size = tabSize,
-                BorderStyle = BorderStyle.FixedSingle,
-                Location = new System.Drawing.Point(0, 0),
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
-            });
-            ScottPlot.FormsPlot plt2 = (FormsPlot)_MemTab.Controls[TAB_HEADER_MEMORY];
-            plt2.Plot.SetAxisLimits(-20, 80, 0, 100);
-            plt2.Plot.Title("Memory usage");
-            plt2.Plot.XLabel("Time");
-            plt2.Plot.YLabel("MB");
-
-            _UpLinkTab.Controls.Add(new ScottPlot.FormsPlot
-            {
-                Name = TAB_HEADER_UPLINK,
-                Size = tabSize,
-                BorderStyle = BorderStyle.FixedSingle,
-                Location = new System.Drawing.Point(0, 0),
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
-            });
-            ScottPlot.FormsPlot plt3 = (FormsPlot)_UpLinkTab.Controls[TAB_HEADER_UPLINK];
-            plt3.Plot.SetAxisLimits(-20, 80, 0, 100);
-            plt3.Plot.Title("Uplink Speed");
-            plt3.Plot.XLabel("Time");
-            plt3.Plot.YLabel("kbps");
-
-            _SysTab.Controls.Add(new ScottPlot.FormsPlot
-            {
-                Name = TAB_HEADER_SYSTEM,
-                Size = tabSize,
-                BorderStyle = BorderStyle.FixedSingle,
-                Location = new System.Drawing.Point(0, 0),
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom
-            });
-            
-            ScottPlot.FormsPlot plt4 = (FormsPlot)_SysTab.Controls[TAB_HEADER_SYSTEM];
-            plt4.Plot.SetAxisLimits(0, 100, 0, 100);
-            plt4.Plot.Title("System CPU usage");
-            plt4.Plot.XLabel("Time");
-            plt4.Plot.YLabel("%");
-            _sysLogger = plt4.Plot.AddDataLogger();
-            _sysLogger.ViewSlide();
-
-            TabPage[] tabPages = { _CPUTab, _MemTab, _UpLinkTab, _SysTab };
-
-            tabControlDataSheet.Size = new Size(MonitorDetailLV.Width, 400);
-            tabControlDataSheet.TabPages.Clear();
-            tabControlDataSheet.TabPages.AddRange(tabPages);
-            tabControlDataSheet.SelectedIndex = 3;
         }
 
         private void ConstructListView()
@@ -270,7 +179,6 @@ namespace Perfmon
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
             var os = Environment.OSVersion.Version.ToString();
-            int ticks = 0;
 
             while (!IsDisposed)
             {
@@ -281,16 +189,11 @@ namespace Perfmon
                 int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
                 float usage = cpuTotal?.NextValue() ?? 0;
 
-                sb.Append($"{usage :F2}%, {mnam}, {os}, {core} C, ");
+                sb.Append($"{usage:F2}%, {mnam}, {os}, {core} C, ");
                 sb.Append($"{ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB");
-
-                ScottPlot.FormsPlot plt4 = (FormsPlot)_SysTab.Controls[TAB_HEADER_SYSTEM];
-                _sysLogger.Add(_sysLogger.Count, usage);
-                plt4.Refresh();
 
                 labelCpuAndMem.Text = sb.ToString();
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
-                ticks ++;
             }
         }
 
@@ -515,15 +418,32 @@ namespace Perfmon
 
         private void BtnVisual_Click(object sender, EventArgs e)
         {
-            if (Size == _formMaxSize)
+        }
+
+        private void MonitorDetailLV_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo info = MonitorDetailLV.HitTest(e.X, e.Y);
+            ListViewItem item = info.Item;
+            if (uint.TryParse(item.Text, out uint pid))
             {
-                Size = _formSize;
-                tabControlDataSheet.Hide();
-            }
-            else
-            {
-                Size = _formMaxSize;
-                tabControlDataSheet.Show();
+                if (_monitorManager.ContainsKey(pid))
+                {
+                    var it = _monitorManager[pid];
+                    string path = it.ResPath??"";
+                    if(path != null)
+                    {
+
+                        var helpThread = new Thread(new ThreadStart(() => {
+                            string desc = it.Monitor?.Descriptor()??"invalid";
+                            using (var newHelp = new VisualForm(path, desc))
+                            {
+                                newHelp.ShowDialog();
+                            }
+                        }));
+                        helpThread.SetApartmentState(ApartmentState.STA);
+                        helpThread.Start();
+                    }
+                }
             }
         }
     }

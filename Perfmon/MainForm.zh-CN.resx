@@ -119,19 +119,20 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnShotProcess.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 5</value>
+    <value>3, 3</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnShotProcess.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="btnShotProcess.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <data name="btnShotProcess.ToolTip" xml:space="preserve">
     <value>抓取进程</value>
   </data>
-  <data name="labelCpuAndMem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 484</value>
-  </data>
-  <data name="labelCpuAndMem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1418, 30</value>
+  <data name="labelCpuAndMem.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="labelCpuAndMem.ToolTip" xml:space="preserve">
     <value>本机状态</value>
@@ -173,87 +174,65 @@
   <data name="monitorStatus.Text" xml:space="preserve">
     <value>状态</value>
   </data>
-  <data name="MonitorDetailLV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 138</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="MonitorDetailLV.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 4, 5, 4</value>
-  </data>
-  <data name="MonitorDetailLV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1418, 313</value>
-  </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 45</value>
-  </data>
-  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 0, 5, 0</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 24</value>
+    <value>13, 32</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>输入 PID 开始：</value>
   </data>
   <data name="textBoxPID.Location" type="System.Drawing.Point, System.Drawing">
-    <value>181, 41</value>
-  </data>
-  <data name="textBoxPID.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 4, 5, 4</value>
-  </data>
-  <data name="textBoxPID.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 30</value>
+    <value>115, 29</value>
   </data>
   <data name="textBoxPID.ToolTip" xml:space="preserve">
     <value>输入PID</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 110</value>
-  </data>
-  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 0, 5, 0</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 24</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>详细情况：</value>
   </data>
   <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>127, 6</value>
+    <value>80, 4</value>
   </data>
   <data name="btnStop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>63, 3, 3, 3</value>
+    <value>40, 2, 2, 2</value>
   </data>
   <data name="btnStop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <data name="btnStop.ToolTip" xml:space="preserve">
     <value>停止采集</value>
   </data>
   <data name="btnRestart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 5</value>
+    <value>119, 3</value>
+  </data>
+  <data name="btnRestart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="btnRestart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <data name="btnRestart.ToolTip" xml:space="preserve">
     <value>重新采集</value>
   </data>
   <data name="BtnRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 5</value>
+    <value>157, 3</value>
+  </data>
+  <data name="BtnRemove.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="BtnRemove.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <data name="BtnRemove.ToolTip" xml:space="preserve">
     <value>删除采集</value>
   </data>
   <data name="btnBreak.Location" type="System.Drawing.Point, System.Drawing">
-    <value>311, 5</value>
+    <value>195, 3</value>
+  </data>
+  <data name="btnBreak.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="btnBreak.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <data name="btnBreak.ToolTip" xml:space="preserve">
     <value>暂停采集</value>
@@ -271,10 +250,13 @@
     <value>NoControl</value>
   </data>
   <data name="BtnVisual.Location" type="System.Drawing.Point, System.Drawing">
-    <value>373, 6</value>
+    <value>234, 4</value>
+  </data>
+  <data name="BtnVisual.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="BtnVisual.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <data name="BtnVisual.ToolTip" xml:space="preserve">
     <value>展示图表</value>
@@ -289,22 +271,25 @@
     <value>(无)</value>
   </data>
   <data name="BtnOpenFloder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>496, 6</value>
+    <value>312, 4</value>
   </data>
   <data name="BtnOpenFloder.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>63, 3, 3, 3</value>
+    <value>40, 2, 2, 2</value>
   </data>
   <data name="BtnOpenFloder.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <data name="BtnOpenResult.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="BtnOpenResult.Location" type="System.Drawing.Point, System.Drawing">
-    <value>558, 5</value>
+    <value>351, 3</value>
+  </data>
+  <data name="BtnOpenResult.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="BtnOpenResult.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="BtnOpenResult.TabIndex" type="System.Int32, mscorlib">
@@ -314,55 +299,25 @@
     <value>查看数据</value>
   </data>
   <data name="BtnAnalysis.Location" type="System.Drawing.Point, System.Drawing">
-    <value>619, 5</value>
+    <value>389, 3</value>
+  </data>
+  <data name="BtnAnalysis.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="BtnAnalysis.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 51</value>
+    <value>36, 36</value>
   </data>
   <data name="BtnAnalysis.ToolTip" xml:space="preserve">
     <value>分析数据</value>
   </data>
   <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>377, 25</value>
+    <value>240, 18</value>
   </data>
-  <data name="flowLayoutPanel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+  <data name="flowLayoutPanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
   </data>
   <data name="flowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>723, 62</value>
-  </data>
-  <data name="tabPage1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1410, 84</value>
-  </data>
-  <data name="tabPage1.Text" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1410, 84</value>
-  </data>
-  <data name="tabPage2.Text" xml:space="preserve">
-    <value>tabPage2</value>
-  </data>
-  <data name="tabControlDataSheet.Padding" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="tabControlDataSheet.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1418, 121</value>
-  </data>
-  <data name="tabControlDataSheet.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>11, 24</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1458, 532</value>
+    <value>460, 44</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -4879,7 +4834,10 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 </value>
   </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>1471, 564</value>
+    <value>942, 411</value>
   </data>
 </root>

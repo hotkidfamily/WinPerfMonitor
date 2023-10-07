@@ -2,6 +2,8 @@
 using Microsoft.Diagnostics.Tracing.Session;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
+using System.Security.AccessControl;
+using TraceReloggerLib;
 
 namespace Perfmon
 {
@@ -91,6 +93,7 @@ namespace Perfmon
         private TraceEventSession? _netTraceSession;
         private readonly NetspeedTrace _netspeedDetail = new();
         private readonly NetspeedTrace _netspeedDetailOld = new();
+        private readonly string _desc = "invalid process desc";
 
         void ProcessExitEventHandler(object? sender, EventArgs e)
         {
@@ -101,12 +104,17 @@ namespace Perfmon
             _updateMonitorStatus?.Invoke(ref _onceRes);
         }
 
+        public string Descriptor()
+        {
+            return _desc;
+        }
+
         public ProcessMonitor(uint pid, int interval, UpdateMonitorStatusDelegate UpdateHandle) 
         {
             _pid = pid;
             _interval = interval;
             _onceRes.ExcuteStatus = "running";
-
+            
             try
             {
                 _process = Process.GetProcessById((int)pid);
@@ -115,8 +123,11 @@ namespace Perfmon
             {
                 _onceRes.ExcuteStatus = "no exist";
             }
+
             if (_process != null)
             {
+                _desc = $" {_process.ProcessName}:{_pid} ";
+
                 _endTask = false;
                 _onceRes.Pid = _pid;
                 _onceRes.ProcName = _process.ProcessName;
