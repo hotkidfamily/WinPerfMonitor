@@ -168,6 +168,14 @@ namespace Perfmon
                         if (item.ExcuteStatus == "exit")
                         {
                             MonitorDetailLV.Items[index].BackColor = Color.Red;
+                            if (_monitorManager.ContainsKey(item.Pid))
+                            {
+                                var v = _monitorManager[item.Pid];
+                                v.Monitor?.Dispose();
+                                _ = v.ResWriter?.DisposeAsync();
+                                v.Monitor = null;
+                                v.ResWriter = null;
+                            }
                         }
                     }
                 }
@@ -229,7 +237,7 @@ namespace Perfmon
             {
                 var v = _monitorManager[pid];
                 v.Monitor?.Dispose();
-                v.ResWriter?.Dispose();
+                _ = (v.ResWriter?.DisposeAsync());
                 v.Monitor = null;
                 v.ResWriter = null;
 
