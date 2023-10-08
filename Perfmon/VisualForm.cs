@@ -48,7 +48,7 @@ namespace Perfmon
         private void ConstructTabControl()
         {
             formsPlotProcCPU.Name = TAB_HEADER_CPU;
-            formsPlotProcCPU.Plot.YLabel("CPU usage (%)");
+            formsPlotProcCPU.Plot.YLabel("CPU (%)");
             formsPlotProcCPU.Plot.YAxis.SetBoundary(0, 100);
             formsPlotProcCPU.Plot.XAxis.SetBoundary(0);
             _procLogger = formsPlotProcCPU.Plot.AddDataLogger();
@@ -56,7 +56,7 @@ namespace Perfmon
             _procLogger.ViewSlide(width: 200);
 
             formsPlotProcMem.Name = TAB_HEADER_MEMORY;
-            formsPlotProcMem.Plot.YLabel("Memory usage (MB)");
+            formsPlotProcMem.Plot.YLabel("Memory (MB)");
             formsPlotProcMem.Plot.YAxis.SetBoundary(0);
             formsPlotProcMem.Plot.XAxis.SetBoundary(0);
             _memLogger = formsPlotProcMem.Plot.AddDataLogger();
@@ -64,7 +64,7 @@ namespace Perfmon
             _memLogger.ViewSlide(width: 200);
 
             formsPlotUpLink.Name = TAB_HEADER_UPLINK;
-            formsPlotUpLink.Plot.YLabel("Uplink Speed (Kb/s)");
+            formsPlotUpLink.Plot.YLabel("Up Traffic (Kb/s)");
             formsPlotUpLink.Plot.YAxis.SetBoundary(0);
             formsPlotUpLink.Plot.XAxis.SetBoundary(0);
             _uplinkLogger = formsPlotUpLink.Plot.AddDataLogger();
@@ -72,7 +72,7 @@ namespace Perfmon
             _uplinkLogger.ViewSlide(width: 200);
 
             formsPlotSysCpu.Name = TAB_HEADER_SYSTEM;
-            formsPlotSysCpu.Plot.YLabel("System CPU usage (%)");
+            formsPlotSysCpu.Plot.YLabel("System CPU (%)");
             formsPlotSysCpu.Plot.YAxis.SetBoundary(0, 100);
             formsPlotSysCpu.Plot.XAxis.SetBoundary(0);
             _sysLogger = formsPlotSysCpu.Plot.AddDataLogger();

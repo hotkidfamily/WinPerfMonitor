@@ -43,34 +43,34 @@
             formsPlotProcCPU.Location = new Point(4, 3);
             formsPlotProcCPU.Margin = new Padding(4, 3, 4, 3);
             formsPlotProcCPU.Name = "formsPlotProcCPU";
-            formsPlotProcCPU.Size = new Size(768, 163);
+            formsPlotProcCPU.Size = new Size(772, 183);
             formsPlotProcCPU.TabIndex = 0;
             // 
             // formsPlotProcMem
             // 
             formsPlotProcMem.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            formsPlotProcMem.Location = new Point(4, 172);
+            formsPlotProcMem.Location = new Point(4, 192);
             formsPlotProcMem.Margin = new Padding(4, 3, 4, 3);
             formsPlotProcMem.Name = "formsPlotProcMem";
-            formsPlotProcMem.Size = new Size(768, 163);
+            formsPlotProcMem.Size = new Size(772, 183);
             formsPlotProcMem.TabIndex = 1;
             // 
             // formsPlotUpLink
             // 
             formsPlotUpLink.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            formsPlotUpLink.Location = new Point(4, 341);
+            formsPlotUpLink.Location = new Point(4, 381);
             formsPlotUpLink.Margin = new Padding(4, 3, 4, 3);
             formsPlotUpLink.Name = "formsPlotUpLink";
-            formsPlotUpLink.Size = new Size(768, 163);
+            formsPlotUpLink.Size = new Size(772, 183);
             formsPlotUpLink.TabIndex = 2;
             // 
             // formsPlotSysCpu
             // 
             formsPlotSysCpu.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            formsPlotSysCpu.Location = new Point(4, 510);
+            formsPlotSysCpu.Location = new Point(4, 570);
             formsPlotSysCpu.Margin = new Padding(4, 3, 4, 3);
             formsPlotSysCpu.Name = "formsPlotSysCpu";
-            formsPlotSysCpu.Size = new Size(768, 164);
+            formsPlotSysCpu.Size = new Size(772, 186);
             formsPlotSysCpu.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -89,17 +89,17 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.Size = new Size(776, 677);
+            tableLayoutPanel1.Size = new Size(780, 759);
             tableLayoutPanel1.TabIndex = 4;
             // 
             // VisualForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 701);
+            ClientSize = new Size(804, 783);
             Controls.Add(tableLayoutPanel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(816, 740);
+            MinimumSize = new Size(820, 800);
             Name = "VisualForm";
             Text = "VisualForm";
             tableLayoutPanel1.ResumeLayout(false);

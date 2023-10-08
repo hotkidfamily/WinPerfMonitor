@@ -268,7 +268,21 @@ namespace Perfmon
 
         private void BtnRestart_Click(object sender, EventArgs e)
         {
-
+            int index = 0;
+            if (MonitorDetailLV.SelectedIndices.Count > 0)
+            {
+                index = MonitorDetailLV.SelectedIndices[0];
+            }
+            else
+            {
+                return;
+            }
+            var item = MonitorDetailLV.Items[index];
+            uint pid = uint.Parse(item.Text);
+            if (!_monitorManager.ContainsKey(pid))
+            {
+                CreateNewMonitor(pid);
+            }
         }
 
         private void BtnBreak_Click(object sender, EventArgs e)
@@ -430,7 +444,7 @@ namespace Perfmon
                 {
                     var it = _monitorManager[pid];
                     string path = it.ResPath ?? "";
-                    if (path != null && ((it.VisualThread == null) || !it.VisualThread.IsAlive))
+                    if (path != null && ((it.VisualThread == null) || !it.VisualThread.IsAlive) && (it.LiveVideIndex == info.Item.Index))
                     {
                         var helpThread = new Thread(new ThreadStart(() =>
                         {
