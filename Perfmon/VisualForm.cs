@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using ScottPlot;
 using System.Globalization;
 using TraceReloggerLib;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
@@ -17,6 +18,9 @@ namespace Perfmon
         private static readonly string TAB_HEADER_UPLINK = "UpLink";
         private static readonly string TAB_HEADER_SYSTEM = "System";
         private ScottPlot.Plottable.DataLogger _sysLogger = default!;
+        private ScottPlot.Plottable.DataLogger _procLogger = default!;
+        private ScottPlot.Plottable.DataLogger _memLogger = default!;
+        private ScottPlot.Plottable.DataLogger _uplinkLogger = default!;
 
         class RunStatusItemMap : ClassMap<RunStatusItem>
         {
@@ -50,33 +54,48 @@ namespace Perfmon
         {
             formsPlotProcCPU.Name = TAB_HEADER_CPU;
             formsPlotProcCPU.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            formsPlotProcCPU.Plot.SetAxisLimits(0, 100, 0, 100);
             formsPlotProcCPU.Plot.Title("CPU usage");
             formsPlotProcCPU.Plot.XLabel("Time");
             formsPlotProcCPU.Plot.YLabel("%");
+            formsPlotProcCPU.Plot.YAxis.SetBoundary(0, 100);
+            formsPlotProcCPU.Plot.XAxis.SetBoundary(0);
+            _procLogger = formsPlotProcCPU.Plot.AddDataLogger();
+            _procLogger.LineWidth = 3;
+            _procLogger.ViewSlide(width: 200);
 
             formsPlotProcMem.Name = TAB_HEADER_MEMORY;
             formsPlotProcMem.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            formsPlotProcMem.Plot.SetAxisLimits(0, 100, 0, 10000);
             formsPlotProcMem.Plot.Title("Memory usage");
             formsPlotProcMem.Plot.XLabel("Time");
             formsPlotProcMem.Plot.YLabel("MB");
+            formsPlotProcMem.Plot.YAxis.SetBoundary(0);
+            formsPlotProcMem.Plot.XAxis.SetBoundary(0);
+            _memLogger = formsPlotProcMem.Plot.AddDataLogger();
+            _memLogger.LineWidth = 3;
+            _memLogger.ViewSlide(width: 200);
 
             formsPlotUpLink.Name = TAB_HEADER_UPLINK;
             formsPlotUpLink.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             formsPlotUpLink.Plot.SetAxisLimits(0, 100, 0, 10000);
             formsPlotUpLink.Plot.Title("Uplink Speed");
             formsPlotUpLink.Plot.XLabel("Time");
-            formsPlotUpLink.Plot.YLabel("kbps");
+            formsPlotUpLink.Plot.YLabel("Kb/s");
+            formsPlotUpLink.Plot.YAxis.SetBoundary(0, 50000);
+            formsPlotUpLink.Plot.XAxis.SetBoundary(0);
+            _uplinkLogger = formsPlotUpLink.Plot.AddDataLogger();
+            _uplinkLogger.LineWidth = 3;
+            _uplinkLogger.ViewSlide(width: 200);
 
             formsPlotSysCpu.Name = TAB_HEADER_SYSTEM;
             formsPlotSysCpu.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            formsPlotSysCpu.Plot.SetAxisLimits(0, 100, 0, 100);
             formsPlotSysCpu.Plot.Title("System CPU usage");
             formsPlotSysCpu.Plot.XLabel("Time");
             formsPlotSysCpu.Plot.YLabel("%");
+            formsPlotSysCpu.Plot.YAxis.SetBoundary(0, 100);
+            formsPlotSysCpu.Plot.XAxis.SetBoundary(0);
             _sysLogger = formsPlotSysCpu.Plot.AddDataLogger();
-            _sysLogger.ViewSlide();
+            _sysLogger.LineWidth = 3;
+            _sysLogger.ViewSlide(width: 200);
 
             formsPlotProcCPU.Refresh();
             formsPlotProcMem.Refresh();
@@ -115,8 +134,14 @@ namespace Perfmon
                 for (int i = 0; i < length; i++)
                 {
                     _sysLogger.Add(_sysLogger.Count, _records[i].Cpu);
+                    _procLogger.Add(_procLogger.Count, _records[i].Cpu);
+                    _memLogger.Add(_memLogger.Count, _records[i].TotalMem);
+                    _uplinkLogger.Add(_uplinkLogger.Count, _records[i].UpLink);
                 }
                 formsPlotSysCpu.Refresh();
+                formsPlotProcCPU.Refresh();
+                formsPlotProcMem.Refresh();
+                formsPlotUpLink.Refresh();
 
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
             }

@@ -40,8 +40,8 @@ namespace Perfmon
             string uposfix = " Kbps";
             string dposfix = " Kbps";
             double total = TotalLinkFlow / 1024.0f;
-            double up = UpLink * 8;
-            double down = DownLink * 8;
+            double up = UpLink;
+            double down = DownLink;
 
             if(up > 1 << 10)
             {
@@ -160,16 +160,15 @@ namespace Perfmon
                     
                         _onceRes.Cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
                         _onceRes.ExcuteSeconds = (nowTicks - firstMonitorTicks)/1000;
-                        lastMonitorTicks = nowTicks;
                         lastProcessorTime = nowProcessorTime;
 
                         {
                             netspeedTracer.send = _netspeedDetail.send;
                             netspeedTracer.received = _netspeedDetail.received;
 
-                            _onceRes.UpLink = (netspeedTracer.send - _netspeedDetailOld.send) / 1024.0f;
-                            _onceRes.DownLink = (netspeedTracer.received - _netspeedDetailOld.received) / 1024.0f;
-                            _onceRes.TotalLinkFlow = (netspeedTracer.send + _netspeedDetailOld.received) / 1024.0f;
+                            _onceRes.UpLink = (netspeedTracer.send - _netspeedDetailOld.send) * 8 / 1024.0f;
+                            _onceRes.DownLink = (netspeedTracer.received - _netspeedDetailOld.received) * 8 / 1024.0f;
+                            _onceRes.TotalLinkFlow = (netspeedTracer.send + _netspeedDetailOld.received) * 8 / 1024.0f;
 
                             _netspeedDetailOld.send = netspeedTracer.send;
                             _netspeedDetailOld.received = netspeedTracer.received;

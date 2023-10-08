@@ -38,10 +38,10 @@
             // formsPlotProcCPU
             // 
             formsPlotProcCPU.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            formsPlotProcCPU.Location = new Point(13, 13);
+            formsPlotProcCPU.Location = new Point(13, 3);
             formsPlotProcCPU.Margin = new Padding(4, 3, 4, 3);
             formsPlotProcCPU.Name = "formsPlotProcCPU";
-            formsPlotProcCPU.Size = new Size(774, 164);
+            formsPlotProcCPU.Size = new Size(774, 208);
             formsPlotProcCPU.TabIndex = 0;
             // 
             // formsPlotProcMem
@@ -50,7 +50,7 @@
             formsPlotProcMem.Location = new Point(13, 195);
             formsPlotProcMem.Margin = new Padding(4, 3, 4, 3);
             formsPlotProcMem.Name = "formsPlotProcMem";
-            formsPlotProcMem.Size = new Size(774, 164);
+            formsPlotProcMem.Size = new Size(774, 208);
             formsPlotProcMem.TabIndex = 1;
             // 
             // formsPlotUpLink
@@ -59,23 +59,23 @@
             formsPlotUpLink.Location = new Point(13, 377);
             formsPlotUpLink.Margin = new Padding(4, 3, 4, 3);
             formsPlotUpLink.Name = "formsPlotUpLink";
-            formsPlotUpLink.Size = new Size(774, 164);
+            formsPlotUpLink.Size = new Size(774, 208);
             formsPlotUpLink.TabIndex = 2;
             // 
             // formsPlotSysCpu
             // 
             formsPlotSysCpu.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            formsPlotSysCpu.Location = new Point(13, 559);
+            formsPlotSysCpu.Location = new Point(13, 571);
             formsPlotSysCpu.Margin = new Padding(4, 3, 4, 3);
             formsPlotSysCpu.Name = "formsPlotSysCpu";
-            formsPlotSysCpu.Size = new Size(774, 164);
+            formsPlotSysCpu.Size = new Size(774, 196);
             formsPlotSysCpu.TabIndex = 3;
             // 
             // VisualForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 735);
+            ClientSize = new Size(800, 779);
             Controls.Add(formsPlotSysCpu);
             Controls.Add(formsPlotUpLink);
             Controls.Add(formsPlotProcMem);

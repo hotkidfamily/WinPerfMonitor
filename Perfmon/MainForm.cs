@@ -25,6 +25,7 @@ namespace Perfmon
             public int LiveVideIndex = 0;
             public CsvWriter? ResWriter;
             public string? ResPath;
+            public Thread? VisualThread;
         }
 
         private readonly Dictionary<uint, ProcessMonitorManager> _monitorManager = new();
@@ -430,18 +431,18 @@ namespace Perfmon
                 {
                     var it = _monitorManager[pid];
                     string path = it.ResPath??"";
-                    if(path != null)
+                    if(path != null && ((it.VisualThread == null) || !it.VisualThread.IsAlive))
                     {
-
                         var helpThread = new Thread(new ThreadStart(() => {
                             string desc = it.Monitor?.Descriptor()??"invalid";
-                            using (var newHelp = new VisualForm(path, desc))
+                            using (var visual = new VisualForm(path, desc))
                             {
-                                newHelp.ShowDialog();
+                                visual.ShowDialog();
                             }
                         }));
                         helpThread.SetApartmentState(ApartmentState.STA);
                         helpThread.Start();
+                        it.VisualThread = helpThread;
                     }
                 }
             }
