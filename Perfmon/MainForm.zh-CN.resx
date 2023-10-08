@@ -18,7 +18,7 @@
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing"">Blue</data>
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
@@ -119,11 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnShotProcess.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnShotProcess.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 1, 1, 1</value>
+    <value>4, 4</value>
   </data>
   <data name="btnShotProcess.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 36</value>
@@ -131,6 +127,7 @@
   <data name="btnShotProcess.ToolTip" xml:space="preserve">
     <value>抓取进程</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="labelCpuAndMem.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 1, 1, 1</value>
   </data>
@@ -186,7 +183,7 @@
     <value>详细情况：</value>
   </data>
   <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 4</value>
+    <value>82, 4</value>
   </data>
   <data name="btnStop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>40, 2, 2, 2</value>
@@ -198,10 +195,7 @@
     <value>停止采集</value>
   </data>
   <data name="btnRestart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 3</value>
-  </data>
-  <data name="btnRestart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 1, 1, 1</value>
+    <value>122, 4</value>
   </data>
   <data name="btnRestart.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 36</value>
@@ -210,10 +204,7 @@
     <value>重新采集</value>
   </data>
   <data name="BtnRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>157, 3</value>
-  </data>
-  <data name="BtnRemove.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 1, 1, 1</value>
+    <value>162, 4</value>
   </data>
   <data name="BtnRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 36</value>
@@ -226,10 +217,7 @@
     <value>False</value>
   </data>
   <data name="btnBreak.Location" type="System.Drawing.Point, System.Drawing">
-    <value>195, 3</value>
-  </data>
-  <data name="btnBreak.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 1, 1, 1</value>
+    <value>202, 4</value>
   </data>
   <data name="btnBreak.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 36</value>
@@ -248,7 +236,7 @@
     <value>(无)</value>
   </data>
   <data name="BtnOpenFloder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 4</value>
+    <value>280, 4</value>
   </data>
   <data name="BtnOpenFloder.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>40, 2, 2, 2</value>
@@ -260,10 +248,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnOpenResult.Location" type="System.Drawing.Point, System.Drawing">
-    <value>311, 3</value>
-  </data>
-  <data name="BtnOpenResult.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 1, 1, 1</value>
+    <value>320, 4</value>
   </data>
   <data name="BtnOpenResult.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 36</value>
@@ -278,16 +263,31 @@
     <value>False</value>
   </data>
   <data name="BtnAnalysis.Location" type="System.Drawing.Point, System.Drawing">
-    <value>349, 3</value>
-  </data>
-  <data name="BtnAnalysis.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 1, 1, 1</value>
+    <value>360, 4</value>
   </data>
   <data name="BtnAnalysis.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 36</value>
   </data>
   <data name="BtnAnalysis.ToolTip" xml:space="preserve">
     <value>分析数据</value>
+  </data>
+  <data name="BtnSetting.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="BtnSetting.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="BtnSetting.ImageKey" xml:space="preserve">
+    <value>(无)</value>
+  </data>
+  <data name="BtnSetting.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnSetting.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>40, 2, 2, 2</value>
+  </data>
+  <data name="BtnSetting.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 36</value>
   </data>
   <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>240, 18</value>
@@ -296,7 +296,7 @@
     <value>1, 1, 1, 1</value>
   </data>
   <data name="flowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>460, 44</value>
+    <value>481, 44</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

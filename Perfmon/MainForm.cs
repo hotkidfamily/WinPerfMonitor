@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Management;
 using Windows.Win32;
 
@@ -466,6 +467,12 @@ namespace Perfmon
                     }
                 }
             }
+        }
+
+        private void BtnSetting_Click(object sender, EventArgs e)
+        {
+            using var setting = new SettingForm();
+            setting.ShowDialog();
         }
     }
 }

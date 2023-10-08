@@ -57,6 +57,7 @@ namespace Perfmon
             BtnOpenFloder = new Button();
             BtnOpenResult = new Button();
             BtnAnalysis = new Button();
+            BtnSetting = new Button();
             toolTip1 = new ToolTip(components);
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -170,6 +171,7 @@ namespace Perfmon
             flowLayoutPanel1.Controls.Add(BtnOpenFloder);
             flowLayoutPanel1.Controls.Add(BtnOpenResult);
             flowLayoutPanel1.Controls.Add(BtnAnalysis);
+            flowLayoutPanel1.Controls.Add(BtnSetting);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             toolTip1.SetToolTip(flowLayoutPanel1, resources.GetString("flowLayoutPanel1.ToolTip"));
             // 
@@ -243,6 +245,16 @@ namespace Perfmon
             BtnAnalysis.UseVisualStyleBackColor = true;
             BtnAnalysis.Click += BtnAnalysis_Click;
             // 
+            // BtnSetting
+            // 
+            resources.ApplyResources(BtnSetting, "BtnSetting");
+            BtnSetting.BackgroundImage = Properties.Resources.setting;
+            BtnSetting.Cursor = Cursors.Hand;
+            BtnSetting.Name = "BtnSetting";
+            toolTip1.SetToolTip(BtnSetting, resources.GetString("BtnSetting.ToolTip"));
+            BtnSetting.UseVisualStyleBackColor = true;
+            BtnSetting.Click += BtnSetting_Click;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -289,5 +301,6 @@ namespace Perfmon
         private Button BtnOpenFloder;
         private Button BtnAnalysis;
         private Button BtnOpenResult;
+        private Button BtnSetting;
     }
 }
