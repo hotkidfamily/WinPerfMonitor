@@ -85,7 +85,6 @@ namespace Perfmon
             formsPlotSysCpu.Refresh();
         }
 
-
         async Task UpdateInfo()
         {
             if (!File.Exists(_csvPath))
@@ -128,6 +127,20 @@ namespace Perfmon
 
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
             }
+
+            _procLogger?.Clear();
+            _memLogger?.Clear();
+            _uplinkLogger?.Clear();
+            _sysLogger?.Clear();
+            formsPlotSysCpu?.Dispose();
+            formsPlotProcCPU?.Dispose();
+            formsPlotProcMem?.Dispose();
+            formsPlotUpLink?.Dispose();
+
+            csv.Dispose();
+            reader.Dispose();
+            fs.Dispose();
         }
+
     }
 }
