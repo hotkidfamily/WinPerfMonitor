@@ -448,7 +448,11 @@ namespace Perfmon
                 {
                     var it = _monitorManager[pid];
                     string path = it.ResPath ?? "";
-                    if (path != null && ((it.VisualThread == null) || !it.VisualThread.IsAlive) && (it.LiveVideIndex == info.Item.Index))
+                    if (
+                        path != null
+                        && ((it.VisualThread == null) || !it.VisualThread.IsAlive) // fix: already running form
+                        && (it.LiveVideIndex == info.Item.Index) // fix: a monitor recapture after removed, then item be double cliked
+                        )
                     {
                         var helpThread = new Thread(new ThreadStart(() =>
                         {
