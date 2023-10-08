@@ -1,4 +1,5 @@
-﻿using Microsoft.Diagnostics.Tracing.Parsers;
+﻿using Microsoft.Diagnostics.Tracing.AutomatedAnalysis;
+using Microsoft.Diagnostics.Tracing.Parsers;
 using Microsoft.Diagnostics.Tracing.Session;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
@@ -89,7 +90,7 @@ namespace Perfmon
 
         private RunStatusItem _onceRes = new();
 
-        private readonly Process? _process;
+        private readonly System.Diagnostics.Process? _process;
 
         private readonly UpdateMonitorStatusDelegate? _updateMonitorStatus;
 
@@ -120,7 +121,7 @@ namespace Perfmon
             
             try
             {
-                _process = Process.GetProcessById((int)pid);
+                _process = System.Diagnostics.Process.GetProcessById((int)pid);
             }
             catch (ArgumentException)
             {
@@ -149,6 +150,7 @@ namespace Perfmon
 
                     while (!_endTask)
                     {
+                        _process.Refresh();
                         _onceRes.VMem = _process.VirtualMemorySize64 / 1048576.0f;
                         _onceRes.PhyMem = _process.WorkingSet64 / 1048576.0f;
                         _onceRes.TotalMem = _onceRes.VMem + _onceRes.PhyMem;

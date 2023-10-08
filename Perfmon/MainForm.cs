@@ -435,10 +435,8 @@ namespace Perfmon
                         var helpThread = new Thread(new ThreadStart(() =>
                         {
                             string desc = it.Monitor?.Descriptor() ?? "invalid";
-                            using (var visual = new VisualForm(path, desc))
-                            {
-                                visual.ShowDialog();
-                            }
+                            using var visual = new VisualForm(path, desc);
+                            visual.ShowDialog();
                         }));
                         helpThread.SetApartmentState(ApartmentState.STA);
                         helpThread.Start();

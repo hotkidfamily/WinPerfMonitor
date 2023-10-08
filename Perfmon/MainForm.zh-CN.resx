@@ -137,10 +137,6 @@
   <data name="labelCpuAndMem.ToolTip" xml:space="preserve">
     <value>本机状态</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="MonitorDetailLV.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
   <data name="PID.Text" xml:space="preserve">
     <value>进程ID</value>
   </data>
@@ -237,6 +233,7 @@
   <data name="btnBreak.ToolTip" xml:space="preserve">
     <value>暂停采集</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="BtnOpenFloder.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
   </data>
