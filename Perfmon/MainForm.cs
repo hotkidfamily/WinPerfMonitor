@@ -1,13 +1,8 @@
-﻿using System.Diagnostics;
-using System.Management;
-using System.Text;
-using Windows.Win32;
-using CsvHelper;
+﻿using CsvHelper;
+using System.Diagnostics;
 using System.Globalization;
-using ScottPlot;
-using System;
-using System.IO;
-using Perfmon.Properties;
+using System.Management;
+using Windows.Win32;
 
 namespace Perfmon
 {
@@ -19,6 +14,7 @@ namespace Perfmon
 
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
+
         internal class ProcessMonitorManager
         {
             public ProcessMonitor? Monitor;
@@ -29,10 +25,12 @@ namespace Perfmon
         }
 
         private readonly Dictionary<uint, ProcessMonitorManager> _monitorManager = new();
+
         private static readonly string[] _colHeaders_zh_hans
             = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
+
         private static readonly string[] _colHeaders_en = new string[] { "PID", "Name", "CPU", "Virtual Memory", "Physical Memory", "Total Memory", "Up Link", "Down Link", "Link Flow", "Time", "Status" };
-        private static readonly string[] _colDefaultValues = new string[] { "0", "Input/Select Target Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
+        private static readonly string[] _colDefaultValues = new string[] { "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
 
         private readonly string[] _colHeaders = default!;
         private static readonly int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
@@ -110,7 +108,7 @@ namespace Perfmon
             this.Opacity = 1;
         }
 
-        void OnUpdateMonitorStatus(ref RunStatusItem status)
+        private void OnUpdateMonitorStatus(ref RunStatusItem status)
         {
             lock (_monitorResult)
             {
@@ -142,7 +140,7 @@ namespace Perfmon
             }
         }
 
-        async Task RefreshListView()
+        private async Task RefreshListView()
         {
             while (!IsDisposed)
             {
@@ -186,7 +184,7 @@ namespace Perfmon
             }
         }
 
-        async Task QurySystemInfo()
+        private async Task QurySystemInfo()
         {
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
@@ -294,7 +292,6 @@ namespace Perfmon
 
         private void BtnBreak_Click(object sender, EventArgs e)
         {
-
         }
 
         private static int GetPhisicalMemory()
