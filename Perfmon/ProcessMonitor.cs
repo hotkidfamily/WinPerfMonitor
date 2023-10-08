@@ -175,7 +175,7 @@ namespace Perfmon
 
                             _onceRes.UpLink = (netspeedTracer.send - _netspeedDetailOld.send) * 8 / 1024.0f;
                             _onceRes.DownLink = (netspeedTracer.received - _netspeedDetailOld.received) * 8 / 1024.0f;
-                            _onceRes.TotalLinkFlow = (netspeedTracer.send + _netspeedDetailOld.received) * 8 / 1024.0f;
+                            _onceRes.TotalLinkFlow = (netspeedTracer.send + _netspeedDetailOld.received) / 1024.0f;
 
                             _netspeedDetailOld.send = netspeedTracer.send;
                             _netspeedDetailOld.received = netspeedTracer.received;
