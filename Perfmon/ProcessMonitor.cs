@@ -22,6 +22,7 @@ namespace Perfmon
         private double totalLinkFlow = 0;
         private long excuteSeconds = 0;
         private string excuteStatus = "no exist";
+        private double sysCpu = 0;
 
         public uint Pid { get => pid; set => pid = value; }
         public string ProcName { get => procName; set => procName = value; }
@@ -34,6 +35,7 @@ namespace Perfmon
         public double TotalLinkFlow { get => totalLinkFlow; set => totalLinkFlow = value; }
         public long ExcuteSeconds { get => excuteSeconds; set => excuteSeconds = value; }
         public string ExcuteStatus { get => excuteStatus; set => excuteStatus = value; }
+        public double SysCpu { get => sysCpu; set => sysCpu = value; }
 
         public string[] Info()
         {
@@ -58,7 +60,7 @@ namespace Perfmon
             return new string[] {
                 $"{Pid}",
                 ProcName,
-                $"{Cpu :F2}",
+                $"{Cpu :F2}%",
                 $"{VMem/1024 :F2} GB",
                 $"{PhyMem :F2} MB",
                 $"{TotalMem/1024 :F2} GB",
@@ -66,7 +68,8 @@ namespace Perfmon
                 $"{down :F2}{dposfix}",
                 $"{total :F2} MB",
                 $"{TimeSpan.FromSeconds(ExcuteSeconds)} s",
-                $"{ExcuteStatus}"
+                $"{ExcuteStatus}",
+                $"{sysCpu :F2}%"
             };
         }
     }

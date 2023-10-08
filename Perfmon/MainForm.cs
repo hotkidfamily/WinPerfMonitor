@@ -39,6 +39,8 @@ namespace Perfmon
 
         private static readonly Process _selfProcess = Process.GetCurrentProcess();
 
+        private double _sysCpu = 0;
+
         public MainForm()
         {
             CultureInfo current = Thread.CurrentThread.CurrentUICulture;
@@ -117,6 +119,7 @@ namespace Perfmon
             if (_monitorManager.ContainsKey(status.Pid))
             {
                 var it = _monitorManager[status.Pid];
+                status.SysCpu = _sysCpu;
                 it.ResWriter?.WriteRecord(status);
                 it.ResWriter?.NextRecord();
                 it.ResWriter?.FlushAsync();
@@ -188,9 +191,9 @@ namespace Perfmon
                 int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
                 int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
                 int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
-                float usage = cpuTotal?.NextValue() ?? 0;
+                _sysCpu = cpuTotal?.NextValue() ?? 0;
 
-                sb.Append($"{usage:F2}%, {mnam}, {os}, {core} C, ");
+                sb.Append($"{_sysCpu:F2}%, {mnam}, {os}, {core} C, ");
                 sb.Append($"{ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB");
 
                 labelCpuAndMem.Text = sb.ToString();

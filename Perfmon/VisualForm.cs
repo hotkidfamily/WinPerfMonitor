@@ -10,7 +10,6 @@ namespace Perfmon
     public partial class VisualForm : Form
     {
         private readonly string _csvPath;
-        private readonly string _descriptor;
         private List<RunStatusItem> _records = default!;
 
         private static readonly string TAB_HEADER_CPU = "CPU";
@@ -37,6 +36,7 @@ namespace Perfmon
                 Map(m => m.TotalLinkFlow).Name("TotalLinkFlow");
                 Map(m => m.ExcuteSeconds).Name("ExcuteSeconds");
                 Map(m => m.ExcuteStatus).Name("ExcuteStatus");
+                Map(m => m.SysCpu).Name("SysCpu");
             }
         }
 
@@ -45,7 +45,6 @@ namespace Perfmon
             InitializeComponent();
             ConstructTabControl();
             _csvPath = path;
-            _descriptor = descriptor;
             _ = UpdateInfo();
             Text = Text + descriptor;
         }
@@ -132,10 +131,10 @@ namespace Perfmon
 
                 for (int i = 0; i < length; i++)
                 {
-                    _sysLogger.Add(_sysLogger.Count, _records[i].Cpu);
                     _procLogger.Add(_procLogger.Count, _records[i].Cpu);
                     _memLogger.Add(_memLogger.Count, _records[i].TotalMem);
                     _uplinkLogger.Add(_uplinkLogger.Count, _records[i].UpLink);
+                    _sysLogger.Add(_sysLogger.Count, _records[i].SysCpu);
                 }
                 formsPlotSysCpu.Refresh();
                 formsPlotProcCPU.Refresh();
