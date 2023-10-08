@@ -24,6 +24,7 @@ namespace Perfmon
         private long excuteSeconds = 0;
         private string excuteStatus = "no exist";
         private double sysCpu = 0;
+        private double cpuPerf = 0;
 
         public uint Pid { get => pid; set => pid = value; }
         public string ProcName { get => procName; set => procName = value; }
@@ -37,6 +38,7 @@ namespace Perfmon
         public long ExcuteSeconds { get => excuteSeconds; set => excuteSeconds = value; }
         public string ExcuteStatus { get => excuteStatus; set => excuteStatus = value; }
         public double SysCpu { get => sysCpu; set => sysCpu = value; }
+        public double CpuPerf { get => cpuPerf; set => cpuPerf = value; }
 
         public string[] Info()
         {
@@ -70,7 +72,8 @@ namespace Perfmon
                 $"{total :F2} MB",
                 $"{TimeSpan.FromSeconds(ExcuteSeconds)} s",
                 $"{ExcuteStatus}",
-                $"{sysCpu :F2}%"
+                $"{sysCpu :F2}%",
+                $"{cpuPerf :F2}%"
             };
         }
     }
@@ -98,6 +101,9 @@ namespace Perfmon
         private readonly NetspeedTrace _netspeedDetail = new();
         private readonly NetspeedTrace _netspeedDetailOld = new();
         private readonly string _desc = "invalid process desc";
+
+        private PerformanceCounter? _cpuUsage;
+        //private PerformanceCounter? _gpuUsage;
 
         void ProcessExitEventHandler(object? sender, EventArgs e)
         {
@@ -147,6 +153,7 @@ namespace Perfmon
                     double lastProcessorTime = 0;
                     double cores = 100.0f / Environment.ProcessorCount;
                     NetspeedTrace netspeedTracer = new();
+                    _cpuUsage = new PerformanceCounter("Process V2", "% Processor Time", $"{_process.ProcessName}:{_pid}");
 
                     while (!_endTask)
                     {
@@ -162,7 +169,8 @@ namespace Perfmon
                             lastMonitorTicks = nowTicks - 1000;
                             lastProcessorTime = nowProcessorTime;
                         }
-                    
+
+                        _onceRes.CpuPerf = _cpuUsage?.NextValue() ?? 0;
                         _onceRes.Cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
                         lastMonitorTicks = nowTicks;
                         lastProcessorTime = nowProcessorTime;

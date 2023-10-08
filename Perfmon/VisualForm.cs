@@ -33,6 +33,7 @@ namespace Perfmon
                 Map(m => m.ExcuteSeconds).Name("ExcuteSeconds");
                 Map(m => m.ExcuteStatus).Name("ExcuteStatus");
                 Map(m => m.SysCpu).Name("SysCpu");
+                Map(m => m.CpuPerf).Name("CpuPerf");
             }
         }
 
