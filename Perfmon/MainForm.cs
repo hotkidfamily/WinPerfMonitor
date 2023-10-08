@@ -186,17 +186,16 @@ namespace Perfmon
 
             while (!IsDisposed)
             {
-                StringBuilder sb = new();
+                _selfProcess.Refresh();
                 int rama = (int)((long)Math.Round(ramAva.NextValue()) >> 20);
                 int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
                 int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
-                int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
+                int pPhyRam = (int)(_selfProcess.PrivateMemorySize64 >> 20);
                 _sysCpu = cpuTotal?.NextValue() ?? 0;
 
-                sb.Append($"{_sysCpu:F2}%, {mnam}, {os}, {core} C, ");
-                sb.Append($"{ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB");
+                var sb = $"{_sysCpu:F2}%, {mnam}, {os}, {core} C, {ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB";
 
-                labelCpuAndMem.Text = sb.ToString();
+                labelCpuAndMem.Text = sb;
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
             }
         }

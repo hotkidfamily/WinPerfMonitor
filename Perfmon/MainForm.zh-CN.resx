@@ -221,6 +221,10 @@
   <data name="BtnRemove.ToolTip" xml:space="preserve">
     <value>删除采集</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnBreak.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="btnBreak.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 3</value>
   </data>
@@ -264,12 +268,14 @@
   <data name="BtnOpenResult.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 36</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="BtnOpenResult.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
   <data name="BtnOpenResult.ToolTip" xml:space="preserve">
     <value>查看数据</value>
+  </data>
+  <data name="BtnAnalysis.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="BtnAnalysis.Location" type="System.Drawing.Point, System.Drawing">
     <value>349, 3</value>
