@@ -417,10 +417,6 @@ namespace Perfmon
             }
         }
 
-        private void BtnVisual_Click(object sender, EventArgs e)
-        {
-        }
-
         private void MonitorDetailLV_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo info = MonitorDetailLV.HitTest(e.X, e.Y);
@@ -430,11 +426,12 @@ namespace Perfmon
                 if (_monitorManager.ContainsKey(pid))
                 {
                     var it = _monitorManager[pid];
-                    string path = it.ResPath??"";
-                    if(path != null && ((it.VisualThread == null) || !it.VisualThread.IsAlive))
+                    string path = it.ResPath ?? "";
+                    if (path != null && ((it.VisualThread == null) || !it.VisualThread.IsAlive))
                     {
-                        var helpThread = new Thread(new ThreadStart(() => {
-                            string desc = it.Monitor?.Descriptor()??"invalid";
+                        var helpThread = new Thread(new ThreadStart(() =>
+                        {
+                            string desc = it.Monitor?.Descriptor() ?? "invalid";
                             using (var visual = new VisualForm(path, desc))
                             {
                                 visual.ShowDialog();

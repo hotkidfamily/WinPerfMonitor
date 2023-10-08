@@ -237,30 +237,6 @@
   <data name="btnBreak.ToolTip" xml:space="preserve">
     <value>暂停采集</value>
   </data>
-  <data name="BtnVisual.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="BtnVisual.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
-  <data name="BtnVisual.ImageKey" xml:space="preserve">
-    <value>(无)</value>
-  </data>
-  <data name="BtnVisual.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnVisual.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 4</value>
-  </data>
-  <data name="BtnVisual.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="BtnVisual.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 36</value>
-  </data>
-  <data name="BtnVisual.ToolTip" xml:space="preserve">
-    <value>展示图表</value>
-  </data>
   <data name="BtnOpenFloder.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
   </data>
@@ -271,7 +247,7 @@
     <value>(无)</value>
   </data>
   <data name="BtnOpenFloder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>312, 4</value>
+    <value>272, 4</value>
   </data>
   <data name="BtnOpenFloder.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>40, 2, 2, 2</value>
@@ -283,7 +259,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnOpenResult.Location" type="System.Drawing.Point, System.Drawing">
-    <value>351, 3</value>
+    <value>311, 3</value>
   </data>
   <data name="BtnOpenResult.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 1, 1, 1</value>
@@ -299,7 +275,7 @@
     <value>查看数据</value>
   </data>
   <data name="BtnAnalysis.Location" type="System.Drawing.Point, System.Drawing">
-    <value>389, 3</value>
+    <value>349, 3</value>
   </data>
   <data name="BtnAnalysis.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 1, 1, 1</value>

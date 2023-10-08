@@ -54,7 +54,6 @@ namespace Perfmon
             btnRestart = new Button();
             BtnRemove = new Button();
             btnBreak = new Button();
-            BtnVisual = new Button();
             BtnOpenFloder = new Button();
             BtnOpenResult = new Button();
             BtnAnalysis = new Button();
@@ -168,7 +167,6 @@ namespace Perfmon
             flowLayoutPanel1.Controls.Add(btnRestart);
             flowLayoutPanel1.Controls.Add(BtnRemove);
             flowLayoutPanel1.Controls.Add(btnBreak);
-            flowLayoutPanel1.Controls.Add(BtnVisual);
             flowLayoutPanel1.Controls.Add(BtnOpenFloder);
             flowLayoutPanel1.Controls.Add(BtnOpenResult);
             flowLayoutPanel1.Controls.Add(BtnAnalysis);
@@ -214,16 +212,6 @@ namespace Perfmon
             toolTip1.SetToolTip(btnBreak, resources.GetString("btnBreak.ToolTip"));
             btnBreak.UseVisualStyleBackColor = true;
             btnBreak.Click += BtnBreak_Click;
-            // 
-            // BtnVisual
-            // 
-            resources.ApplyResources(BtnVisual, "BtnVisual");
-            BtnVisual.BackgroundImage = Properties.Resources.data_visualization;
-            BtnVisual.Cursor = Cursors.Hand;
-            BtnVisual.Name = "BtnVisual";
-            toolTip1.SetToolTip(BtnVisual, resources.GetString("BtnVisual.ToolTip"));
-            BtnVisual.UseVisualStyleBackColor = true;
-            BtnVisual.Click += BtnVisual_Click;
             // 
             // BtnOpenFloder
             // 
@@ -300,7 +288,6 @@ namespace Perfmon
         private ToolTip toolTip1;
         private Button BtnOpenFloder;
         private Button BtnAnalysis;
-        private Button BtnVisual;
         private Button BtnOpenResult;
     }
 }

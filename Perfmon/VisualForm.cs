@@ -76,11 +76,10 @@ namespace Perfmon
 
             formsPlotUpLink.Name = TAB_HEADER_UPLINK;
             formsPlotUpLink.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            formsPlotUpLink.Plot.SetAxisLimits(0, 100, 0, 10000);
             formsPlotUpLink.Plot.Title("Uplink Speed");
             formsPlotUpLink.Plot.XLabel("Time");
             formsPlotUpLink.Plot.YLabel("Kb/s");
-            formsPlotUpLink.Plot.YAxis.SetBoundary(0, 50000);
+            formsPlotUpLink.Plot.YAxis.SetBoundary(0);
             formsPlotUpLink.Plot.XAxis.SetBoundary(0);
             _uplinkLogger = formsPlotUpLink.Plot.AddDataLogger();
             _uplinkLogger.LineWidth = 3;
