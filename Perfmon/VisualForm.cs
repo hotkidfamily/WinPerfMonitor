@@ -1,16 +1,12 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using ScottPlot;
 using System.Globalization;
-using TraceReloggerLib;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace Perfmon
 {
     public partial class VisualForm : Form
     {
         private readonly string _csvPath;
-        private List<RunStatusItem> _records = default!;
 
         private static readonly string TAB_HEADER_CPU = "CPU";
         private static readonly string TAB_HEADER_MEMORY = "Memory";
@@ -53,9 +49,7 @@ namespace Perfmon
         {
             formsPlotProcCPU.Name = TAB_HEADER_CPU;
             formsPlotProcCPU.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            formsPlotProcCPU.Plot.Title("CPU usage");
-            formsPlotProcCPU.Plot.XLabel("Time");
-            formsPlotProcCPU.Plot.YLabel("%");
+            formsPlotProcCPU.Plot.YLabel("CPU usage %");
             formsPlotProcCPU.Plot.YAxis.SetBoundary(0, 100);
             formsPlotProcCPU.Plot.XAxis.SetBoundary(0);
             _procLogger = formsPlotProcCPU.Plot.AddDataLogger();
@@ -64,9 +58,7 @@ namespace Perfmon
 
             formsPlotProcMem.Name = TAB_HEADER_MEMORY;
             formsPlotProcMem.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            formsPlotProcMem.Plot.Title("Memory usage");
-            formsPlotProcMem.Plot.XLabel("Time");
-            formsPlotProcMem.Plot.YLabel("MB");
+            formsPlotProcMem.Plot.YLabel("Memory usage MB");
             formsPlotProcMem.Plot.YAxis.SetBoundary(0);
             formsPlotProcMem.Plot.XAxis.SetBoundary(0);
             _memLogger = formsPlotProcMem.Plot.AddDataLogger();
@@ -75,9 +67,7 @@ namespace Perfmon
 
             formsPlotUpLink.Name = TAB_HEADER_UPLINK;
             formsPlotUpLink.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            formsPlotUpLink.Plot.Title("Uplink Speed");
-            formsPlotUpLink.Plot.XLabel("Time");
-            formsPlotUpLink.Plot.YLabel("Kb/s");
+            formsPlotUpLink.Plot.YLabel("Uplink Speed Kb/s");
             formsPlotUpLink.Plot.YAxis.SetBoundary(0);
             formsPlotUpLink.Plot.XAxis.SetBoundary(0);
             _uplinkLogger = formsPlotUpLink.Plot.AddDataLogger();
@@ -86,9 +76,7 @@ namespace Perfmon
 
             formsPlotSysCpu.Name = TAB_HEADER_SYSTEM;
             formsPlotSysCpu.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            formsPlotSysCpu.Plot.Title("System CPU usage");
-            formsPlotSysCpu.Plot.XLabel("Time");
-            formsPlotSysCpu.Plot.YLabel("%");
+            formsPlotSysCpu.Plot.YLabel("System CPU usage %");
             formsPlotSysCpu.Plot.YAxis.SetBoundary(0, 100);
             formsPlotSysCpu.Plot.XAxis.SetBoundary(0);
             _sysLogger = formsPlotSysCpu.Plot.AddDataLogger();
@@ -108,6 +96,7 @@ namespace Perfmon
             {
                 return;
             }
+            List<RunStatusItem> records;
 
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -126,15 +115,15 @@ namespace Perfmon
 
             while (!IsDisposed)
             {
-                _records = csv.GetRecords<RunStatusItem>().ToList();
-                int length = _records.Count;
+                records = csv.GetRecords<RunStatusItem>().ToList();
+                int length = records.Count;
 
                 for (int i = 0; i < length; i++)
                 {
-                    _procLogger.Add(_procLogger.Count, _records[i].Cpu);
-                    _memLogger.Add(_memLogger.Count, _records[i].TotalMem);
-                    _uplinkLogger.Add(_uplinkLogger.Count, _records[i].UpLink);
-                    _sysLogger.Add(_sysLogger.Count, _records[i].SysCpu);
+                    _procLogger.Add(_procLogger.Count, records[i].Cpu);
+                    _memLogger.Add(_memLogger.Count, records[i].TotalMem);
+                    _uplinkLogger.Add(_uplinkLogger.Count, records[i].UpLink);
+                    _sysLogger.Add(_sysLogger.Count, records[i].SysCpu);
                 }
                 formsPlotSysCpu.Refresh();
                 formsPlotProcCPU.Refresh();
