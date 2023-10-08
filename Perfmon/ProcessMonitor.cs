@@ -162,8 +162,10 @@ namespace Perfmon
                         }
                     
                         _onceRes.Cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
-                        _onceRes.ExcuteSeconds = (nowTicks - firstMonitorTicks)/1000;
+                        lastMonitorTicks = nowTicks;
                         lastProcessorTime = nowProcessorTime;
+
+                        _onceRes.ExcuteSeconds = (nowTicks - firstMonitorTicks)/1000;
 
                         {
                             netspeedTracer.send = _netspeedDetail.send;
