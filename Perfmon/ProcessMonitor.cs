@@ -210,7 +210,7 @@ namespace Perfmon
             _netspeedDetail.send = 0;
             _netspeedDetail.received = 0;
 
-            using TraceEventSession netTraceSession = new TraceEventSession("Perfmon_KernelAndClrEventsSession");
+            using TraceEventSession netTraceSession = new("Perfmon_KernelAndClrEventsSession");
             netTraceSession.EnableKernelProvider(KernelTraceEventParser.Keywords.NetworkTCPIP);
 
             netTraceSession.Source.Kernel.TcpIpRecv += data =>
