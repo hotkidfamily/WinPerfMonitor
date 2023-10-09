@@ -97,13 +97,9 @@ namespace Perfmon
 
         private readonly UpdateMonitorStatusDelegate? _updateMonitorStatus;
 
-        private TraceEventSession? _netTraceSession;
         private readonly NetspeedTrace _netspeedDetail = new();
         private readonly NetspeedTrace _netspeedDetailOld = new();
         private readonly string _desc = "invalid process desc";
-
-        private PerformanceCounter? _cpuUsage;
-        //private PerformanceCounter? _gpuUsage;
 
         void ProcessExitEventHandler(object? sender, EventArgs e)
         {
@@ -153,10 +149,11 @@ namespace Perfmon
                     double lastProcessorTime = 0;
                     double cores = 100.0f / Environment.ProcessorCount;
                     NetspeedTrace netspeedTracer = new();
+                    PerformanceCounter? cpuUsage = null;
 
                     try
                     {
-                        _cpuUsage = new PerformanceCounter("Process V2", "% Processor Time", $"{_process.ProcessName}:{_pid}");
+                        cpuUsage = new PerformanceCounter("Process V2", "% Processor Time", $"{_process.ProcessName}:{_pid}");
                     }
                     catch (Exception) {
                     }
@@ -176,7 +173,7 @@ namespace Perfmon
                             lastProcessorTime = nowProcessorTime;
                         }
 
-                        _onceRes.CpuPerf = _cpuUsage?.NextValue() ?? 0;
+                        _onceRes.CpuPerf = cpuUsage?.NextValue() ?? 0;
                         _onceRes.Cpu = Math.Round((nowProcessorTime - lastProcessorTime) * cores / (nowTicks - lastMonitorTicks), 2);
                         lastMonitorTicks = nowTicks;
                         lastProcessorTime = nowProcessorTime;
@@ -209,61 +206,52 @@ namespace Perfmon
 
         private void StartEtwSession()
         {
-            try
-            {
-                var processId = _pid;
+            var processId = _pid;
+            _netspeedDetail.send = 0;
+            _netspeedDetail.received = 0;
 
-                using (_netTraceSession = new TraceEventSession("Perfmon_KernelAndClrEventsSession"))
+            using TraceEventSession netTraceSession = new TraceEventSession("Perfmon_KernelAndClrEventsSession");
+            netTraceSession.EnableKernelProvider(KernelTraceEventParser.Keywords.NetworkTCPIP);
+
+            netTraceSession.Source.Kernel.TcpIpRecv += data =>
+            {
+                if (data.ProcessID == processId)
                 {
-                    _netTraceSession.EnableKernelProvider(KernelTraceEventParser.Keywords.NetworkTCPIP);
-
-                    _netTraceSession.Source.Kernel.TcpIpRecv += data =>
-                    {
-                        if (data.ProcessID == processId)
-                        {
-                            _netspeedDetail.received += data.size;
-                        }
-                    };
-
-                    _netTraceSession.Source.Kernel.TcpIpSend += data =>
-                    {
-                        if (data.ProcessID == processId)
-                        {
-                            _netspeedDetail.send += data.size;
-                        }
-                    };
-
-                    _netTraceSession.Source.Kernel.UdpIpRecv += data =>
-                    {
-                        if (data.ProcessID == processId)
-                        {
-                            _netspeedDetail.received += data.size;
-                        }
-                    };
-
-                    _netTraceSession.Source.Kernel.UdpIpSend += data =>
-                    {
-                        if (data.ProcessID == processId)
-                        {
-                            _netspeedDetail.send += data.size;
-                        }
-                    };
-
-                    _netTraceSession.Source.Process();
+                    _netspeedDetail.received += data.size;
                 }
-            }
-            catch
+            };
+
+            netTraceSession.Source.Kernel.TcpIpSend += data =>
             {
-                _netspeedDetail.send = 0;
-                _netspeedDetail.received = 0;
-            }
+                if (data.ProcessID == processId)
+                {
+                    _netspeedDetail.send += data.size;
+                }
+            };
+
+            netTraceSession.Source.Kernel.UdpIpRecv += data =>
+            {
+                if (data.ProcessID == processId)
+                {
+                    _netspeedDetail.received += data.size;
+                }
+            };
+
+            netTraceSession.Source.Kernel.UdpIpSend += data =>
+            {
+                if (data.ProcessID == processId)
+                {
+                    _netspeedDetail.send += data.size;
+                }
+            };
+
+            netTraceSession.Source.Process();
         }
 
         public void Dispose()
         {
             _endTask = true;
             _task?.Wait();
-            _netTraceSession?.Dispose();
         }
     }
 }
