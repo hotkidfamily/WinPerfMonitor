@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Microsoft.Diagnostics.Tracing.Parsers.AspNet;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -9,9 +10,9 @@ namespace Perfmon
 {
     public partial class MainForm : Form
     {
-        private PerformanceCounter cpuTotal = default!;
-        private PerformanceCounter ramAva = default!;
-        private PerformanceCounter ramUsed = default!;
+        private PerformanceCounter? _cpuTotal = null;
+        private PerformanceCounter? _ramAva = null;
+        private PerformanceCounter? _ramUsed = null;
 
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
@@ -73,20 +74,22 @@ namespace Perfmon
             {
                 try
                 {
-                    cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
-                    float usage = cpuTotal?.NextValue() ?? 0;
+                    _cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
+                    float usage = _cpuTotal?.NextValue() ?? 0;
                 }
                 catch (Exception)
                 {
-                    cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+                    _cpuTotal = null;
                 }
             }
-            else
+
+            if(_cpuTotal == null)
             {
-                cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+                _cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             }
-            ramAva = new PerformanceCounter("Memory", "Available Bytes");
-            ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
+
+            _ramAva = new PerformanceCounter("Memory", "Available Bytes");
+            _ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
         }
 
         private void BtnShotProcess_MouseDown(object sender, MouseEventArgs e)
@@ -194,11 +197,11 @@ namespace Perfmon
             while (!IsDisposed)
             {
                 _selfProcess.Refresh();
-                int rama = (int)((long)Math.Round(ramAva.NextValue()) >> 20);
-                int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
+                int rama = (int)((long)Math.Round(_ramAva?.NextValue()??0) >> 20);
+                int ram = (int)((long)(_ramUsed?.NextValue()??0) >> 20) + rama;
                 int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
                 int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
-                _sysCpu = cpuTotal?.NextValue() ?? 0;
+                _sysCpu = _cpuTotal?.NextValue() ?? 0;
 
                 var sb = $"{_sysCpu:F2}%, {mnam}, {os}, {core} C, {ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB";
 
@@ -368,9 +371,9 @@ namespace Perfmon
                 it.Value.ResWriter?.Dispose();
             }
             _monitorManager.Clear();
-            cpuTotal.Dispose();
-            ramAva.Dispose();
-            ramUsed.Dispose();
+            _cpuTotal?.Dispose();
+            _ramAva?.Dispose();
+            _ramUsed?.Dispose();
         }
 
         private void BtnOpenFloder_Click(object sender, EventArgs e)
