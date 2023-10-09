@@ -10,10 +10,6 @@ namespace Perfmon
 {
     public partial class MainForm : Form
     {
-        private PerformanceCounter? _cpuTotal = null;
-        private PerformanceCounter? _ramAva = null;
-        private PerformanceCounter? _ramUsed = null;
-
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
 
@@ -169,36 +165,25 @@ namespace Perfmon
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
             var os = Environment.OSVersion.Version.ToString();
+            using PerformanceCounter ramAva = new("Memory", "Available Bytes");
+            using PerformanceCounter ramUsed = new("Memory", "Committed Bytes");
 
-            if (Environment.OSVersion.Version.Major >= 10)
+            PerformanceCounter? cpuTotal = null;
+            try
             {
-                try
-                {
-                    _cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
-                    float usage = _cpuTotal?.NextValue() ?? 0;
-                }
-                catch (Exception)
-                {
-                    _cpuTotal = null;
-                }
-            }
-
-            if (_cpuTotal == null)
-            {
-                _cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            }
-
-            _ramAva = new PerformanceCounter("Memory", "Available Bytes");
-            _ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
+                cpuTotal = new("Processor Information", "% Processor Utility", "_Total");
+                _ = cpuTotal?.NextValue();
+            }catch(Exception) { cpuTotal?.Dispose(); cpuTotal = null; }
+            cpuTotal ??= new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
             while (!IsDisposed)
             {
                 _selfProcess.Refresh();
-                int rama = (int)((long)Math.Round(_ramAva?.NextValue()??0) >> 20);
-                int ram = (int)((long)(_ramUsed?.NextValue()??0) >> 20) + rama;
+                int rama = (int)((long)Math.Round(ramAva?.NextValue()??0) >> 20);
+                int ram = (int)((long)(ramUsed?.NextValue()??0) >> 20) + rama;
                 int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
                 int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
-                _sysCpu = _cpuTotal?.NextValue() ?? 0;
+                _sysCpu = cpuTotal?.NextValue() ?? 0;
 
                 var sb = $"{_sysCpu:F2}%, {mnam}, {os}, {core} C, {ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB";
 
@@ -368,9 +353,6 @@ namespace Perfmon
                 it.Value.ResWriter?.Dispose();
             }
             _monitorManager.Clear();
-            _cpuTotal?.Dispose();
-            _ramAva?.Dispose();
-            _ramUsed?.Dispose();
         }
 
         private void BtnOpenFloder_Click(object sender, EventArgs e)
