@@ -171,7 +171,7 @@ namespace Perfmon
                             {
                                 var v = _monitorManager[item.Pid];
                                 v.Monitor?.Dispose();
-                                _ = v.ResWriter?.DisposeAsync();
+                                v.ResWriter?.Dispose();
                                 v.Monitor = null;
                                 v.ResWriter = null;
                             }
@@ -236,7 +236,7 @@ namespace Perfmon
             {
                 var v = _monitorManager[pid];
                 v.Monitor?.Dispose();
-                _ = (v.ResWriter?.DisposeAsync());
+                v.ResWriter?.Dispose();
                 v.Monitor = null;
                 v.ResWriter = null;
 
