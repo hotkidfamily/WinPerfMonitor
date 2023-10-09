@@ -62,35 +62,11 @@ namespace Perfmon
             InitializeComponent();
             ConstructListView();
 
-            ConstructSystemMonitor();
             _phyMemTotal = GetPhisicalMemory();
             _ = QurySystemInfo();
             _ = RefreshListView();
         }
 
-        private void ConstructSystemMonitor()
-        {
-            if (Environment.OSVersion.Version.Major >= 10)
-            {
-                try
-                {
-                    _cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
-                    float usage = _cpuTotal?.NextValue() ?? 0;
-                }
-                catch (Exception)
-                {
-                    _cpuTotal = null;
-                }
-            }
-
-            if(_cpuTotal == null)
-            {
-                _cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            }
-
-            _ramAva = new PerformanceCounter("Memory", "Available Bytes");
-            _ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
-        }
 
         private void BtnShotProcess_MouseDown(object sender, MouseEventArgs e)
         {
@@ -193,6 +169,27 @@ namespace Perfmon
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
             var os = Environment.OSVersion.Version.ToString();
+
+            if (Environment.OSVersion.Version.Major >= 10)
+            {
+                try
+                {
+                    _cpuTotal = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
+                    float usage = _cpuTotal?.NextValue() ?? 0;
+                }
+                catch (Exception)
+                {
+                    _cpuTotal = null;
+                }
+            }
+
+            if (_cpuTotal == null)
+            {
+                _cpuTotal = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            }
+
+            _ramAva = new PerformanceCounter("Memory", "Available Bytes");
+            _ramUsed = new PerformanceCounter("Memory", "Committed Bytes");
 
             while (!IsDisposed)
             {
