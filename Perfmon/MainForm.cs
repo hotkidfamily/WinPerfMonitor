@@ -121,7 +121,7 @@ namespace Perfmon
                 status.SysCpu = _sysCpu;
                 it.ResWriter?.WriteRecord(status);
                 it.ResWriter?.NextRecord();
-                it.ResWriter?.FlushAsync();
+                it.ResWriter?.Flush();
             }
         }
 
@@ -134,7 +134,7 @@ namespace Perfmon
                 ColumnHeader ch = new()
                 {
                     Width = _colSize[i],
-                    TextAlign = System.Windows.Forms.HorizontalAlignment.Left,
+                    TextAlign = HorizontalAlignment.Left,
                     Text = _colHeaders?[i],
                 };
                 MonitorDetailLV.Columns.Add(ch);
@@ -197,7 +197,7 @@ namespace Perfmon
                 int rama = (int)((long)Math.Round(ramAva.NextValue()) >> 20);
                 int ram = (int)((long)ramUsed.NextValue() >> 20) + rama;
                 int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
-                int pPhyRam = (int)(_selfProcess.PrivateMemorySize64 >> 20);
+                int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
                 _sysCpu = cpuTotal?.NextValue() ?? 0;
 
                 var sb = $"{_sysCpu:F2}%, {mnam}, {os}, {core} C, {ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB";
