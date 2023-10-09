@@ -149,14 +149,7 @@ namespace Perfmon
                     double lastProcessorTime = 0;
                     double cores = 100.0f / Environment.ProcessorCount;
                     NetspeedTrace netspeedTracer = new();
-                    PerformanceCounter? cpuUsage = null;
-
-                    try
-                    {
-                        cpuUsage = new PerformanceCounter("Process V2", "% Processor Time", $"{_process.ProcessName}:{_pid}");
-                    }
-                    catch (Exception) {
-                    }
+                    using PerformanceCounter cpuUsage = new("Process V2", "% Processor Time", $"{_process.ProcessName}:{_pid}");
 
                     while (!_endTask)
                     {
