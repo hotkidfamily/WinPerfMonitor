@@ -45,34 +45,34 @@
             formsPlotProcCPU.Location = new Point(4, 3);
             formsPlotProcCPU.Margin = new Padding(4, 3, 4, 3);
             formsPlotProcCPU.Name = "formsPlotProcCPU";
-            formsPlotProcCPU.Size = new Size(772, 185);
+            formsPlotProcCPU.Size = new Size(772, 187);
             formsPlotProcCPU.TabIndex = 0;
             // 
             // formsPlotProcMem
             // 
             formsPlotProcMem.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            formsPlotProcMem.Location = new Point(4, 194);
+            formsPlotProcMem.Location = new Point(4, 196);
             formsPlotProcMem.Margin = new Padding(4, 3, 4, 3);
             formsPlotProcMem.Name = "formsPlotProcMem";
-            formsPlotProcMem.Size = new Size(772, 185);
+            formsPlotProcMem.Size = new Size(772, 187);
             formsPlotProcMem.TabIndex = 1;
             // 
             // formsPlotUpLink
             // 
             formsPlotUpLink.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            formsPlotUpLink.Location = new Point(4, 385);
+            formsPlotUpLink.Location = new Point(4, 389);
             formsPlotUpLink.Margin = new Padding(4, 3, 4, 3);
             formsPlotUpLink.Name = "formsPlotUpLink";
-            formsPlotUpLink.Size = new Size(772, 185);
+            formsPlotUpLink.Size = new Size(772, 187);
             formsPlotUpLink.TabIndex = 2;
             // 
             // formsPlotSysCpu
             // 
             formsPlotSysCpu.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            formsPlotSysCpu.Location = new Point(4, 576);
+            formsPlotSysCpu.Location = new Point(4, 582);
             formsPlotSysCpu.Margin = new Padding(4, 3, 4, 3);
             formsPlotSysCpu.Name = "formsPlotSysCpu";
-            formsPlotSysCpu.Size = new Size(772, 188);
+            formsPlotSysCpu.Size = new Size(772, 189);
             formsPlotSysCpu.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -84,20 +84,21 @@
             tableLayoutPanel1.Controls.Add(formsPlotSysCpu, 0, 3);
             tableLayoutPanel1.Controls.Add(formsPlotProcMem, 0, 1);
             tableLayoutPanel1.Controls.Add(formsPlotUpLink, 0, 2);
-            tableLayoutPanel1.Location = new Point(12, 44);
+            tableLayoutPanel1.Location = new Point(12, 37);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.Size = new Size(780, 767);
+            tableLayoutPanel1.Size = new Size(780, 774);
             tableLayoutPanel1.TabIndex = 4;
             // 
             // BtnFull
             // 
+            BtnFull.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnFull.Location = new Point(601, 8);
-            BtnFull.Margin = new Padding(2, 2, 2, 2);
+            BtnFull.Margin = new Padding(2);
             BtnFull.Name = "BtnFull";
             BtnFull.Size = new Size(71, 24);
             BtnFull.TabIndex = 5;
@@ -107,8 +108,9 @@
             // 
             // BtnSlide
             // 
+            BtnSlide.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnSlide.Location = new Point(700, 8);
-            BtnSlide.Margin = new Padding(2, 2, 2, 2);
+            BtnSlide.Margin = new Padding(2);
             BtnSlide.Name = "BtnSlide";
             BtnSlide.Size = new Size(71, 24);
             BtnSlide.TabIndex = 6;

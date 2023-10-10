@@ -445,7 +445,7 @@ namespace PerfMonitor
         private void FreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MonitorDetailLV.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            
+
             MonitorDetailLV.BeginUpdate();
             for (int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++)
             {

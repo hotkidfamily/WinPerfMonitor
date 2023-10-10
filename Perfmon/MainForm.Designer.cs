@@ -52,6 +52,7 @@ namespace PerfMonitor
             BtnSetting = new Button();
             BtnOpenFloder = new Button();
             btnShotProcess = new Button();
+            BtnHistory = new Button();
             ItemContextMenuStrip = new ContextMenuStrip(components);
             openToolStripMenuItem = new ToolStripMenuItem();
             stopToolStripMenuItem = new ToolStripMenuItem();
@@ -66,13 +67,13 @@ namespace PerfMonitor
             // labelCpuAndMem
             // 
             labelCpuAndMem.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            labelCpuAndMem.BorderStyle = BorderStyle.None;
+            labelCpuAndMem.BorderStyle = BorderStyle.FixedSingle;
             labelCpuAndMem.Location = new Point(13, 343);
             labelCpuAndMem.Margin = new Padding(1);
             labelCpuAndMem.Name = "labelCpuAndMem";
             labelCpuAndMem.ReadOnly = true;
-            labelCpuAndMem.Size = new Size(903, 16);
-            labelCpuAndMem.TabIndex = 1;
+            labelCpuAndMem.Size = new Size(903, 23);
+            labelCpuAndMem.TabIndex = 5;
             labelCpuAndMem.TextAlign = HorizontalAlignment.Right;
             toolTip1.SetToolTip(labelCpuAndMem, "本机状态");
             // 
@@ -164,7 +165,7 @@ namespace PerfMonitor
             textBoxPID.Location = new Point(115, 31);
             textBoxPID.Name = "textBoxPID";
             textBoxPID.Size = new Size(100, 23);
-            textBoxPID.TabIndex = 5;
+            textBoxPID.TabIndex = 1;
             toolTip1.SetToolTip(textBoxPID, "输入PID");
             textBoxPID.KeyPress += TextBoxPID_KeyPress;
             // 
@@ -229,6 +230,22 @@ namespace PerfMonitor
             btnShotProcess.MouseDown += BtnShotProcess_MouseDown;
             btnShotProcess.MouseUp += BtnShotProcess_MouseUp;
             // 
+            // BtnHistory
+            // 
+            BtnHistory.BackgroundImage = Properties.Resources.history;
+            BtnHistory.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnHistory.Cursor = Cursors.Hand;
+            BtnHistory.FlatStyle = FlatStyle.Popup;
+            BtnHistory.ImageKey = "(无)";
+            BtnHistory.ImeMode = ImeMode.NoControl;
+            BtnHistory.Location = new Point(102, 4);
+            BtnHistory.Margin = new Padding(20, 2, 2, 2);
+            BtnHistory.Name = "BtnHistory";
+            BtnHistory.Size = new Size(36, 36);
+            BtnHistory.TabIndex = 15;
+            toolTip1.SetToolTip(BtnHistory, "打开历史");
+            BtnHistory.UseVisualStyleBackColor = true;
+            // 
             // ItemContextMenuStrip
             // 
             ItemContextMenuStrip.ImageScalingSize = new Size(24, 24);
@@ -280,11 +297,12 @@ namespace PerfMonitor
             // 
             flowLayoutPanel1.Controls.Add(BtnOpenFloder);
             flowLayoutPanel1.Controls.Add(BtnSetting);
-            flowLayoutPanel1.Location = new Point(832, 24);
+            flowLayoutPanel1.Controls.Add(BtnHistory);
+            flowLayoutPanel1.Location = new Point(768, 24);
             flowLayoutPanel1.Margin = new Padding(1);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Padding = new Padding(2);
-            flowLayoutPanel1.Size = new Size(84, 44);
+            flowLayoutPanel1.Size = new Size(148, 44);
             flowLayoutPanel1.TabIndex = 7;
             // 
             // MainForm
@@ -339,5 +357,6 @@ namespace PerfMonitor
         private Button BtnOpenFloder;
         private Button btnShotProcess;
         private FlowLayoutPanel flowLayoutPanel1;
+        private Button BtnHistory;
     }
 }
