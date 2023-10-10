@@ -2,7 +2,7 @@
 using CsvHelper.Configuration;
 using System.Globalization;
 
-namespace Perfmon
+namespace PerfMonitor
 {
     public partial class VisualForm : Form
     {

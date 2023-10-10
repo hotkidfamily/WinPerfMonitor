@@ -6,7 +6,7 @@ using System.IO;
 using System.Management;
 using Windows.Win32;
 
-namespace Perfmon
+namespace PerfMonitor
 {
     public partial class MainForm : Form
     {
@@ -61,6 +61,7 @@ namespace Perfmon
             _phyMemTotal = GetPhisicalMemory();
             _ = QurySystemInfo();
             _ = RefreshListView();
+            //Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
         }
 
 
@@ -313,7 +314,13 @@ namespace Perfmon
         {
             if (!_monitorManager.ContainsKey(pid))
             {
-                Process p = Process.GetProcessById((int)pid);
+                Process? p = null;
+                try
+                {
+                    p = Process.GetProcessById((int)pid);
+                }
+                catch { return; }
+
                 string name = p.ProcessName;
                 ProcessMonitor monitor = new(pid, 1000, OnUpdateMonitorStatus);
                 var mainPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);

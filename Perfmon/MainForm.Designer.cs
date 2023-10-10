@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Perfmon
+namespace PerfMonitor
 {
     partial class MainForm
     {

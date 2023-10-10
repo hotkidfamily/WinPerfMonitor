@@ -8,7 +8,7 @@
     <ApplicationIcon>Resources\game-game-shooting.ico</ApplicationIcon>
     <IsPublishable>False</IsPublishable>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Perfmon.Loader</StartupObject>
+    <StartupObject>PerfMonitor.Loader</StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 

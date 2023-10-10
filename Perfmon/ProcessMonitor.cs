@@ -6,7 +6,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Security.AccessControl;
 using TraceReloggerLib;
 
-namespace Perfmon
+namespace PerfMonitor
 {
     delegate void UpdateMonitorStatusDelegate(ref RunStatusItem status);
 

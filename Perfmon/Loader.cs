@@ -1,4 +1,4 @@
-﻿namespace Perfmon
+﻿namespace PerfMonitor
 {
     public class Loader
     {
