@@ -139,5 +139,20 @@ namespace PerfMonitor
             formsPlotUpLink?.Dispose();
         }
 
+        private void BtnFull_Click(object sender, EventArgs e)
+        {
+            _procLogger?.ViewFull();
+            _memLogger?.ViewFull();
+            _uplinkLogger.ViewFull();
+            _sysLogger.ViewFull();
+        }
+
+        private void BtnSlide_Click(object sender, EventArgs e)
+        {
+            _procLogger?.ViewSlide();
+            _memLogger?.ViewSlide();
+            _uplinkLogger.ViewSlide();
+            _sysLogger.ViewSlide();
+        }
     }
 }
