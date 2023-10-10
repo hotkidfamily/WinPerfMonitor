@@ -74,21 +74,7 @@ namespace PerfMonitor
 
         public MainForm()
         {
-            CultureInfo current = Thread.CurrentThread.CurrentUICulture;
-            if (current.TwoLetterISOLanguageName != "zh")
-            {
-                CultureInfo newCulture = CultureInfo.CreateSpecificCulture("en-US");
-                Thread.CurrentThread.CurrentUICulture = newCulture;
-                Thread.CurrentThread.CurrentCulture = newCulture;
-                _colHeaders = _colHeaders_en;
-            }
-            else
-            {
-                CultureInfo newCulture = CultureInfo.CreateSpecificCulture("zh-CN");
-                Thread.CurrentThread.CurrentUICulture = newCulture;
-                Thread.CurrentThread.CurrentCulture = newCulture;
-                _colHeaders = _colHeaders_zh_hans;
-            }
+            _colHeaders = _colHeaders_zh_hans;
 
             InitializeComponent();
             ConstructListView();

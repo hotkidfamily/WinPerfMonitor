@@ -65,24 +65,31 @@ namespace PerfMonitor
             // 
             // labelCpuAndMem
             // 
-            resources.ApplyResources(labelCpuAndMem, "labelCpuAndMem");
+            labelCpuAndMem.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             labelCpuAndMem.BorderStyle = BorderStyle.None;
+            labelCpuAndMem.Location = new Point(13, 343);
+            labelCpuAndMem.Margin = new Padding(1);
             labelCpuAndMem.Name = "labelCpuAndMem";
             labelCpuAndMem.ReadOnly = true;
-            toolTip1.SetToolTip(labelCpuAndMem, resources.GetString("labelCpuAndMem.ToolTip"));
+            labelCpuAndMem.Size = new Size(903, 16);
+            labelCpuAndMem.TabIndex = 1;
+            labelCpuAndMem.TextAlign = HorizontalAlignment.Right;
+            toolTip1.SetToolTip(labelCpuAndMem, "本机状态");
             // 
             // MonitorDetailLV
             // 
-            resources.ApplyResources(MonitorDetailLV, "MonitorDetailLV");
             MonitorDetailLV.Activation = ItemActivation.OneClick;
+            MonitorDetailLV.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             MonitorDetailLV.BorderStyle = BorderStyle.FixedSingle;
             MonitorDetailLV.Columns.AddRange(new ColumnHeader[] { PID, procName, cpuUsage, vMem, phyMem, totalMem, downLink, upLink, totalLink, runningSeconds, monitorStatus });
             MonitorDetailLV.FullRowSelect = true;
             MonitorDetailLV.GridLines = true;
             MonitorDetailLV.HideSelection = true;
+            MonitorDetailLV.Location = new Point(13, 98);
             MonitorDetailLV.MultiSelect = false;
             MonitorDetailLV.Name = "MonitorDetailLV";
-            toolTip1.SetToolTip(MonitorDetailLV, resources.GetString("MonitorDetailLV.ToolTip"));
+            MonitorDetailLV.Size = new Size(903, 222);
+            MonitorDetailLV.TabIndex = 3;
             MonitorDetailLV.UseCompatibleStateImageBehavior = false;
             MonitorDetailLV.View = View.Details;
             MonitorDetailLV.MouseClick += MonitorDetailLV_MouseClick;
@@ -91,153 +98,200 @@ namespace PerfMonitor
             // 
             // PID
             // 
-            resources.ApplyResources(PID, "PID");
+            PID.Text = "进程ID";
+            PID.Width = 50;
             // 
             // procName
             // 
-            resources.ApplyResources(procName, "procName");
+            procName.Text = "进程名";
+            procName.Width = 100;
             // 
             // cpuUsage
             // 
-            resources.ApplyResources(cpuUsage, "cpuUsage");
+            cpuUsage.Text = "CPU使用率";
+            cpuUsage.Width = 40;
             // 
             // vMem
             // 
-            resources.ApplyResources(vMem, "vMem");
+            vMem.Text = "虚拟内存";
+            vMem.Width = 80;
             // 
             // phyMem
             // 
-            resources.ApplyResources(phyMem, "phyMem");
+            phyMem.Text = "物理内存";
+            phyMem.Width = 100;
             // 
             // totalMem
             // 
-            resources.ApplyResources(totalMem, "totalMem");
+            totalMem.Text = "进程总内存";
+            totalMem.Width = 80;
             // 
             // downLink
             // 
-            resources.ApplyResources(downLink, "downLink");
+            downLink.Text = "下行";
+            downLink.Width = 100;
             // 
             // upLink
             // 
-            resources.ApplyResources(upLink, "upLink");
+            upLink.Text = "上行";
+            upLink.Width = 100;
             // 
             // totalLink
             // 
-            resources.ApplyResources(totalLink, "totalLink");
+            totalLink.Text = "总流量";
+            totalLink.Width = 80;
             // 
             // runningSeconds
             // 
-            resources.ApplyResources(runningSeconds, "runningSeconds");
+            runningSeconds.Text = "运行时间";
+            runningSeconds.Width = 80;
             // 
             // monitorStatus
             // 
-            resources.ApplyResources(monitorStatus, "monitorStatus");
+            monitorStatus.Text = "状态";
             // 
             // label1
             // 
-            resources.ApplyResources(label1, "label1");
+            label1.AutoSize = true;
+            label1.Location = new Point(13, 34);
             label1.Name = "label1";
-            toolTip1.SetToolTip(label1, resources.GetString("label1.ToolTip"));
+            label1.Size = new Size(96, 17);
+            label1.TabIndex = 4;
+            label1.Text = "输入 PID 开始：";
             // 
             // textBoxPID
             // 
-            resources.ApplyResources(textBoxPID, "textBoxPID");
+            textBoxPID.Location = new Point(115, 31);
             textBoxPID.Name = "textBoxPID";
-            toolTip1.SetToolTip(textBoxPID, resources.GetString("textBoxPID.ToolTip"));
+            textBoxPID.Size = new Size(100, 23);
+            textBoxPID.TabIndex = 5;
+            toolTip1.SetToolTip(textBoxPID, "输入PID");
             textBoxPID.KeyPress += TextBoxPID_KeyPress;
             // 
             // label2
             // 
-            resources.ApplyResources(label2, "label2");
+            label2.AutoSize = true;
+            label2.Location = new Point(13, 78);
             label2.Name = "label2";
-            toolTip1.SetToolTip(label2, resources.GetString("label2.ToolTip"));
+            label2.Size = new Size(68, 17);
+            label2.TabIndex = 6;
+            label2.Text = "详细情况：";
             // 
             // ItemContextMenuStrip
             // 
-            resources.ApplyResources(ItemContextMenuStrip, "ItemContextMenuStrip");
             ItemContextMenuStrip.ImageScalingSize = new Size(24, 24);
             ItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { openToolStripMenuItem, stopToolStripMenuItem, restartCaptureToolStripMenuItem, deleteCaptureToolStripMenuItem, freshToolStripMenuItem });
             ItemContextMenuStrip.Name = "contextMenuStrip1";
-            toolTip1.SetToolTip(ItemContextMenuStrip, resources.GetString("ItemContextMenuStrip.ToolTip"));
+            ItemContextMenuStrip.Size = new Size(146, 154);
             // 
             // openToolStripMenuItem
             // 
-            resources.ApplyResources(openToolStripMenuItem, "openToolStripMenuItem");
             openToolStripMenuItem.Image = Properties.Resources.floppy;
             openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.Size = new Size(145, 30);
+            openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // stopToolStripMenuItem
             // 
-            resources.ApplyResources(stopToolStripMenuItem, "stopToolStripMenuItem");
             stopToolStripMenuItem.Image = Properties.Resources.stop;
             stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            stopToolStripMenuItem.Size = new Size(145, 30);
+            stopToolStripMenuItem.Text = "Stop";
             stopToolStripMenuItem.Click += StopToolStripMenuItem_Click;
             // 
             // restartCaptureToolStripMenuItem
             // 
-            resources.ApplyResources(restartCaptureToolStripMenuItem, "restartCaptureToolStripMenuItem");
             restartCaptureToolStripMenuItem.Image = Properties.Resources.reloading;
             restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
+            restartCaptureToolStripMenuItem.Size = new Size(145, 30);
+            restartCaptureToolStripMenuItem.Text = "ReCapture";
             restartCaptureToolStripMenuItem.Click += restartCaptureToolStripMenuItem_Click;
             // 
             // deleteCaptureToolStripMenuItem
             // 
-            resources.ApplyResources(deleteCaptureToolStripMenuItem, "deleteCaptureToolStripMenuItem");
             deleteCaptureToolStripMenuItem.Image = Properties.Resources.remove;
             deleteCaptureToolStripMenuItem.Name = "deleteCaptureToolStripMenuItem";
+            deleteCaptureToolStripMenuItem.Size = new Size(145, 30);
+            deleteCaptureToolStripMenuItem.Text = "Delete";
             deleteCaptureToolStripMenuItem.Click += deleteCaptureToolStripMenuItem_Click;
             // 
             // freshToolStripMenuItem
             // 
-            resources.ApplyResources(freshToolStripMenuItem, "freshToolStripMenuItem");
             freshToolStripMenuItem.Image = Properties.Resources.refresh;
             freshToolStripMenuItem.Name = "freshToolStripMenuItem";
+            freshToolStripMenuItem.Size = new Size(145, 30);
+            freshToolStripMenuItem.Text = "Fresh";
             freshToolStripMenuItem.Click += freshToolStripMenuItem_Click;
             // 
             // BtnSetting
             // 
-            resources.ApplyResources(BtnSetting, "BtnSetting");
             BtnSetting.BackgroundImage = Properties.Resources.setting;
+            BtnSetting.BackgroundImageLayout = ImageLayout.Zoom;
             BtnSetting.Cursor = Cursors.Hand;
+            BtnSetting.FlatStyle = FlatStyle.Popup;
+            BtnSetting.ImageKey = "(无)";
+            BtnSetting.ImeMode = ImeMode.NoControl;
+            BtnSetting.Location = new Point(44, 4);
+            BtnSetting.Margin = new Padding(2);
             BtnSetting.Name = "BtnSetting";
-            toolTip1.SetToolTip(BtnSetting, resources.GetString("BtnSetting.ToolTip"));
+            BtnSetting.Size = new Size(36, 36);
+            BtnSetting.TabIndex = 14;
+            toolTip1.SetToolTip(BtnSetting, "设置");
             BtnSetting.UseVisualStyleBackColor = true;
             BtnSetting.Click += BtnSetting_Click;
             // 
             // BtnOpenFloder
             // 
-            resources.ApplyResources(BtnOpenFloder, "BtnOpenFloder");
             BtnOpenFloder.BackgroundImage = Properties.Resources.folder;
+            BtnOpenFloder.BackgroundImageLayout = ImageLayout.Zoom;
             BtnOpenFloder.Cursor = Cursors.Hand;
+            BtnOpenFloder.FlatStyle = FlatStyle.Popup;
+            BtnOpenFloder.ImageKey = "(无)";
+            BtnOpenFloder.ImeMode = ImeMode.NoControl;
+            BtnOpenFloder.Location = new Point(4, 4);
+            BtnOpenFloder.Margin = new Padding(2);
             BtnOpenFloder.Name = "BtnOpenFloder";
-            toolTip1.SetToolTip(BtnOpenFloder, resources.GetString("BtnOpenFloder.ToolTip"));
+            BtnOpenFloder.Size = new Size(36, 36);
+            BtnOpenFloder.TabIndex = 10;
+            toolTip1.SetToolTip(BtnOpenFloder, "打开数据文件夹");
             BtnOpenFloder.UseVisualStyleBackColor = true;
             BtnOpenFloder.Click += BtnOpenFloder_Click;
             // 
             // btnShotProcess
             // 
-            resources.ApplyResources(btnShotProcess, "btnShotProcess");
             btnShotProcess.BackgroundImage = Properties.Resources.target;
+            btnShotProcess.BackgroundImageLayout = ImageLayout.Zoom;
             btnShotProcess.Cursor = Cursors.Cross;
+            btnShotProcess.FlatStyle = FlatStyle.Popup;
+            btnShotProcess.ImageKey = "(无)";
+            btnShotProcess.ImeMode = ImeMode.NoControl;
+            btnShotProcess.Location = new Point(243, 24);
+            btnShotProcess.Margin = new Padding(1);
             btnShotProcess.Name = "btnShotProcess";
-            toolTip1.SetToolTip(btnShotProcess, resources.GetString("btnShotProcess.ToolTip"));
+            btnShotProcess.Size = new Size(36, 36);
+            btnShotProcess.TabIndex = 0;
+            toolTip1.SetToolTip(btnShotProcess, "抓取进程");
             btnShotProcess.UseVisualStyleBackColor = true;
             btnShotProcess.MouseDown += BtnShotProcess_MouseDown;
             btnShotProcess.MouseUp += BtnShotProcess_MouseUp;
             // 
             // flowLayoutPanel1
             // 
-            resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
             flowLayoutPanel1.Controls.Add(BtnOpenFloder);
             flowLayoutPanel1.Controls.Add(BtnSetting);
+            flowLayoutPanel1.Location = new Point(832, 24);
+            flowLayoutPanel1.Margin = new Padding(1);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            toolTip1.SetToolTip(flowLayoutPanel1, resources.GetString("flowLayoutPanel1.ToolTip"));
+            flowLayoutPanel1.Padding = new Padding(2);
+            flowLayoutPanel1.Size = new Size(84, 44);
+            flowLayoutPanel1.TabIndex = 7;
             // 
             // MainForm
             // 
-            resources.ApplyResources(this, "$this");
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(928, 377);
             Controls.Add(btnShotProcess);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label2);
@@ -245,8 +299,11 @@ namespace PerfMonitor
             Controls.Add(label1);
             Controls.Add(MonitorDetailLV);
             Controls.Add(labelCpuAndMem);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(1);
+            MinimumSize = new Size(940, 406);
             Name = "MainForm";
-            toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
+            Text = "PerfMonitor";
             FormClosing += MainForm_FormClosing;
             ItemContextMenuStrip.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
