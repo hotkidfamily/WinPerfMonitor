@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Management;
+using System.Windows.Forms;
 using Windows.Win32;
 
 namespace PerfMonitor
@@ -31,11 +32,13 @@ namespace PerfMonitor
         private static readonly string[] _colDefaultValues = new string[] { "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
 
         private readonly string[] _colHeaders = default!;
-        private static readonly int[] _colSize = new int[] { 50, 100, 40, 80, 100, 80, 100, 100, 80, 80, 60 };
+        private static readonly int[] _colSize = new int[] { 100, 140, 80, 100, 100, 100, 100, 100, 100, 120, 100 };
 
         private static readonly Process _selfProcess = Process.GetCurrentProcess();
 
         private double _sysCpu = 0;
+
+        private static string? _outputPath;
 
         public MainForm()
         {
@@ -61,7 +64,21 @@ namespace PerfMonitor
             _phyMemTotal = GetPhisicalMemory();
             _ = QurySystemInfo();
             _ = RefreshListView();
-            //Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+
+            try
+            {
+                _outputPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);
+            }
+            catch (Exception)
+            {
+                var tPath = Path.Combine(Path.GetTempPath(), "PerfMonitor");
+
+                if (!Directory.Exists(tPath))
+                {
+                    Directory.CreateDirectory(tPath);
+                }
+                _outputPath = tPath;
+            }
         }
 
 
@@ -174,14 +191,15 @@ namespace PerfMonitor
             {
                 cpuTotal = new("Processor Information", "% Processor Utility", "_Total");
                 _ = cpuTotal?.NextValue();
-            }catch(Exception) { cpuTotal?.Dispose(); cpuTotal = null; }
+            }
+            catch (Exception) { cpuTotal?.Dispose(); cpuTotal = null; }
             cpuTotal ??= new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
             while (!IsDisposed)
             {
                 _selfProcess.Refresh();
-                int rama = (int)((long)Math.Round(ramAva?.NextValue()??0) >> 20);
-                int ram = (int)((long)(ramUsed?.NextValue()??0) >> 20) + rama;
+                int rama = (int)((long)Math.Round(ramAva?.NextValue() ?? 0) >> 20);
+                int ram = (int)((long)(ramUsed?.NextValue() ?? 0) >> 20) + rama;
                 int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
                 int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
                 _sysCpu = cpuTotal?.NextValue() ?? 0;
@@ -206,55 +224,6 @@ namespace PerfMonitor
                 {
                     MessageBox.Show("Bad PID, PID wrong or has been exit", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Question);
                 }
-            }
-        }
-
-        private void BtnStop_Click(object sender, EventArgs e)
-        {
-            int index = 0;
-            if (MonitorDetailLV.SelectedIndices.Count > 0)
-            {
-                index = MonitorDetailLV.SelectedIndices[0];
-            }
-            var item = MonitorDetailLV.Items[index];
-            uint pid = uint.Parse(item.Text);
-            if (_monitorManager.ContainsKey(pid))
-            {
-                var v = _monitorManager[pid];
-                v.Monitor?.Dispose();
-                v.ResWriter?.Dispose();
-                v.Monitor = null;
-                v.ResWriter = null;
-
-                item.BackColor = Color.Black;
-                item.ForeColor = Color.White;
-            }
-        }
-
-        private void BtnRemove_Click(object sender, EventArgs e)
-        {
-            int index = 0;
-            if (MonitorDetailLV.SelectedIndices.Count > 0)
-            {
-                index = MonitorDetailLV.SelectedIndices[0];
-            }
-            else
-            {
-                return;
-            }
-            var item = MonitorDetailLV.Items[index];
-            uint pid = uint.Parse(item.Text);
-            if (_monitorManager.ContainsKey(pid))
-            {
-                var v = _monitorManager[pid];
-                if (v.Monitor == null)
-                {
-                    _monitorManager.Remove(pid);
-                    item.BackColor = Color.White;
-                    item.ForeColor = Color.Red;
-                }
-
-                //MonitorDetailLV.Items.RemoveAt(index);
             }
         }
 
@@ -364,67 +333,14 @@ namespace PerfMonitor
 
         private void BtnOpenFloder_Click(object sender, EventArgs e)
         {
-            int index = 0;
-            if (MonitorDetailLV.SelectedIndices.Count > 0)
+            if (_outputPath != null)
             {
-                index = MonitorDetailLV.SelectedIndices[0];
-            }
-            else
-            {
-                return;
-            }
-            var item = MonitorDetailLV.Items[index];
-            if (uint.TryParse(item.Text, out uint pid))
-            {
-                if (_monitorManager.ContainsKey(pid))
+                ProcessStartInfo psi = new()
                 {
-                    var monitor = _monitorManager[pid];
-                    var path = Path.GetDirectoryName(monitor.ResPath);
-                    if (path != null)
-                    {
-                        ProcessStartInfo psi = new()
-                        {
-                            FileName = path,
-                            UseShellExecute = true
-                        };
-                        Process.Start(psi);
-                    }
-                }
-            }
-        }
-
-        private void BtnAnalysis_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void BtnOpenResult_Click(object sender, EventArgs e)
-        {
-            int index = 0;
-            if (MonitorDetailLV.SelectedIndices.Count > 0)
-            {
-                index = MonitorDetailLV.SelectedIndices[0];
-            }
-            else
-            {
-                return;
-            }
-            var item = MonitorDetailLV.Items[index];
-            if (uint.TryParse(item.Text, out uint pid))
-            {
-                if (_monitorManager.ContainsKey(pid))
-                {
-                    var monitor = _monitorManager[pid];
-                    var path = monitor.ResPath;
-                    if (path != null)
-                    {
-                        ProcessStartInfo psi = new()
-                        {
-                            FileName = path,
-                            UseShellExecute = true
-                        };
-                        Process.Start(psi);
-                    }
-                }
+                    FileName = _outputPath,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
             }
         }
 
@@ -462,6 +378,102 @@ namespace PerfMonitor
         {
             using var setting = new SettingForm();
             setting.ShowDialog();
+        }
+
+        private void MonitorDetailLV_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var focusedItem = MonitorDetailLV.FocusedItem;
+                if (focusedItem != null && focusedItem.Bounds.Contains(e.Location))
+                {
+                    ItemContextMenuStrip.Show(Cursor.Position);
+                }
+            }
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var item = MonitorDetailLV.FocusedItem;
+            if (item != null)
+            {
+                uint pid = uint.Parse(item.Text);
+                if (_monitorManager.ContainsKey(pid))
+                {
+                    var monitor = _monitorManager[pid];
+                    var path = monitor.ResPath;
+                    if (path != null)
+                    {
+                        ProcessStartInfo psi = new()
+                        {
+                            FileName = path,
+                            UseShellExecute = true
+                        };
+                        Process.Start(psi);
+                    }
+                }
+            }
+        }
+
+        private void StopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var item = MonitorDetailLV.FocusedItem;
+            if (item != null)
+            {
+                uint pid = uint.Parse(item.Text);
+                if (_monitorManager.ContainsKey(pid))
+                {
+                    var v = _monitorManager[pid];
+                    v.Monitor?.Dispose();
+                    v.ResWriter?.Dispose();
+                    v.Monitor = null;
+                    v.ResWriter = null;
+
+                    item.BackColor = Color.Black;
+                    item.ForeColor = Color.White;
+                }
+            }
+        }
+
+        private void restartCaptureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var item = MonitorDetailLV.FocusedItem;
+            if (item != null)
+            {
+                uint pid = uint.Parse(item.Text);
+                if (!_monitorManager.ContainsKey(pid))
+                {
+                    CreateNewMonitor(pid);
+                }
+            }
+        }
+
+        private void deleteCaptureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var item = MonitorDetailLV.FocusedItem;
+            if (item != null)
+            {
+                uint pid = uint.Parse(item.Text);
+                if (_monitorManager.ContainsKey(pid))
+                {
+                    var v = _monitorManager[pid];
+                    if (v.Monitor == null)
+                    {
+                        _monitorManager.Remove(pid);
+                        item.BackColor = Color.White;
+                        item.ForeColor = Color.Red;
+                    }
+                }
+                //MonitorDetailLV.Items.RemoveAt(index);
+            }
+        }
+
+        private void freshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++)
+            {
+                MonitorDetailLV.Columns[i].Width = -2;
+            }
         }
     }
 }

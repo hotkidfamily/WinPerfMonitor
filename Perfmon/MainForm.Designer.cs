@@ -50,16 +50,17 @@ namespace PerfMonitor
             textBoxPID = new TextBox();
             label2 = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            btnStop = new Button();
-            btnRestart = new Button();
-            BtnRemove = new Button();
-            btnBreak = new Button();
             BtnOpenFloder = new Button();
-            BtnOpenResult = new Button();
-            BtnAnalysis = new Button();
             BtnSetting = new Button();
             toolTip1 = new ToolTip(components);
+            ItemContextMenuStrip = new ContextMenuStrip(components);
+            openToolStripMenuItem = new ToolStripMenuItem();
+            stopToolStripMenuItem = new ToolStripMenuItem();
+            restartCaptureToolStripMenuItem = new ToolStripMenuItem();
+            deleteCaptureToolStripMenuItem = new ToolStripMenuItem();
+            freshToolStripMenuItem = new ToolStripMenuItem();
             flowLayoutPanel1.SuspendLayout();
+            ItemContextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // btnShotProcess
@@ -95,6 +96,7 @@ namespace PerfMonitor
             toolTip1.SetToolTip(MonitorDetailLV, resources.GetString("MonitorDetailLV.ToolTip"));
             MonitorDetailLV.UseCompatibleStateImageBehavior = false;
             MonitorDetailLV.View = View.Details;
+            MonitorDetailLV.MouseClick += MonitorDetailLV_MouseClick;
             MonitorDetailLV.MouseDoubleClick += MonitorDetailLV_MouseDoubleClick;
             // 
             // PID
@@ -164,56 +166,10 @@ namespace PerfMonitor
             // 
             resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
             flowLayoutPanel1.Controls.Add(btnShotProcess);
-            flowLayoutPanel1.Controls.Add(btnStop);
-            flowLayoutPanel1.Controls.Add(btnRestart);
-            flowLayoutPanel1.Controls.Add(BtnRemove);
-            flowLayoutPanel1.Controls.Add(btnBreak);
             flowLayoutPanel1.Controls.Add(BtnOpenFloder);
-            flowLayoutPanel1.Controls.Add(BtnOpenResult);
-            flowLayoutPanel1.Controls.Add(BtnAnalysis);
             flowLayoutPanel1.Controls.Add(BtnSetting);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             toolTip1.SetToolTip(flowLayoutPanel1, resources.GetString("flowLayoutPanel1.ToolTip"));
-            // 
-            // btnStop
-            // 
-            resources.ApplyResources(btnStop, "btnStop");
-            btnStop.BackgroundImage = Properties.Resources.stop;
-            btnStop.Cursor = Cursors.Hand;
-            btnStop.Name = "btnStop";
-            toolTip1.SetToolTip(btnStop, resources.GetString("btnStop.ToolTip"));
-            btnStop.UseVisualStyleBackColor = true;
-            btnStop.Click += BtnStop_Click;
-            // 
-            // btnRestart
-            // 
-            resources.ApplyResources(btnRestart, "btnRestart");
-            btnRestart.BackgroundImage = Properties.Resources.reloading;
-            btnRestart.Cursor = Cursors.Hand;
-            btnRestart.Name = "btnRestart";
-            toolTip1.SetToolTip(btnRestart, resources.GetString("btnRestart.ToolTip"));
-            btnRestart.UseVisualStyleBackColor = true;
-            btnRestart.Click += BtnRestart_Click;
-            // 
-            // BtnRemove
-            // 
-            resources.ApplyResources(BtnRemove, "BtnRemove");
-            BtnRemove.BackgroundImage = Properties.Resources.remove;
-            BtnRemove.Cursor = Cursors.Hand;
-            BtnRemove.Name = "BtnRemove";
-            toolTip1.SetToolTip(BtnRemove, resources.GetString("BtnRemove.ToolTip"));
-            BtnRemove.UseVisualStyleBackColor = true;
-            BtnRemove.Click += BtnRemove_Click;
-            // 
-            // btnBreak
-            // 
-            resources.ApplyResources(btnBreak, "btnBreak");
-            btnBreak.BackgroundImage = Properties.Resources.pause;
-            btnBreak.Cursor = Cursors.Hand;
-            btnBreak.Name = "btnBreak";
-            toolTip1.SetToolTip(btnBreak, resources.GetString("btnBreak.ToolTip"));
-            btnBreak.UseVisualStyleBackColor = true;
-            btnBreak.Click += BtnBreak_Click;
             // 
             // BtnOpenFloder
             // 
@@ -225,26 +181,6 @@ namespace PerfMonitor
             BtnOpenFloder.UseVisualStyleBackColor = true;
             BtnOpenFloder.Click += BtnOpenFloder_Click;
             // 
-            // BtnOpenResult
-            // 
-            resources.ApplyResources(BtnOpenResult, "BtnOpenResult");
-            BtnOpenResult.BackgroundImage = Properties.Resources.floppy;
-            BtnOpenResult.Cursor = Cursors.Hand;
-            BtnOpenResult.Name = "BtnOpenResult";
-            toolTip1.SetToolTip(BtnOpenResult, resources.GetString("BtnOpenResult.ToolTip"));
-            BtnOpenResult.UseVisualStyleBackColor = true;
-            BtnOpenResult.Click += BtnOpenResult_Click;
-            // 
-            // BtnAnalysis
-            // 
-            resources.ApplyResources(BtnAnalysis, "BtnAnalysis");
-            BtnAnalysis.BackgroundImage = Properties.Resources.analysis;
-            BtnAnalysis.Cursor = Cursors.Hand;
-            BtnAnalysis.Name = "BtnAnalysis";
-            toolTip1.SetToolTip(BtnAnalysis, resources.GetString("BtnAnalysis.ToolTip"));
-            BtnAnalysis.UseVisualStyleBackColor = true;
-            BtnAnalysis.Click += BtnAnalysis_Click;
-            // 
             // BtnSetting
             // 
             resources.ApplyResources(BtnSetting, "BtnSetting");
@@ -254,6 +190,44 @@ namespace PerfMonitor
             toolTip1.SetToolTip(BtnSetting, resources.GetString("BtnSetting.ToolTip"));
             BtnSetting.UseVisualStyleBackColor = true;
             BtnSetting.Click += BtnSetting_Click;
+            // 
+            // ItemContextMenuStrip
+            // 
+            resources.ApplyResources(ItemContextMenuStrip, "ItemContextMenuStrip");
+            ItemContextMenuStrip.ImageScalingSize = new Size(24, 24);
+            ItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { openToolStripMenuItem, stopToolStripMenuItem, restartCaptureToolStripMenuItem, deleteCaptureToolStripMenuItem, freshToolStripMenuItem });
+            ItemContextMenuStrip.Name = "contextMenuStrip1";
+            toolTip1.SetToolTip(ItemContextMenuStrip, resources.GetString("ItemContextMenuStrip.ToolTip"));
+            // 
+            // openToolStripMenuItem
+            // 
+            resources.ApplyResources(openToolStripMenuItem, "openToolStripMenuItem");
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
+            // 
+            // stopToolStripMenuItem
+            // 
+            resources.ApplyResources(stopToolStripMenuItem, "stopToolStripMenuItem");
+            stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            stopToolStripMenuItem.Click += StopToolStripMenuItem_Click;
+            // 
+            // restartCaptureToolStripMenuItem
+            // 
+            resources.ApplyResources(restartCaptureToolStripMenuItem, "restartCaptureToolStripMenuItem");
+            restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
+            restartCaptureToolStripMenuItem.Click += restartCaptureToolStripMenuItem_Click;
+            // 
+            // deleteCaptureToolStripMenuItem
+            // 
+            resources.ApplyResources(deleteCaptureToolStripMenuItem, "deleteCaptureToolStripMenuItem");
+            deleteCaptureToolStripMenuItem.Name = "deleteCaptureToolStripMenuItem";
+            deleteCaptureToolStripMenuItem.Click += deleteCaptureToolStripMenuItem_Click;
+            // 
+            // freshToolStripMenuItem
+            // 
+            resources.ApplyResources(freshToolStripMenuItem, "freshToolStripMenuItem");
+            freshToolStripMenuItem.Name = "freshToolStripMenuItem";
+            freshToolStripMenuItem.Click += freshToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -269,6 +243,7 @@ namespace PerfMonitor
             toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             FormClosing += MainForm_FormClosing;
             flowLayoutPanel1.ResumeLayout(false);
+            ItemContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -293,14 +268,14 @@ namespace PerfMonitor
         private ColumnHeader runningSeconds;
         private ColumnHeader monitorStatus;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button btnStop;
-        private Button btnBreak;
-        private Button BtnRemove;
-        private Button btnRestart;
         private ToolTip toolTip1;
         private Button BtnOpenFloder;
-        private Button BtnAnalysis;
-        private Button BtnOpenResult;
         private Button BtnSetting;
+        private ContextMenuStrip ItemContextMenuStrip;
+        private ToolStripMenuItem openToolStripMenuItem;
+        private ToolStripMenuItem stopToolStripMenuItem;
+        private ToolStripMenuItem restartCaptureToolStripMenuItem;
+        private ToolStripMenuItem deleteCaptureToolStripMenuItem;
+        private ToolStripMenuItem freshToolStripMenuItem;
     }
 }
