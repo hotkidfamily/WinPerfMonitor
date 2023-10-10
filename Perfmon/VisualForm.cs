@@ -104,9 +104,9 @@ namespace PerfMonitor
                 MissingFieldFound = null,
             };
 
-            var fs = new FileStream(_csvPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            var reader = new StreamReader(fs);
-            var csv = new CsvReader(reader, config);
+            using var fs = new FileStream(_csvPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var reader = new StreamReader(fs);
+            using var csv = new CsvReader(reader, config);
             csv.Context.RegisterClassMap<RunStatusItemMap>();
 
             while (!IsDisposed)
@@ -137,10 +137,6 @@ namespace PerfMonitor
             formsPlotProcCPU?.Dispose();
             formsPlotProcMem?.Dispose();
             formsPlotUpLink?.Dispose();
-
-            csv.Dispose();
-            reader.Dispose();
-            fs.Dispose();
         }
 
     }
