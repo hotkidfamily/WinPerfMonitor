@@ -459,7 +459,7 @@ namespace PerfMonitor
             if (e.Button == MouseButtons.Middle)
             {
                 var item = MonitorDetailLV.FocusedItem;
-                if (item != null)
+                if (item != null && item.Bounds.Contains(e.Location))
                 {
                     uint pid = uint.Parse(item.Text);
                     if (_monitorManager.ContainsKey(pid))
