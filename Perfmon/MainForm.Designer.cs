@@ -32,7 +32,6 @@ namespace PerfMonitor
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            btnShotProcess = new Button();
             labelCpuAndMem = new TextBox();
             MonitorDetailLV = new ListView();
             PID = new ColumnHeader();
@@ -49,9 +48,6 @@ namespace PerfMonitor
             label1 = new Label();
             textBoxPID = new TextBox();
             label2 = new Label();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            BtnOpenFloder = new Button();
-            BtnSetting = new Button();
             toolTip1 = new ToolTip(components);
             ItemContextMenuStrip = new ContextMenuStrip(components);
             openToolStripMenuItem = new ToolStripMenuItem();
@@ -59,25 +55,18 @@ namespace PerfMonitor
             restartCaptureToolStripMenuItem = new ToolStripMenuItem();
             deleteCaptureToolStripMenuItem = new ToolStripMenuItem();
             freshToolStripMenuItem = new ToolStripMenuItem();
-            flowLayoutPanel1.SuspendLayout();
+            BtnSetting = new Button();
+            BtnOpenFloder = new Button();
+            btnShotProcess = new Button();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             ItemContextMenuStrip.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // btnShotProcess
-            // 
-            resources.ApplyResources(btnShotProcess, "btnShotProcess");
-            btnShotProcess.BackgroundImage = Properties.Resources.target;
-            btnShotProcess.Cursor = Cursors.Cross;
-            btnShotProcess.Name = "btnShotProcess";
-            toolTip1.SetToolTip(btnShotProcess, resources.GetString("btnShotProcess.ToolTip"));
-            btnShotProcess.UseVisualStyleBackColor = true;
-            btnShotProcess.MouseDown += BtnShotProcess_MouseDown;
-            btnShotProcess.MouseUp += BtnShotProcess_MouseUp;
             // 
             // labelCpuAndMem
             // 
             resources.ApplyResources(labelCpuAndMem, "labelCpuAndMem");
-            labelCpuAndMem.BorderStyle = BorderStyle.FixedSingle;
+            labelCpuAndMem.BorderStyle = BorderStyle.None;
             labelCpuAndMem.Name = "labelCpuAndMem";
             labelCpuAndMem.ReadOnly = true;
             toolTip1.SetToolTip(labelCpuAndMem, resources.GetString("labelCpuAndMem.ToolTip"));
@@ -98,6 +87,7 @@ namespace PerfMonitor
             MonitorDetailLV.View = View.Details;
             MonitorDetailLV.MouseClick += MonitorDetailLV_MouseClick;
             MonitorDetailLV.MouseDoubleClick += MonitorDetailLV_MouseDoubleClick;
+            MonitorDetailLV.MouseDown += MonitorDetailLV_MouseDown;
             // 
             // PID
             // 
@@ -162,35 +152,6 @@ namespace PerfMonitor
             label2.Name = "label2";
             toolTip1.SetToolTip(label2, resources.GetString("label2.ToolTip"));
             // 
-            // flowLayoutPanel1
-            // 
-            resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
-            flowLayoutPanel1.Controls.Add(btnShotProcess);
-            flowLayoutPanel1.Controls.Add(BtnOpenFloder);
-            flowLayoutPanel1.Controls.Add(BtnSetting);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            toolTip1.SetToolTip(flowLayoutPanel1, resources.GetString("flowLayoutPanel1.ToolTip"));
-            // 
-            // BtnOpenFloder
-            // 
-            resources.ApplyResources(BtnOpenFloder, "BtnOpenFloder");
-            BtnOpenFloder.BackgroundImage = Properties.Resources.folder;
-            BtnOpenFloder.Cursor = Cursors.Hand;
-            BtnOpenFloder.Name = "BtnOpenFloder";
-            toolTip1.SetToolTip(BtnOpenFloder, resources.GetString("BtnOpenFloder.ToolTip"));
-            BtnOpenFloder.UseVisualStyleBackColor = true;
-            BtnOpenFloder.Click += BtnOpenFloder_Click;
-            // 
-            // BtnSetting
-            // 
-            resources.ApplyResources(BtnSetting, "BtnSetting");
-            BtnSetting.BackgroundImage = Properties.Resources.setting;
-            BtnSetting.Cursor = Cursors.Hand;
-            BtnSetting.Name = "BtnSetting";
-            toolTip1.SetToolTip(BtnSetting, resources.GetString("BtnSetting.ToolTip"));
-            BtnSetting.UseVisualStyleBackColor = true;
-            BtnSetting.Click += BtnSetting_Click;
-            // 
             // ItemContextMenuStrip
             // 
             resources.ApplyResources(ItemContextMenuStrip, "ItemContextMenuStrip");
@@ -202,37 +163,82 @@ namespace PerfMonitor
             // openToolStripMenuItem
             // 
             resources.ApplyResources(openToolStripMenuItem, "openToolStripMenuItem");
+            openToolStripMenuItem.Image = Properties.Resources.floppy;
             openToolStripMenuItem.Name = "openToolStripMenuItem";
             openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // stopToolStripMenuItem
             // 
             resources.ApplyResources(stopToolStripMenuItem, "stopToolStripMenuItem");
+            stopToolStripMenuItem.Image = Properties.Resources.stop;
             stopToolStripMenuItem.Name = "stopToolStripMenuItem";
             stopToolStripMenuItem.Click += StopToolStripMenuItem_Click;
             // 
             // restartCaptureToolStripMenuItem
             // 
             resources.ApplyResources(restartCaptureToolStripMenuItem, "restartCaptureToolStripMenuItem");
+            restartCaptureToolStripMenuItem.Image = Properties.Resources.reloading;
             restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
             restartCaptureToolStripMenuItem.Click += restartCaptureToolStripMenuItem_Click;
             // 
             // deleteCaptureToolStripMenuItem
             // 
             resources.ApplyResources(deleteCaptureToolStripMenuItem, "deleteCaptureToolStripMenuItem");
+            deleteCaptureToolStripMenuItem.Image = Properties.Resources.remove;
             deleteCaptureToolStripMenuItem.Name = "deleteCaptureToolStripMenuItem";
             deleteCaptureToolStripMenuItem.Click += deleteCaptureToolStripMenuItem_Click;
             // 
             // freshToolStripMenuItem
             // 
             resources.ApplyResources(freshToolStripMenuItem, "freshToolStripMenuItem");
+            freshToolStripMenuItem.Image = Properties.Resources.refresh;
             freshToolStripMenuItem.Name = "freshToolStripMenuItem";
             freshToolStripMenuItem.Click += freshToolStripMenuItem_Click;
+            // 
+            // BtnSetting
+            // 
+            resources.ApplyResources(BtnSetting, "BtnSetting");
+            BtnSetting.BackgroundImage = Properties.Resources.setting;
+            BtnSetting.Cursor = Cursors.Hand;
+            BtnSetting.Name = "BtnSetting";
+            toolTip1.SetToolTip(BtnSetting, resources.GetString("BtnSetting.ToolTip"));
+            BtnSetting.UseVisualStyleBackColor = true;
+            BtnSetting.Click += BtnSetting_Click;
+            // 
+            // BtnOpenFloder
+            // 
+            resources.ApplyResources(BtnOpenFloder, "BtnOpenFloder");
+            BtnOpenFloder.BackgroundImage = Properties.Resources.folder;
+            BtnOpenFloder.Cursor = Cursors.Hand;
+            BtnOpenFloder.Name = "BtnOpenFloder";
+            toolTip1.SetToolTip(BtnOpenFloder, resources.GetString("BtnOpenFloder.ToolTip"));
+            BtnOpenFloder.UseVisualStyleBackColor = true;
+            BtnOpenFloder.Click += BtnOpenFloder_Click;
+            // 
+            // btnShotProcess
+            // 
+            resources.ApplyResources(btnShotProcess, "btnShotProcess");
+            btnShotProcess.BackgroundImage = Properties.Resources.target;
+            btnShotProcess.Cursor = Cursors.Cross;
+            btnShotProcess.Name = "btnShotProcess";
+            toolTip1.SetToolTip(btnShotProcess, resources.GetString("btnShotProcess.ToolTip"));
+            btnShotProcess.UseVisualStyleBackColor = true;
+            btnShotProcess.MouseDown += BtnShotProcess_MouseDown;
+            btnShotProcess.MouseUp += BtnShotProcess_MouseUp;
+            // 
+            // flowLayoutPanel1
+            // 
+            resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
+            flowLayoutPanel1.Controls.Add(BtnOpenFloder);
+            flowLayoutPanel1.Controls.Add(BtnSetting);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            toolTip1.SetToolTip(flowLayoutPanel1, resources.GetString("flowLayoutPanel1.ToolTip"));
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnShotProcess);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label2);
             Controls.Add(textBoxPID);
@@ -242,15 +248,13 @@ namespace PerfMonitor
             Name = "MainForm";
             toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             FormClosing += MainForm_FormClosing;
-            flowLayoutPanel1.ResumeLayout(false);
             ItemContextMenuStrip.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Button btnShotProcess;
         private TextBox labelCpuAndMem;
         private ListView MonitorDetailLV;
         private Label label1;
@@ -267,15 +271,16 @@ namespace PerfMonitor
         private ColumnHeader PID;
         private ColumnHeader runningSeconds;
         private ColumnHeader monitorStatus;
-        private FlowLayoutPanel flowLayoutPanel1;
         private ToolTip toolTip1;
-        private Button BtnOpenFloder;
-        private Button BtnSetting;
         private ContextMenuStrip ItemContextMenuStrip;
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem stopToolStripMenuItem;
         private ToolStripMenuItem restartCaptureToolStripMenuItem;
         private ToolStripMenuItem deleteCaptureToolStripMenuItem;
         private ToolStripMenuItem freshToolStripMenuItem;
+        private Button BtnSetting;
+        private Button BtnOpenFloder;
+        private Button btnShotProcess;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

@@ -22,6 +22,7 @@ namespace PerfMonitor
             public CsvWriter? ResWriter;
             public string? ResPath;
             public Thread? VisualThread;
+            public int Status;
         }
 
         private readonly Dictionary<uint, ProcessMonitorManager> _monitorManager = new();
@@ -372,8 +373,8 @@ namespace PerfMonitor
         {
             if (e.Button == MouseButtons.Right)
             {
-                var focusedItem = MonitorDetailLV.FocusedItem;
-                if (focusedItem != null && focusedItem.Bounds.Contains(e.Location))
+                var item = MonitorDetailLV.FocusedItem;
+                if (item != null && item.Bounds.Contains(e.Location))
                 {
                     ItemContextMenuStrip.Show(Cursor.Position);
                 }
@@ -461,6 +462,32 @@ namespace PerfMonitor
             for (int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++)
             {
                 MonitorDetailLV.Columns[i].Width = -2;
+            }
+        }
+
+        private void MonitorDetailLV_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                var item = MonitorDetailLV.FocusedItem;
+                if (item != null)
+                {
+                    uint pid = uint.Parse(item.Text);
+                    if (_monitorManager.ContainsKey(pid))
+                    {
+                        var monitor = _monitorManager[pid];
+                        var path = monitor.ResPath;
+                        if (path != null)
+                        {
+                            ProcessStartInfo psi = new()
+                            {
+                                FileName = path,
+                                UseShellExecute = true
+                            };
+                            Process.Start(psi);
+                        }
+                    }
+                }
             }
         }
     }
