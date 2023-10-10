@@ -22,7 +22,6 @@ namespace PerfMonitor
             public CsvWriter? ResWriter;
             public string? ResPath;
             public Thread? VisualThread;
-            public int Status;
         }
 
         private readonly Dictionary<uint, ProcessMonitorManager> _monitorManager = new();
@@ -445,10 +444,14 @@ namespace PerfMonitor
 
         private void freshToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MonitorDetailLV.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            
+            MonitorDetailLV.BeginUpdate();
             for (int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++)
             {
-                MonitorDetailLV.Columns[i].Width = -2;
+                MonitorDetailLV.Columns[i].Width += 10;
             }
+            MonitorDetailLV.EndUpdate();
         }
 
         private void MonitorDetailLV_MouseDown(object sender, MouseEventArgs e)
