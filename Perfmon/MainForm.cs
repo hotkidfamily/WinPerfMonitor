@@ -409,7 +409,7 @@ namespace PerfMonitor
             }
         }
 
-        private void restartCaptureToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RestartCaptureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
             if (item != null)
@@ -422,7 +422,7 @@ namespace PerfMonitor
             }
         }
 
-        private void deleteCaptureToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DeleteCaptureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
             if (item != null)
@@ -442,7 +442,7 @@ namespace PerfMonitor
             }
         }
 
-        private void freshToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MonitorDetailLV.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             

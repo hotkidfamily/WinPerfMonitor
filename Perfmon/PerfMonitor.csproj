@@ -10,6 +10,9 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>PerfMonitor.Loader</StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+	<SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
+	<SelfContained>false</SelfContained>
+	<RuntimeIdentifier>win-x86</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>

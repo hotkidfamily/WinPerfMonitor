@@ -258,7 +258,7 @@ namespace PerfMonitor
             restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
             restartCaptureToolStripMenuItem.Size = new Size(145, 30);
             restartCaptureToolStripMenuItem.Text = "ReCapture";
-            restartCaptureToolStripMenuItem.Click += restartCaptureToolStripMenuItem_Click;
+            restartCaptureToolStripMenuItem.Click += RestartCaptureToolStripMenuItem_Click;
             // 
             // deleteCaptureToolStripMenuItem
             // 
@@ -266,7 +266,7 @@ namespace PerfMonitor
             deleteCaptureToolStripMenuItem.Name = "deleteCaptureToolStripMenuItem";
             deleteCaptureToolStripMenuItem.Size = new Size(145, 30);
             deleteCaptureToolStripMenuItem.Text = "Delete";
-            deleteCaptureToolStripMenuItem.Click += deleteCaptureToolStripMenuItem_Click;
+            deleteCaptureToolStripMenuItem.Click += DeleteCaptureToolStripMenuItem_Click;
             // 
             // freshToolStripMenuItem
             // 
@@ -274,7 +274,7 @@ namespace PerfMonitor
             freshToolStripMenuItem.Name = "freshToolStripMenuItem";
             freshToolStripMenuItem.Size = new Size(145, 30);
             freshToolStripMenuItem.Text = "Fresh";
-            freshToolStripMenuItem.Click += freshToolStripMenuItem_Click;
+            freshToolStripMenuItem.Click += FreshToolStripMenuItem_Click;
             // 
             // flowLayoutPanel1
             // 
