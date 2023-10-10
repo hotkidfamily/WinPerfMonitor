@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using Microsoft.Diagnostics.Tracing.Parsers.AspNet;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -38,7 +39,37 @@ namespace PerfMonitor
 
         private double _sysCpu = 0;
 
-        private static string? _outputPath;
+        private static string LogFolder
+        {
+            get
+            {
+                string? oPath = null;
+                try
+                {
+                    var s = _selfProcess.MainModule?.FileName;
+                    if (s != null)
+                    {
+                        oPath = Path.GetDirectoryName(s);
+                    }
+                }
+                catch (Exception) { oPath = null; }
+
+                var tPath = Path.Combine(Path.GetTempPath(), "PerfMonitor");
+                if (!Directory.Exists(tPath))
+                {
+                    Directory.CreateDirectory(tPath);
+                }
+
+                oPath ??= tPath;
+
+                var output = Path.Combine(oPath, "output");
+
+                if (!Directory.Exists($"{output}"))
+                    Directory.CreateDirectory($"{output}");
+
+                return output;
+            }
+        }
 
         public MainForm()
         {
@@ -64,21 +95,6 @@ namespace PerfMonitor
             _phyMemTotal = GetPhisicalMemory();
             _ = QurySystemInfo();
             _ = RefreshListView();
-
-            try
-            {
-                _outputPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);
-            }
-            catch (Exception)
-            {
-                var tPath = Path.Combine(Path.GetTempPath(), "PerfMonitor");
-
-                if (!Directory.Exists(tPath))
-                {
-                    Directory.CreateDirectory(tPath);
-                }
-                _outputPath = tPath;
-            }
         }
 
 
@@ -227,29 +243,6 @@ namespace PerfMonitor
             }
         }
 
-        private void BtnRestart_Click(object sender, EventArgs e)
-        {
-            int index = 0;
-            if (MonitorDetailLV.SelectedIndices.Count > 0)
-            {
-                index = MonitorDetailLV.SelectedIndices[0];
-            }
-            else
-            {
-                return;
-            }
-            var item = MonitorDetailLV.Items[index];
-            uint pid = uint.Parse(item.Text);
-            if (!_monitorManager.ContainsKey(pid))
-            {
-                CreateNewMonitor(pid);
-            }
-        }
-
-        private void BtnBreak_Click(object sender, EventArgs e)
-        {
-        }
-
         private static int GetPhisicalMemory()
         {
             ManagementObjectSearcher searcher = new()
@@ -292,13 +285,8 @@ namespace PerfMonitor
 
                 string name = p.ProcessName;
                 ProcessMonitor monitor = new(pid, 1000, OnUpdateMonitorStatus);
-                var mainPath = Path.GetDirectoryName(_selfProcess.MainModule?.FileName);
-                var csvpath = Path.Combine(mainPath ?? Environment.CurrentDirectory, "output");
 
-                if (!Directory.Exists($"{csvpath}"))
-                    Directory.CreateDirectory($"{csvpath}");
-
-                string resPath = $"{csvpath}{Path.DirectorySeparatorChar}{name}({pid}).{DateTime.Now:yyyy.MMdd.HHmm.ss}.csv";
+                string resPath = $"{LogFolder}{Path.DirectorySeparatorChar}{name}({pid}).{DateTime.Now:yyyy.MMdd.HHmm.ss}.csv";
                 var writer = new StreamWriter(resPath);
                 var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                 ProcessMonitorManager monitorMgr = new()
@@ -333,11 +321,11 @@ namespace PerfMonitor
 
         private void BtnOpenFloder_Click(object sender, EventArgs e)
         {
-            if (_outputPath != null)
+            if (LogFolder != null)
             {
                 ProcessStartInfo psi = new()
                 {
-                    FileName = _outputPath,
+                    FileName = LogFolder,
                     UseShellExecute = true
                 };
                 Process.Start(psi);
