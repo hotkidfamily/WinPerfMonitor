@@ -79,7 +79,7 @@ namespace PerfMonitor
             ConstructListView();
 
             _phyMemTotal = GetPhisicalMemory();
-            _ = QurySystemInfo();
+            _ = QuerySystemInfo();
             _ = RefreshListView();
         }
 
@@ -180,7 +180,7 @@ namespace PerfMonitor
             }
         }
 
-        private async Task QurySystemInfo()
+        private async Task QuerySystemInfo()
         {
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
@@ -199,6 +199,7 @@ namespace PerfMonitor
 
             while (!IsDisposed)
             {
+                var s =  DateTime.Now;
                 _selfProcess.Refresh();
                 int rama = (int)((long)Math.Round(ramAva?.NextValue() ?? 0) >> 20);
                 int ram = (int)((long)(ramUsed?.NextValue() ?? 0) >> 20) + rama;
@@ -209,7 +210,9 @@ namespace PerfMonitor
                 var sb = $"{_sysCpu:F2}%, {mnam}, {os}, {core} C, {ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB";
 
                 labelCpuAndMem.Text = sb;
-                await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                var e = DateTime.Now;
+                var q = (e - s).Milliseconds;
+                await Task.Delay(TimeSpan.FromMilliseconds(1000 - q));
             }
         }
 

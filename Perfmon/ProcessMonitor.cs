@@ -162,6 +162,7 @@ namespace PerfMonitor
 
                     while (!_endTask)
                     {
+                        var s = DateTime.Now;
                         _process.Refresh();
                         _onceRes.VMem = _process.VirtualMemorySize64 / 1048576.0f;
                         _onceRes.PhyMem = _process.WorkingSet64 / 1048576.0f;
@@ -195,8 +196,10 @@ namespace PerfMonitor
                         }
 
                         _updateMonitorStatus?.Invoke(ref _onceRes);
+                        var e = DateTime.Now;
+                        var q = (e - s).TotalMilliseconds;
 
-                        Thread.Sleep(TimeSpan.FromMilliseconds(_interval));
+                        Thread.Sleep(TimeSpan.FromMilliseconds(_interval - q));
                     }
                 });
 
