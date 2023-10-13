@@ -197,9 +197,9 @@ namespace PerfMonitor
             catch (Exception) { cpuTotal?.Dispose(); cpuTotal = null; }
             cpuTotal ??= new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
+            var sw = Stopwatch.StartNew();
             while (!IsDisposed)
             {
-                var s =  DateTime.Now;
                 _selfProcess.Refresh();
                 int rama = (int)((long)Math.Round(ramAva?.NextValue() ?? 0) >> 20);
                 int ram = (int)((long)(ramUsed?.NextValue() ?? 0) >> 20) + rama;
@@ -210,9 +210,10 @@ namespace PerfMonitor
                 var sb = $"{_sysCpu:F2}%, {mnam}, {os}, {core} C, {ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB";
 
                 labelCpuAndMem.Text = sb;
-                var e = DateTime.Now;
-                var q = (e - s).Milliseconds;
-                await Task.Delay(TimeSpan.FromMilliseconds(1000 - q));
+
+                var q = sw.ElapsedMilliseconds;
+                var d = 1000 - (q % 1000);
+                await Task.Delay(TimeSpan.FromMilliseconds(d));
             }
         }
 

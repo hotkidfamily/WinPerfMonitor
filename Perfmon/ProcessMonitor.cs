@@ -144,7 +144,6 @@ namespace PerfMonitor
 
                 _task = new Task(() =>
                 {
-                    long firstMonitorTicks = Environment.TickCount64;
                     long lastMonitorTicks = 0;
                     double lastProcessorTime = 0;
                     double cores = 100.0f / Environment.ProcessorCount;
@@ -160,16 +159,17 @@ namespace PerfMonitor
                         cpuUsage?.Dispose();
                     }
 
+                    Stopwatch sw = Stopwatch.StartNew();
+                    long firstMonitorTicks = sw.ElapsedMilliseconds;
                     while (!_endTask)
                     {
-                        var s = DateTime.Now;
                         _process.Refresh();
                         _onceRes.VMem = _process.VirtualMemorySize64 / 1048576.0f;
                         _onceRes.PhyMem = _process.WorkingSet64 / 1048576.0f;
                         _onceRes.TotalMem = _onceRes.VMem + _onceRes.PhyMem;
 
                         double nowProcessorTime = _process.TotalProcessorTime.TotalMilliseconds;
-                        long nowTicks = Environment.TickCount64;
+                        long nowTicks = sw.ElapsedMilliseconds;
                         if (lastMonitorTicks == 0)
                         {
                             lastMonitorTicks = nowTicks - 1000;
@@ -196,10 +196,10 @@ namespace PerfMonitor
                         }
 
                         _updateMonitorStatus?.Invoke(ref _onceRes);
-                        var e = DateTime.Now;
-                        var q = (e - s).TotalMilliseconds;
 
-                        Thread.Sleep(TimeSpan.FromMilliseconds(_interval - q));
+                        var q = sw.ElapsedMilliseconds;
+                        var d = _interval - (q % _interval);
+                        Thread.Sleep(TimeSpan.FromMilliseconds(d));
                     }
                 });
 
