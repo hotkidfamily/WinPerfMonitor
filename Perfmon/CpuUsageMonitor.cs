@@ -19,23 +19,14 @@ namespace PerfMonitor
         private winmdroot.System.Performance.PDH_RAW_COUNTER _lastData;
         private bool _first = true;
 
-        public CpuUsageMonitor()
+        public CpuUsageMonitor(string query)
         {
-            PInvoke.PdhOpenQuery(null, 0, out _hQuery);//开始查询
-            string strQuery;
-            if (Environment.OSVersion.Version.Major >= 10)
-            {
-                strQuery = "\\Processor Information(_Total)\\% Processor Utility";
-            }
-            else
-            {
-                strQuery = "\\Processor Information(_Total)\\% Processor Time";
-            }
+            PInvoke.PdhOpenQuery(null, 0, out _hQuery);
             nuint user = 0;
-            PInvoke.PdhAddCounter(_hQuery, strQuery, user, out _hCounter);
+            PInvoke.PdhAddCounter(_hQuery, query, user, out _hCounter);
         }
 
-        public double Query()
+        public double NextValue()
         {
             double cpu = 0.0f;
             winmdroot.System.Performance.PDH_RAW_COUNTER rawData;

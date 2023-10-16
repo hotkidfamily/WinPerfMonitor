@@ -148,16 +148,8 @@ namespace PerfMonitor
                     double lastProcessorTime = 0;
                     double cores = 100.0f / Environment.ProcessorCount;
                     NetspeedTrace netspeedTracer = new();
-                    PerformanceCounter? cpuUsage = null;
-
-                    try
-                    {
-                        cpuUsage = new("Process V2", "% Processor Time", $"{_process.ProcessName}:{_pid}");
-                    }
-                    catch (Exception)
-                    {
-                        cpuUsage?.Dispose();
-                    }
+                    string strQuery = $"\\Process V2({_process.ProcessName}:{_pid})\\% Processor Time";
+                    using CpuUsageMonitor cpuUsage = new(strQuery);
 
                     Stopwatch sw = Stopwatch.StartNew();
                     long firstMonitorTicks = sw.ElapsedMilliseconds;
