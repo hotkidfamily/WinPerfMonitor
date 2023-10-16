@@ -295,6 +295,7 @@ namespace PerfMonitor
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             flowLayoutPanel1.Controls.Add(BtnOpenFloder);
             flowLayoutPanel1.Controls.Add(BtnSetting);
             flowLayoutPanel1.Controls.Add(BtnHistory);

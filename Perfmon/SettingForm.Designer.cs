@@ -45,7 +45,7 @@
             tabControl1.Location = new Point(12, 12);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(776, 406);
+            tabControl1.Size = new Size(776, 310);
             tabControl1.TabIndex = 0;
             // 
             // tabPageCommon
@@ -55,7 +55,7 @@
             tabPageCommon.Location = new Point(4, 26);
             tabPageCommon.Name = "tabPageCommon";
             tabPageCommon.Padding = new Padding(3);
-            tabPageCommon.Size = new Size(768, 376);
+            tabPageCommon.Size = new Size(768, 280);
             tabPageCommon.TabIndex = 0;
             tabPageCommon.Text = "Common";
             tabPageCommon.UseVisualStyleBackColor = true;
@@ -93,7 +93,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 331);
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SettingForm";
