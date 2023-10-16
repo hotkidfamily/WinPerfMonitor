@@ -202,13 +202,13 @@ namespace PerfMonitor
             while (!IsDisposed)
             {
                 _selfProcess.Refresh();
-                int rama = (int)((long)Math.Round(ramAva?.NextValue() ?? 0) >> 20);
-                int ram = (int)((long)(ramUsed?.NextValue() ?? 0) >> 20) + rama;
-                int pVRam = (int)(_selfProcess.VirtualMemorySize64 >> 30);
-                int pPhyRam = (int)(_selfProcess.WorkingSet64 >> 20);
+                int rama = (int)((long)Math.Round(ramAva?.NextValue() ?? 0) / Units.MB);
+                int ram = (int)((long)(ramUsed?.NextValue() ?? 0) / Units.MB) + rama;
+                double pVRam = _selfProcess.VirtualMemorySize64 * 1.0 / Units.GB;
+                int pPhyRam = (int)(_selfProcess.WorkingSet64 / Units.MB);
                 _sysCpu = cpuTotal?.NextValue() ?? 0;
 
-                var sb = $"{_sysCpu:F2}%, {mnam}, {os}, {core} C, {ram}MB, {rama}MB, {_phyMemTotal}GB, {pVRam}GB,{pPhyRam}MB";
+                var sb = $"{_sysCpu:F2}%, {ram}MB, {rama}MB | {core} C, {mnam}, {os}, {_phyMemTotal}GB | {pVRam :F2}GB, {pPhyRam}MB";
 
                 labelCpuAndMem.Text = sb;
 
@@ -260,7 +260,7 @@ namespace PerfMonitor
                     }
                 }
             }
-            return (int)(capacity / (1024 * 1024 * 1000));
+            return (int)(capacity / Units.GiB);
         }
 
         private void CreateNewMonitor(uint pid)
@@ -454,7 +454,7 @@ namespace PerfMonitor
             MonitorDetailLV.BeginUpdate();
             for (int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++)
             {
-                MonitorDetailLV.Columns[i].Width += 10;
+                MonitorDetailLV.Columns[i].Width += 20;
             }
             MonitorDetailLV.EndUpdate();
         }
