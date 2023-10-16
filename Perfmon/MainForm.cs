@@ -208,7 +208,7 @@ namespace PerfMonitor
                 int pPhyRam = (int)(_selfProcess.WorkingSet64 / Units.MB);
                 _sysCpu = cpuTotal?.NextValue() ?? 0;
 
-                var sb = $"{_sysCpu:F2}%, {ram}MB, {rama}MB | {core} C, {mnam}, {os}, {_phyMemTotal}GB | {pVRam :F2}GB, {pPhyRam}MB";
+                var sb = $"{_sysCpu:F2}%, {ram}MB, {rama}MB | {core} C, {mnam}, {os}, {_phyMemTotal}GB | {pVRam:F2}GB, {pPhyRam}MB";
 
                 labelCpuAndMem.Text = sb;
 
