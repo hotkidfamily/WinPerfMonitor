@@ -35,7 +35,7 @@ namespace PerfMonitor
         private readonly string[] _colHeaders = default!;
         private static readonly int[] _colSize = new int[] { 100, 140, 80, 100, 100, 100, 100, 100, 100, 120, 100 };
 
-        private static readonly Process _selfProcess = Process.GetCurrentProcess();
+        private static readonly Process _proc = Process.GetCurrentProcess();
 
         private double _sysCpu = 0;
 
@@ -46,7 +46,7 @@ namespace PerfMonitor
                 string? oPath = null;
                 try
                 {
-                    var s = _selfProcess.MainModule?.FileName;
+                    var s = _proc.MainModule?.FileName;
                     if (s != null)
                     {
                         oPath = Path.GetDirectoryName(s);
@@ -201,11 +201,11 @@ namespace PerfMonitor
             var sw = Stopwatch.StartNew();
             while (!IsDisposed)
             {
-                _selfProcess.Refresh();
+                _proc.Refresh();
                 int rama = (int)((long)Math.Round(ramAva?.NextValue() ?? 0) / Units.MB);
                 int ram = (int)((long)(ramUsed?.NextValue() ?? 0) / Units.MB) + rama;
-                double pVRam = _selfProcess.VirtualMemorySize64 * 1.0 / Units.GB;
-                int pPhyRam = (int)(_selfProcess.WorkingSet64 / Units.MB);
+                double pVRam = _proc.VirtualMemorySize64 * 1.0 / Units.GB;
+                int pPhyRam = (int)(_proc.WorkingSet64 / Units.MB);
                 _sysCpu = cpuTotal?.NextValue() ?? 0;
 
                 var sb = $"{_sysCpu:F2}%, {ram}MB, {rama}MB | {core} C, {mnam}, {os}, {_phyMemTotal}GB | {pVRam:F2}GB, {pPhyRam}MB";
@@ -216,6 +216,8 @@ namespace PerfMonitor
                 var d = 1000 - (q % 1000);
                 await Task.Delay(TimeSpan.FromMilliseconds(d));
             }
+
+            cpuTotal?.Dispose();
         }
 
         private void TextBoxPID_KeyPress(object sender, KeyPressEventArgs e)
@@ -308,6 +310,8 @@ namespace PerfMonitor
                 it.Value.ResWriter?.Dispose();
             }
             _monitorManager.Clear();
+
+            _proc.Dispose();
         }
 
         private void BtnOpenFloder_Click(object sender, EventArgs e)
