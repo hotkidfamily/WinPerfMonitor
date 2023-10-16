@@ -146,36 +146,37 @@ namespace PerfMonitor
                     ress = new List<RunStatusItem>(_monitorResult.ToArray());
                     _monitorResult.Clear();
                 }
-
-                MonitorDetailLV.BeginUpdate();
-                foreach (RunStatusItem item in ress)
+                if (ress.Count > 0)
                 {
-                    if (_monitorManager.ContainsKey(item.Pid))
+                    MonitorDetailLV.BeginUpdate();
+                    foreach (RunStatusItem item in ress)
                     {
-                        var index = _monitorManager[item.Pid].LiveVideIndex;
+                        if (_monitorManager.ContainsKey(item.Pid))
+                        {
+                            var index = _monitorManager[item.Pid].LiveVideIndex;
 
-                        var values = item.Info();
-                        for (int i = 0; i < _colHeaders?.Length; i++)
-                        {
-                            MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
-                        }
-                        if (item.ExcuteStatus == "exit")
-                        {
-                            MonitorDetailLV.Items[index].BackColor = Color.Red;
-                            if (_monitorManager.ContainsKey(item.Pid))
+                            var values = item.Info();
+                            for (int i = 0; i < _colHeaders?.Length; i++)
                             {
-                                var v = _monitorManager[item.Pid];
-                                v.Monitor?.Dispose();
-                                v.ResWriter?.Dispose();
-                                v.Monitor = null;
-                                v.ResWriter = null;
+                                MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
+                            }
+                            if (item.ExcuteStatus == "exit")
+                            {
+                                MonitorDetailLV.Items[index].BackColor = Color.Red;
+                                if (_monitorManager.ContainsKey(item.Pid))
+                                {
+                                    var v = _monitorManager[item.Pid];
+                                    v.Monitor?.Dispose();
+                                    v.ResWriter?.Dispose();
+                                    v.Monitor = null;
+                                    v.ResWriter = null;
+                                }
                             }
                         }
                     }
+
+                    MonitorDetailLV.EndUpdate();
                 }
-
-                MonitorDetailLV.EndUpdate();
-
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
             }
         }
