@@ -188,15 +188,16 @@ namespace PerfMonitor
             var os = Environment.OSVersion.Version.ToString();
             using PerformanceCounter ramAva = new("Memory", "Available Bytes");
             using PerformanceCounter ramUsed = new("Memory", "Committed Bytes");
+            using CpuUsageMonitor cpuTotal = new();
 
-            PerformanceCounter? cpuTotal = null;
+           /* PerformanceCounter? cpuTotal = null;
             try
             {
                 cpuTotal = new("Processor Information", "% Processor Utility", "_Total");
                 _ = cpuTotal?.NextValue();
             }
             catch (Exception) { cpuTotal?.Dispose(); cpuTotal = null; }
-            cpuTotal ??= new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            cpuTotal ??= new PerformanceCounter("Processor", "% Processor Time", "_Total");*/
 
             var sw = Stopwatch.StartNew();
             while (!IsDisposed)
@@ -206,7 +207,8 @@ namespace PerfMonitor
                 int ram = (int)((long)(ramUsed?.NextValue() ?? 0) / Units.MB) + rama;
                 double pVRam = _proc.VirtualMemorySize64 * 1.0 / Units.GB;
                 int pPhyRam = (int)(_proc.WorkingSet64 / Units.MB);
-                _sysCpu = cpuTotal?.NextValue() ?? 0;
+                //_sysCpu = cpuTotal?.NextValue() ?? 0;
+                 _sysCpu = cpuTotal.Query();
 
                 var sb = $"{_sysCpu:F2}%, {ram}MB, {rama}MB | {core} C, {mnam}, {os}, {_phyMemTotal}GB | {pVRam:F2}GB, {pPhyRam}MB";
 
