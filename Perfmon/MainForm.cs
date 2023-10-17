@@ -14,6 +14,12 @@ namespace PerfMonitor
     {
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
+        internal enum MonitorStatus : uint
+        {
+            MonitorStatusMonitoring = 0,
+            MonitorStatusStopped = 1,
+            MonitorStatusRemoved = 2,
+        };
 
         internal class ProcessMonitorManager
         {
@@ -22,6 +28,7 @@ namespace PerfMonitor
             public CsvWriter? ResWriter;
             public string? ResPath;
             public Thread? VisualThread;
+            public MonitorStatus status;
         }
 
         private readonly Dictionary<uint, ProcessMonitorManager> _monitorManager = new();
@@ -285,7 +292,7 @@ namespace PerfMonitor
                 string resPath = $"{LogFolder}{Path.DirectorySeparatorChar}{name}({pid}).{DateTime.Now:yyyy.MMdd.HHmm.ss}.csv";
                 var writer = new StreamWriter(resPath);
                 var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-                ProcessMonitorManager monitorMgr = new()
+                ProcessMonitorManager ctx = new()
                 {
                     Monitor = monitor,
                     ResWriter = csv,
@@ -300,8 +307,10 @@ namespace PerfMonitor
                 MonitorDetailLV.Items[it.Index].Selected = true;
                 MonitorDetailLV.EndUpdate();
 
-                monitorMgr.LiveVideIndex = it.Index;
-                _monitorManager.Add(pid, monitorMgr);
+                ctx.LiveVideIndex = it.Index;
+                _monitorManager.Add(pid, ctx);
+                ctx.status = MonitorStatus.MonitorStatusMonitoring;
+
             }
         }
 
@@ -414,6 +423,7 @@ namespace PerfMonitor
                     v.ResWriter?.Dispose();
                     v.Monitor = null;
                     v.ResWriter = null;
+                    v.status = MonitorStatus.MonitorStatusStopped;
 
                     item.BackColor = Color.Black;
                     item.ForeColor = Color.White;
@@ -448,6 +458,7 @@ namespace PerfMonitor
                         _monitorManager.Remove(pid);
                         item.BackColor = Color.White;
                         item.ForeColor = Color.Red;
+                        v.status = MonitorStatus.MonitorStatusRemoved;
                     }
                 }
                 //MonitorDetailLV.Items.RemoveAt(index);
