@@ -339,8 +339,7 @@ namespace PerfMonitor
         {
             foreach (var it in _monitorManager)
             {
-                it.Value.Monitor?.Dispose();
-                it.Value.ResWriter?.Dispose();
+                it.Value.Dispose();
             }
             _monitorManager.Clear();
 
