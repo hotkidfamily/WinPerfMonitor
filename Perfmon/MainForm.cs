@@ -28,7 +28,7 @@ namespace PerfMonitor
             public CsvWriter? ResWriter;
             public string? ResPath;
             public Thread? VisualThread;
-            public MonitorStatus status;
+            public MonitorStatus MntStatus;
         }
 
         private readonly Dictionary<uint, ProcessMonitorContext> _monitorManager = new();
@@ -309,7 +309,7 @@ namespace PerfMonitor
 
                 ctx.LiveVideIndex = it.Index;
                 _monitorManager.Add(pid, ctx);
-                ctx.status = MonitorStatus.MonitorStatusMonitoring;
+                ctx.MntStatus = MonitorStatus.MonitorStatusMonitoring;
             }
         }
 
@@ -422,7 +422,7 @@ namespace PerfMonitor
                     v.ResWriter?.Dispose();
                     v.Monitor = null;
                     v.ResWriter = null;
-                    v.status = MonitorStatus.MonitorStatusStopped;
+                    v.MntStatus = MonitorStatus.MonitorStatusStopped;
 
                     item.BackColor = Color.Black;
                     item.ForeColor = Color.White;
@@ -457,7 +457,7 @@ namespace PerfMonitor
                         _monitorManager.Remove(pid);
                         item.BackColor = Color.White;
                         item.ForeColor = Color.Red;
-                        v.status = MonitorStatus.MonitorStatusRemoved;
+                        v.MntStatus = MonitorStatus.MonitorStatusRemoved;
                     }
                 }
                 //MonitorDetailLV.Items.RemoveAt(index);
