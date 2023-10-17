@@ -113,7 +113,7 @@ namespace PerfMonitor
             ConstructListView();
 
             _phyMemTotal = GetPhisicalMemory();
-            _ = QuerySystemInfo();
+            Task.Run(QuerySystemInfo);
             _ = RefreshListView();
         }
 
