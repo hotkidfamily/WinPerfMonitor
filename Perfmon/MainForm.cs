@@ -257,8 +257,7 @@ namespace PerfMonitor
             {
                 if (uint.TryParse(textBoxPID.Text, out uint pi))
                 {
-                    uint pid = pi;
-                    CreateNewMonitor(pid);
+                    CreateNewMonitor(pi);
                 }
                 else
                 {
