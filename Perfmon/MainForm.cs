@@ -21,7 +21,7 @@ namespace PerfMonitor
             MonitorStatusRemoved = 2,
         };
 
-        internal class ProcessMonitorManager
+        internal class ProcessMonitorContext
         {
             public ProcessMonitor? Monitor;
             public int LiveVideIndex = 0;
@@ -31,7 +31,7 @@ namespace PerfMonitor
             public MonitorStatus status;
         }
 
-        private readonly Dictionary<uint, ProcessMonitorManager> _monitorManager = new();
+        private readonly Dictionary<uint, ProcessMonitorContext> _monitorManager = new();
 
         private static readonly string[] _colHeaders_zh_hans
             = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
@@ -292,7 +292,7 @@ namespace PerfMonitor
                 string resPath = $"{LogFolder}{Path.DirectorySeparatorChar}{name}({pid}).{DateTime.Now:yyyy.MMdd.HHmm.ss}.csv";
                 var writer = new StreamWriter(resPath);
                 var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-                ProcessMonitorManager ctx = new()
+                ProcessMonitorContext ctx = new()
                 {
                     Monitor = monitor,
                     ResWriter = csv,
@@ -310,7 +310,6 @@ namespace PerfMonitor
                 ctx.LiveVideIndex = it.Index;
                 _monitorManager.Add(pid, ctx);
                 ctx.status = MonitorStatus.MonitorStatusMonitoring;
-
             }
         }
 
