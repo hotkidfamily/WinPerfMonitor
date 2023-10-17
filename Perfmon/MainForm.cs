@@ -1,10 +1,12 @@
 ﻿using CsvHelper;
 using Microsoft.Diagnostics.Tracing.Parsers.AspNet;
+using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Management;
+using System.Reflection;
 using System.Windows.Forms;
 using Windows.Win32;
 
@@ -21,14 +23,38 @@ namespace PerfMonitor
             MonitorStatusRemoved = 2,
         };
 
-        internal class ProcessMonitorContext
+        internal class ProcessMonitorContext : IDisposable
         {
             public ProcessMonitor? Monitor;
             public int LiveVideIndex = 0;
             public CsvWriter? ResWriter;
             public string? ResPath;
+            public Form? Form;
             public Thread? VisualThread;
             public MonitorStatus MntStatus;
+
+            public void Dispose()
+            {
+                Monitor?.Dispose();
+                ResWriter?.Dispose();
+                Form?.Dispose();
+                VisualThread?.Join();
+                MntStatus = MonitorStatus.MonitorStatusRemoved;
+            }
+
+            public void Stop()
+            {
+                Monitor?.Dispose();
+                ResWriter?.Dispose();
+                Monitor = null;
+                ResWriter = null;
+                MntStatus = MonitorStatus.MonitorStatusStopped;
+            }
+
+            public bool IsStop()
+            {
+                return MntStatus == MonitorStatus.MonitorStatusStopped;
+            }
         }
 
         private readonly Dictionary<uint, ProcessMonitorContext> _monitorManager = new();
@@ -156,32 +182,26 @@ namespace PerfMonitor
                 if (ress.Count > 0)
                 {
                     MonitorDetailLV.BeginUpdate();
-                    foreach (RunStatusItem item in ress)
+                    foreach (RunStatusItem res in ress)
                     {
-                        if (_monitorManager.ContainsKey(item.Pid))
+                        if (_monitorManager.ContainsKey(res.Pid))
                         {
-                            var index = _monitorManager[item.Pid].LiveVideIndex;
+                            var index = _monitorManager[res.Pid].LiveVideIndex;
 
-                            var values = item.Info();
+                            var values = res.Info();
+                            var item = MonitorDetailLV.Items[index];
                             for (int i = 0; i < _colHeaders?.Length; i++)
                             {
-                                MonitorDetailLV.Items[index].SubItems[i].Text = values[i];
+                                item.SubItems[i].Text = values[i];
                             }
-                            if (item.ExcuteStatus == "exit")
+                            if (res.ExcuteStatus == "exit")
                             {
-                                MonitorDetailLV.Items[index].BackColor = Color.Red;
-                                if (_monitorManager.ContainsKey(item.Pid))
-                                {
-                                    var v = _monitorManager[item.Pid];
-                                    v.Monitor?.Dispose();
-                                    v.ResWriter?.Dispose();
-                                    v.Monitor = null;
-                                    v.ResWriter = null;
-                                }
+                                item.BackColor = Color.Red;
+                                var v = _monitorManager[res.Pid];
+                                v.Stop();
                             }
                         }
                     }
-
                     MonitorDetailLV.EndUpdate();
                 }
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
@@ -234,7 +254,7 @@ namespace PerfMonitor
         {
             if (e.KeyChar == '\r')
             {
-                if (uint.TryParse(textBoxPID.Text.ToString(), out uint pi))
+                if (uint.TryParse(textBoxPID.Text, out uint pi))
                 {
                     uint pid = pi;
                     CreateNewMonitor(pid);
@@ -296,20 +316,21 @@ namespace PerfMonitor
                 {
                     Monitor = monitor,
                     ResWriter = csv,
-                    ResPath = resPath
+                    ResPath = resPath,
+                    MntStatus = MonitorStatus.MonitorStatusMonitoring,
                 };
                 csv.WriteHeader<RunStatusItem>();
                 csv.NextRecord();
 
                 MonitorDetailLV.BeginUpdate();
                 var lvi = new ListViewItem(_colDefaultValues);
+                lvi.Tag = ctx;
                 var it = MonitorDetailLV.Items.Add(lvi);
                 MonitorDetailLV.Items[it.Index].Selected = true;
+                ctx.LiveVideIndex = it.Index;
                 MonitorDetailLV.EndUpdate();
 
-                ctx.LiveVideIndex = it.Index;
                 _monitorManager.Add(pid, ctx);
-                ctx.MntStatus = MonitorStatus.MonitorStatusMonitoring;
             }
         }
 
@@ -354,15 +375,17 @@ namespace PerfMonitor
                         && (it.LiveVideIndex == info.Item.Index) // fix: a monitor recapture after removed, then item be double cliked
                         )
                     {
+                        Form? visual = null;
                         var helpThread = new Thread(new ThreadStart(() =>
                         {
                             string desc = it.Monitor?.Descriptor() ?? "invalid";
-                            using var visual = new VisualForm(path, desc);
+                            visual = new VisualForm(path, desc);
                             visual.ShowDialog();
                         }));
                         helpThread.SetApartmentState(ApartmentState.STA);
                         helpThread.Start();
                         it.VisualThread = helpThread;
+                        it.Form = visual;
                     }
                 }
             }
@@ -389,22 +412,17 @@ namespace PerfMonitor
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if (item != null)
+            if (item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
             {
-                uint pid = uint.Parse(item.Text);
-                if (_monitorManager.ContainsKey(pid))
+                var path = _monitorManager[pid].ResPath;
+                if (path != null)
                 {
-                    var monitor = _monitorManager[pid];
-                    var path = monitor.ResPath;
-                    if (path != null)
+                    ProcessStartInfo psi = new()
                     {
-                        ProcessStartInfo psi = new()
-                        {
-                            FileName = path,
-                            UseShellExecute = true
-                        };
-                        Process.Start(psi);
-                    }
+                        FileName = path,
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
                 }
             }
         }
@@ -412,32 +430,34 @@ namespace PerfMonitor
         private void StopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if (item != null)
+            if (item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
             {
-                uint pid = uint.Parse(item.Text);
-                if (_monitorManager.ContainsKey(pid))
-                {
-                    var v = _monitorManager[pid];
-                    v.Monitor?.Dispose();
-                    v.ResWriter?.Dispose();
-                    v.Monitor = null;
-                    v.ResWriter = null;
-                    v.MntStatus = MonitorStatus.MonitorStatusStopped;
+                var v = _monitorManager[pid];
+                v.Stop();
 
-                    item.BackColor = Color.Black;
-                    item.ForeColor = Color.White;
-                }
+                item.BackColor = Color.Black;
+                item.ForeColor = Color.White;
             }
         }
 
         private void RestartCaptureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if (item != null)
+            if (item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
             {
-                uint pid = uint.Parse(item.Text);
-                if (!_monitorManager.ContainsKey(pid))
+                ProcessMonitorContext v = (ProcessMonitorContext)item.Tag;
+                if (v != null && v.IsStop())
                 {
+                    v.Dispose();
+
+                    _monitorManager.Remove(pid);
+                    item.Tag = null;
+                    MonitorDetailLV.Items.RemoveAt(item.Index);
+                    for (int i = 0; i < MonitorDetailLV.Items.Count; i++)
+                    {
+                        ProcessMonitorContext v2 = (ProcessMonitorContext)MonitorDetailLV.Items[i].Tag;
+                        v2.LiveVideIndex = i;
+                    }
                     CreateNewMonitor(pid);
                 }
             }
@@ -446,21 +466,20 @@ namespace PerfMonitor
         private void DeleteCaptureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if (item != null)
+            if (item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
             {
-                uint pid = uint.Parse(item.Text);
-                if (_monitorManager.ContainsKey(pid))
+                var v = _monitorManager[pid];
+                if (v.IsStop())
                 {
-                    var v = _monitorManager[pid];
-                    if (v.Monitor == null)
+                    v.Dispose();
+                    _monitorManager.Remove(pid);
+                    MonitorDetailLV.Items.RemoveAt(item.Index);
+                    for (int i = 0; i < MonitorDetailLV.Items.Count; i++)
                     {
-                        _monitorManager.Remove(pid);
-                        item.BackColor = Color.White;
-                        item.ForeColor = Color.Red;
-                        v.MntStatus = MonitorStatus.MonitorStatusRemoved;
+                        ProcessMonitorContext v2 = (ProcessMonitorContext)MonitorDetailLV.Items[i].Tag;
+                        v2.LiveVideIndex = i;
                     }
                 }
-                //MonitorDetailLV.Items.RemoveAt(index);
             }
         }
 
@@ -481,22 +500,18 @@ namespace PerfMonitor
             if (e.Button == MouseButtons.Middle)
             {
                 var item = MonitorDetailLV.FocusedItem;
-                if (item != null && item.Bounds.Contains(e.Location))
+                if (item != null && item.Bounds.Contains(e.Location) 
+                    && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
                 {
-                    uint pid = uint.Parse(item.Text);
-                    if (_monitorManager.ContainsKey(pid))
+                    var monitor = _monitorManager[pid];
+                    if (monitor.ResPath != null)
                     {
-                        var monitor = _monitorManager[pid];
-                        var path = monitor.ResPath;
-                        if (path != null)
+                        ProcessStartInfo psi = new()
                         {
-                            ProcessStartInfo psi = new()
-                            {
-                                FileName = path,
-                                UseShellExecute = true
-                            };
-                            Process.Start(psi);
-                        }
+                            FileName = monitor.ResPath,
+                            UseShellExecute = true
+                        };
+                        Process.Start(psi);
                     }
                 }
             }
