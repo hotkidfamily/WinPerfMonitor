@@ -199,7 +199,7 @@ namespace PerfMonitor
                 strQuery = "\\Processor Information(_Total)\\% Processor Time";
             }
 
-            using CpuUsageMonitor cpuTotal = new(strQuery);
+            using PerfQuery cpuTotal = new(strQuery);
 
             var sw = Stopwatch.StartNew();
             while (!IsDisposed)

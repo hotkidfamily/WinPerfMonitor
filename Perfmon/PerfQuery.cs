@@ -12,14 +12,14 @@ using winmdroot = global::Windows.Win32;
 
 namespace PerfMonitor
 {
-    internal class CpuUsageMonitor: IDisposable
+    internal class PerfQuery: IDisposable
     {
         private nint _hQuery;
         private nint _hCounter;
         private winmdroot.System.Performance.PDH_RAW_COUNTER _lastData;
         private bool _first = true;
 
-        public CpuUsageMonitor(string query)
+        public PerfQuery(string query)
         {
             PInvoke.PdhOpenQuery(null, 0, out _hQuery);
             nuint user = 0;
