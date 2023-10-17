@@ -29,16 +29,17 @@ namespace PerfMonitor
             public int LiveVideIndex = 0;
             public CsvWriter? ResWriter;
             public string? ResPath;
-            public Form? Form;
             public Thread? VisualThread;
             public MonitorStatus MntStatus;
+            public bool IsDisposed = false;
 
             public void Dispose()
             {
+                IsDisposed = true;
                 Monitor?.Dispose();
                 ResWriter?.Dispose();
-                Form?.Dispose();
-                VisualThread?.Join();
+                Monitor = null;
+                ResWriter = null;
                 MntStatus = MonitorStatus.MonitorStatusRemoved;
             }
 
@@ -375,17 +376,15 @@ namespace PerfMonitor
                         && (it.LiveVideIndex == info.Item.Index) // fix: a monitor recapture after removed, then item be double cliked
                         )
                     {
-                        Form? visual = null;
                         var helpThread = new Thread(new ThreadStart(() =>
                         {
                             string desc = it.Monitor?.Descriptor() ?? "invalid";
-                            visual = new VisualForm(path, desc);
+                            var visual = new VisualForm(path, desc);
                             visual.ShowDialog();
                         }));
                         helpThread.SetApartmentState(ApartmentState.STA);
                         helpThread.Start();
                         it.VisualThread = helpThread;
-                        it.Form = visual;
                     }
                 }
             }
