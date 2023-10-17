@@ -237,7 +237,7 @@ namespace PerfMonitor
                 int ram = (int)((long)(ramUsed?.NextValue() ?? 0) / Units.MB) + rama;
                 double pVRam = _proc.VirtualMemorySize64 * 1.0 / Units.GB;
                 int pPhyRam = (int)(_proc.WorkingSet64 / Units.MB);
-                 _sysCpu = cpuTotal.NextValue();
+                _sysCpu = cpuTotal.NextValue();
 
                 var sb = $"{_sysCpu:F2}%, {ram}MB, {rama}MB | {core} C, {mnam}, {os}, {_phyMemTotal}GB | {pVRam:F2}GB, {pPhyRam}MB";
 
@@ -498,7 +498,7 @@ namespace PerfMonitor
             if (e.Button == MouseButtons.Middle)
             {
                 var item = MonitorDetailLV.FocusedItem;
-                if (item != null && item.Bounds.Contains(e.Location) 
+                if (item != null && item.Bounds.Contains(e.Location)
                     && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
                 {
                     var monitor = _monitorManager[pid];

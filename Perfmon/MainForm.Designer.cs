@@ -60,6 +60,8 @@ namespace PerfMonitor
             deleteCaptureToolStripMenuItem = new ToolStripMenuItem();
             freshToolStripMenuItem = new ToolStripMenuItem();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripSeparator2 = new ToolStripSeparator();
             ItemContextMenuStrip.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -249,48 +251,48 @@ namespace PerfMonitor
             // ItemContextMenuStrip
             // 
             ItemContextMenuStrip.ImageScalingSize = new Size(24, 24);
-            ItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { openToolStripMenuItem, stopToolStripMenuItem, restartCaptureToolStripMenuItem, deleteCaptureToolStripMenuItem, freshToolStripMenuItem });
+            ItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { openToolStripMenuItem, toolStripSeparator2, stopToolStripMenuItem, restartCaptureToolStripMenuItem, deleteCaptureToolStripMenuItem, toolStripSeparator1, freshToolStripMenuItem });
             ItemContextMenuStrip.Name = "contextMenuStrip1";
-            ItemContextMenuStrip.Size = new Size(146, 154);
+            ItemContextMenuStrip.Size = new Size(133, 166);
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Image = Properties.Resources.floppy;
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(145, 30);
-            openToolStripMenuItem.Text = "Open";
+            openToolStripMenuItem.Size = new Size(132, 30);
+            openToolStripMenuItem.Text = "打开结果";
             openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // stopToolStripMenuItem
             // 
             stopToolStripMenuItem.Image = Properties.Resources.stop;
             stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            stopToolStripMenuItem.Size = new Size(145, 30);
-            stopToolStripMenuItem.Text = "Stop";
+            stopToolStripMenuItem.Size = new Size(132, 30);
+            stopToolStripMenuItem.Text = "停止";
             stopToolStripMenuItem.Click += StopToolStripMenuItem_Click;
             // 
             // restartCaptureToolStripMenuItem
             // 
             restartCaptureToolStripMenuItem.Image = Properties.Resources.reloading;
             restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
-            restartCaptureToolStripMenuItem.Size = new Size(145, 30);
-            restartCaptureToolStripMenuItem.Text = "ReCapture";
+            restartCaptureToolStripMenuItem.Size = new Size(132, 30);
+            restartCaptureToolStripMenuItem.Text = "重新采集";
             restartCaptureToolStripMenuItem.Click += RestartCaptureToolStripMenuItem_Click;
             // 
             // deleteCaptureToolStripMenuItem
             // 
             deleteCaptureToolStripMenuItem.Image = Properties.Resources.remove;
             deleteCaptureToolStripMenuItem.Name = "deleteCaptureToolStripMenuItem";
-            deleteCaptureToolStripMenuItem.Size = new Size(145, 30);
-            deleteCaptureToolStripMenuItem.Text = "Delete";
+            deleteCaptureToolStripMenuItem.Size = new Size(132, 30);
+            deleteCaptureToolStripMenuItem.Text = "删除";
             deleteCaptureToolStripMenuItem.Click += DeleteCaptureToolStripMenuItem_Click;
             // 
             // freshToolStripMenuItem
             // 
             freshToolStripMenuItem.Image = Properties.Resources.refresh;
             freshToolStripMenuItem.Name = "freshToolStripMenuItem";
-            freshToolStripMenuItem.Size = new Size(145, 30);
-            freshToolStripMenuItem.Text = "Fresh";
+            freshToolStripMenuItem.Size = new Size(132, 30);
+            freshToolStripMenuItem.Text = "刷新表格";
             freshToolStripMenuItem.Click += FreshToolStripMenuItem_Click;
             // 
             // flowLayoutPanel1
@@ -305,6 +307,16 @@ namespace PerfMonitor
             flowLayoutPanel1.Padding = new Padding(2);
             flowLayoutPanel1.Size = new Size(148, 44);
             flowLayoutPanel1.TabIndex = 7;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(129, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(129, 6);
             // 
             // MainForm
             // 
@@ -359,5 +371,7 @@ namespace PerfMonitor
         private Button btnShotProcess;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button BtnHistory;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripSeparator toolStripSeparator1;
     }
 }
