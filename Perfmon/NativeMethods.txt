@@ -6,4 +6,5 @@ PdhAddCounter
 PdhCollectQueryData
 PdhGetRawCounterValue
 PdhCalculateCounterFromRawValue
+PdhRemoveCounter
 PdhCloseQuery
