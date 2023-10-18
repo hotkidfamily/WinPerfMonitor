@@ -115,6 +115,7 @@ namespace PerfMonitor
             _phyMemTotal = GetPhisicalMemory();
             Task.Run(QuerySystemInfo);
             _ = RefreshListView();
+            labelCpuAndMem.Text = "loading...";
         }
 
 
