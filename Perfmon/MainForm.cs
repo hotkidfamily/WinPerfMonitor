@@ -242,7 +242,11 @@ namespace PerfMonitor
 
                 var sb = $"{_sysCpu:F2}%, {ram}MB, {rama}MB | {core} C, {mnam}, {os}, {_phyMemTotal}GB | {pVRam:F2}GB, {pPhyRam}MB";
 
-                labelCpuAndMem.Text = sb;
+                labelCpuAndMem.Invoke(new Action(() =>
+                {
+                    labelCpuAndMem.Text = sb;
+                })
+                );
 
                 var q = sw.ElapsedMilliseconds;
                 var d = 1000 - (q % 1000);
