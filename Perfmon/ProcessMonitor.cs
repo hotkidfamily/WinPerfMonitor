@@ -148,8 +148,54 @@ namespace PerfMonitor
                     double lastProcessorTime = 0;
                     double cores = 100.0f / Environment.ProcessorCount;
                     NetspeedTrace netspeedTracer = new();
-                    string strQuery = $"\\Process V2({_process.ProcessName}:{_pid})\\% Processor Time";
-                    using PerfQuery cpuUsage = new(strQuery);
+
+                    string strQuery = $"\\Process({_process.ProcessName})\\% Processor Time";
+                    if ((Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Build >= 22000) 
+                        || Environment.OSVersion.Version.Major > 10)
+                    {
+                        strQuery = $"\\Process V2({_process.ProcessName}:{_pid})\\% Processor Time";
+                    }
+                    else
+                    {
+                        bool bMultiInstance = false;
+                        uint instanceCount = 0;
+
+                        while (true)
+                        {
+                            string pidQuery;
+                            if (!bMultiInstance)
+                            {
+                                pidQuery = $"\\Process({_process.ProcessName})\\ID Process";
+                            }
+                            else
+                            {
+                                pidQuery = $"\\Process({_process.ProcessName}#{instanceCount})\\ID Process";
+                            }
+
+                            using PerfQuery pid = new(pidQuery);
+                            uint v = (uint)pid.NextValue();
+                            if (v == _pid)
+                            {
+                                if(instanceCount != 0)
+                                    strQuery = $"\\Process({_process.ProcessName}#{instanceCount})\\% Processor Time";
+                                else
+                                    strQuery = $"\\Process({_process.ProcessName})\\% Processor Time";
+                                break;
+                            }
+                            else
+                            {
+                                bMultiInstance = true;
+                                instanceCount++;
+                            }
+
+                            if(instanceCount > 100)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    using PerfDiffQuery cpuUsage = new(strQuery);
 
                     Stopwatch sw = Stopwatch.StartNew();
                     long firstMonitorTicks = sw.ElapsedMilliseconds;

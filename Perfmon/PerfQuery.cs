@@ -16,10 +16,53 @@ namespace PerfMonitor
     {
         private nint _hQuery;
         private nint _hCounter;
+
+        public PerfQuery(string query)
+        {
+            PInvoke.PdhOpenQuery(null, 0, out _hQuery);
+            nuint user = 0;
+            PInvoke.PdhAddCounter(_hQuery, query, user, out _hCounter);
+        }
+
+        public double NextValue()
+        {
+            winmdroot.System.Performance.PDH_RAW_COUNTER rawData;
+
+            PInvoke.PdhCollectQueryData(_hQuery);
+
+            uint type = 0;
+            unsafe
+            {
+                PInvoke.PdhGetRawCounterValue(_hCounter, &type, out rawData);
+            }
+
+            return rawData.FirstValue;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                PInvoke.PdhRemoveCounter(_hCounter);
+                PInvoke.PdhCloseQuery(_hQuery);
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+    }
+
+    internal class PerfDiffQuery : IDisposable
+    {
+        private nint _hQuery;
+        private nint _hCounter;
         private winmdroot.System.Performance.PDH_RAW_COUNTER _lastData;
         private bool _first = true;
 
-        public PerfQuery(string query)
+        public PerfDiffQuery(string query)
         {
             PInvoke.PdhOpenQuery(null, 0, out _hQuery);
             nuint user = 0;
@@ -69,7 +112,5 @@ namespace PerfMonitor
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-
     }
-
 }
