@@ -172,8 +172,7 @@ namespace PerfMonitor
                                 pidQuery = $"\\Process({_process.ProcessName}#{instanceCount})\\ID Process";
                             }
 
-                            using PerfQuery pid = new(pidQuery);
-                            uint v = (uint)pid.NextValue();
+                            uint v = (uint)QueryOnce.Query(pidQuery);
                             if (v == _pid)
                             {
                                 if(instanceCount != 0)
@@ -195,7 +194,7 @@ namespace PerfMonitor
                         }
                     }
 
-                    using PerfDiffQuery cpuUsage = new(strQuery);
+                    using PerfQuery cpuUsage = new(strQuery);
 
                     Stopwatch sw = Stopwatch.StartNew();
                     long firstMonitorTicks = sw.ElapsedMilliseconds;
