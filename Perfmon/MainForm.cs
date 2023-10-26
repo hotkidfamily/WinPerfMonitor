@@ -33,7 +33,7 @@ namespace PerfMonitor
             public MonitorStatus MntStatus;
             public bool IsDisposed = false;
 
-            public void Dispose()
+            public void Dispose ()
             {
                 IsDisposed = true;
                 Monitor?.Dispose();
@@ -43,7 +43,7 @@ namespace PerfMonitor
                 MntStatus = MonitorStatus.MonitorStatusRemoved;
             }
 
-            public void Stop()
+            public void Stop ()
             {
                 Monitor?.Dispose();
                 ResWriter?.Dispose();
@@ -52,7 +52,7 @@ namespace PerfMonitor
                 MntStatus = MonitorStatus.MonitorStatusStopped;
             }
 
-            public bool IsStop()
+            public bool IsStop ()
             {
                 return MntStatus == MonitorStatus.MonitorStatusStopped;
             }
@@ -61,13 +61,12 @@ namespace PerfMonitor
         private readonly Dictionary<uint, ProcessMonitorContext> _monitorManager = new();
 
         private static readonly string[] _colHeaders_zh_hans
-            = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态" };
+            = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态", "备注" };
 
-        private static readonly string[] _colHeaders_en = new string[] { "PID", "Name", "CPU", "Virtual Memory", "Physical Memory", "Total Memory", "Up Link", "Down Link", "Link Flow", "Time", "Status" };
-        private static readonly string[] _colDefaultValues = new string[] { "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
+        private static readonly string[] _colDefaultValues = new string[] { "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0", ""};
 
         private readonly string[] _colHeaders = default!;
-        private static readonly int[] _colSize = new int[] { 100, 140, 80, 100, 100, 100, 100, 100, 100, 120, 100 };
+        private static readonly int[] _colSize = new int[] { 100, 140, 80, 100, 100, 100, 100, 100, 100, 120, 100, 200 };
 
         private static readonly Process _proc = Process.GetCurrentProcess();
 
@@ -81,15 +80,15 @@ namespace PerfMonitor
                 try
                 {
                     var s = _proc.MainModule?.FileName;
-                    if (s != null)
+                    if ( s != null )
                     {
                         oPath = Path.GetDirectoryName(s);
                     }
                 }
-                catch (Exception) { oPath = null; }
+                catch ( Exception ) { oPath = null; }
 
                 var tPath = Path.Combine(Path.GetTempPath(), "PerfMonitor");
-                if (!Directory.Exists(tPath))
+                if ( !Directory.Exists(tPath) )
                 {
                     Directory.CreateDirectory(tPath);
                 }
@@ -98,14 +97,14 @@ namespace PerfMonitor
 
                 var output = Path.Combine(oPath, "output");
 
-                if (!Directory.Exists($"{output}"))
+                if ( !Directory.Exists($"{output}") )
                     Directory.CreateDirectory($"{output}");
 
                 return output;
             }
         }
 
-        public MainForm()
+        public MainForm ()
         {
             _colHeaders = _colHeaders_zh_hans;
 
@@ -119,12 +118,12 @@ namespace PerfMonitor
         }
 
 
-        private void BtnShotProcess_MouseDown(object sender, MouseEventArgs e)
+        private void BtnShotProcess_MouseDown (object sender, MouseEventArgs e)
         {
             this.Opacity = 0;
         }
 
-        private void BtnShotProcess_MouseUp(object sender, MouseEventArgs e)
+        private void BtnShotProcess_MouseUp (object sender, MouseEventArgs e)
         {
             PInvoke.GetCursorPos(out Point v);
             var Handle = PInvoke.WindowFromPoint(v);
@@ -139,13 +138,13 @@ namespace PerfMonitor
             this.Opacity = 1;
         }
 
-        private void OnUpdateMonitorStatus(ref RunStatusItem status)
+        private void OnUpdateMonitorStatus (ref RunStatusItem status)
         {
-            lock (_monitorResult)
+            lock ( _monitorResult )
             {
                 _monitorResult.Add(status);
             }
-            if (_monitorManager.ContainsKey(status.Pid))
+            if ( _monitorManager.ContainsKey(status.Pid) )
             {
                 var it = _monitorManager[status.Pid];
                 status.SysCpu = _sysCpu;
@@ -155,19 +154,19 @@ namespace PerfMonitor
                     it.ResWriter?.NextRecord();
                     it.ResWriter?.Flush();
                 }
-                catch (Exception)
+                catch ( Exception )
                 {
                     // ignore file 
                 }
-                
+
             }
         }
 
-        private void ConstructListView()
+        private void ConstructListView ()
         {
             MonitorDetailLV.Columns.Clear();
 
-            for (int i = 0; i < _colSize.Length; i++)
+            for ( int i = 0; i < _colSize.Length; i++ )
             {
                 ColumnHeader ch = new()
                 {
@@ -179,32 +178,37 @@ namespace PerfMonitor
             }
         }
 
-        private async Task RefreshListView()
+        private async Task RefreshListView ()
         {
-            while (!IsDisposed)
+            while ( !IsDisposed )
             {
                 List<RunStatusItem> ress;
-                lock (_monitorResult)
+                lock ( _monitorResult )
                 {
                     ress = new List<RunStatusItem>(_monitorResult.ToArray());
                     _monitorResult.Clear();
                 }
-                if (ress.Count > 0)
+                if ( ress.Count > 0 )
                 {
                     MonitorDetailLV.BeginUpdate();
-                    foreach (RunStatusItem res in ress)
+                    foreach ( RunStatusItem res in ress )
                     {
-                        if (_monitorManager.ContainsKey(res.Pid))
+                        if ( _monitorManager.ContainsKey(res.Pid) )
                         {
-                            var index = _monitorManager[res.Pid].LiveVideIndex;
+                            var ctx = _monitorManager[res.Pid];
+                            var index = ctx.LiveVideIndex;
 
                             var values = res.Info();
                             var item = MonitorDetailLV.Items[index];
-                            for (int i = 0; i < _colHeaders?.Length; i++)
+                            for ( int i = 0; i < _colHeaders.Length - 1; i++ )
                             {
                                 item.SubItems[i].Text = values[i];
                             }
-                            if (res.ExcuteStatus == "exit")
+
+                            if(ctx.Monitor != null && ctx.Monitor.Mark.Length > 0)
+                                item.SubItems[_colHeaders.Length-1].Text = ctx.Monitor.Mark;
+
+                            if ( res.ExcuteStatus == "exit" )
                             {
                                 item.BackColor = Color.Red;
                                 var v = _monitorManager[res.Pid];
@@ -218,7 +222,7 @@ namespace PerfMonitor
             }
         }
 
-        private async Task QuerySystemInfo()
+        private async Task QuerySystemInfo ()
         {
             var core = Environment.ProcessorCount;
             var mnam = Environment.MachineName;
@@ -227,7 +231,7 @@ namespace PerfMonitor
             using PerformanceCounter ramUsed = new("Memory", "Committed Bytes");
 
             string strQuery;
-            if (Environment.OSVersion.Version.Major >= 10)
+            if ( Environment.OSVersion.Version.Major >= 10 )
             {
                 strQuery = "\\Processor Information(_Total)\\% Processor Utility";
             }
@@ -238,7 +242,7 @@ namespace PerfMonitor
 
             using PerfQuery cpuTotal = new(strQuery);
             var sw = Stopwatch.StartNew();
-            while (!IsDisposed)
+            while ( !IsDisposed )
             {
                 _proc.Refresh();
                 int rama = (int)((long)Math.Round(ramAva?.NextValue() ?? 0) / Units.MB);
@@ -263,11 +267,11 @@ namespace PerfMonitor
             cpuTotal?.Dispose();
         }
 
-        private void TextBoxPID_KeyPress(object sender, KeyPressEventArgs e)
+        private void TextBoxPID_KeyPress (object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '\r')
+            if ( e.KeyChar == '\r' )
             {
-                if (uint.TryParse(textBoxPID.Text, out uint pi))
+                if ( uint.TryParse(textBoxPID.Text, out uint pi) )
                 {
                     CreateNewMonitor(pi);
                 }
@@ -278,7 +282,7 @@ namespace PerfMonitor
             }
         }
 
-        private static int GetPhisicalMemory()
+        private static int GetPhisicalMemory ()
         {
             ManagementObjectSearcher searcher = new()
             {
@@ -288,10 +292,10 @@ namespace PerfMonitor
             ManagementObjectCollection.ManagementObjectEnumerator em = collection.GetEnumerator();
 
             long capacity = 0;
-            while (em.MoveNext())
+            while ( em.MoveNext() )
             {
                 ManagementBaseObject baseObj = em.Current;
-                if (baseObj.Properties["Capacity"].Value != null)
+                if ( baseObj.Properties["Capacity"].Value != null )
                 {
                     try
                     {
@@ -304,17 +308,17 @@ namespace PerfMonitor
                     }
                 }
             }
-            return (int)(capacity / Units.GiB);
+            return (int) (capacity / Units.GiB);
         }
 
-        private void CreateNewMonitor(uint pid)
+        private void CreateNewMonitor (uint pid)
         {
-            if (!_monitorManager.ContainsKey(pid))
+            if ( !_monitorManager.ContainsKey(pid) )
             {
                 Process? p = null;
                 try
                 {
-                    p = Process.GetProcessById((int)pid);
+                    p = Process.GetProcessById((int) pid);
                 }
                 catch { return; }
 
@@ -348,9 +352,9 @@ namespace PerfMonitor
             }
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing (object sender, FormClosingEventArgs e)
         {
-            foreach (var it in _monitorManager)
+            foreach ( var it in _monitorManager )
             {
                 it.Value.Dispose();
             }
@@ -359,9 +363,9 @@ namespace PerfMonitor
             _proc.Dispose();
         }
 
-        private void BtnOpenFloder_Click(object sender, EventArgs e)
+        private void BtnOpenFloder_Click (object sender, EventArgs e)
         {
-            if (LogFolder != null)
+            if ( LogFolder != null )
             {
                 ProcessStartInfo psi = new()
                 {
@@ -372,13 +376,13 @@ namespace PerfMonitor
             }
         }
 
-        private void MonitorDetailLV_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void MonitorDetailLV_MouseDoubleClick (object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo info = MonitorDetailLV.HitTest(e.X, e.Y);
             ListViewItem item = info.Item;
-            if (uint.TryParse(item.Text, out uint pid))
+            if ( uint.TryParse(item.Text, out uint pid) )
             {
-                if (_monitorManager.ContainsKey(pid))
+                if ( _monitorManager.ContainsKey(pid) )
                 {
                     var it = _monitorManager[pid];
                     string path = it.ResPath ?? "";
@@ -402,31 +406,31 @@ namespace PerfMonitor
             }
         }
 
-        private void BtnSetting_Click(object sender, EventArgs e)
+        private void BtnSetting_Click (object sender, EventArgs e)
         {
             using var setting = new SettingForm();
             setting.ShowDialog();
         }
 
-        private void MonitorDetailLV_MouseClick(object sender, MouseEventArgs e)
+        private void MonitorDetailLV_MouseClick (object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if ( e.Button == MouseButtons.Right )
             {
                 var item = MonitorDetailLV.FocusedItem;
-                if (item != null && item.Bounds.Contains(e.Location))
+                if ( item != null && item.Bounds.Contains(e.Location) )
                 {
                     ItemContextMenuStrip.Show(Cursor.Position);
                 }
             }
         }
 
-        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if (item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
+            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var path = _monitorManager[pid].ResPath;
-                if (path != null)
+                if ( path != null )
                 {
                     ProcessStartInfo psi = new()
                     {
@@ -438,10 +442,10 @@ namespace PerfMonitor
             }
         }
 
-        private void StopToolStripMenuItem_Click(object sender, EventArgs e)
+        private void StopToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if (item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
+            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var v = _monitorManager[pid];
                 v.Stop();
@@ -451,20 +455,20 @@ namespace PerfMonitor
             }
         }
 
-        private void RestartCaptureToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RestartCaptureToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if (item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
+            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 ProcessMonitorContext v = (ProcessMonitorContext)item.Tag;
-                if (v != null && v.IsStop())
+                if ( v != null && v.IsStop() )
                 {
                     v.Dispose();
 
                     _monitorManager.Remove(pid);
                     item.Tag = null;
                     MonitorDetailLV.Items.RemoveAt(item.Index);
-                    for (int i = 0; i < MonitorDetailLV.Items.Count; i++)
+                    for ( int i = 0; i < MonitorDetailLV.Items.Count; i++ )
                     {
                         ProcessMonitorContext v2 = (ProcessMonitorContext)MonitorDetailLV.Items[i].Tag;
                         v2.LiveVideIndex = i;
@@ -474,18 +478,18 @@ namespace PerfMonitor
             }
         }
 
-        private void DeleteCaptureToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DeleteCaptureToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if (item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
+            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var v = _monitorManager[pid];
-                if (v.IsStop())
+                if ( v.IsStop() )
                 {
                     v.Dispose();
                     _monitorManager.Remove(pid);
                     MonitorDetailLV.Items.RemoveAt(item.Index);
-                    for (int i = 0; i < MonitorDetailLV.Items.Count; i++)
+                    for ( int i = 0; i < MonitorDetailLV.Items.Count; i++ )
                     {
                         ProcessMonitorContext v2 = (ProcessMonitorContext)MonitorDetailLV.Items[i].Tag;
                         v2.LiveVideIndex = i;
@@ -494,28 +498,28 @@ namespace PerfMonitor
             }
         }
 
-        private void FreshToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FreshToolStripMenuItem_Click (object sender, EventArgs e)
         {
             MonitorDetailLV.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
             MonitorDetailLV.BeginUpdate();
-            for (int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++)
+            for ( int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++ )
             {
                 MonitorDetailLV.Columns[i].Width += 20;
             }
             MonitorDetailLV.EndUpdate();
         }
 
-        private void MonitorDetailLV_MouseDown(object sender, MouseEventArgs e)
+        private void MonitorDetailLV_MouseDown (object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle)
+            if ( e.Button == MouseButtons.Middle )
             {
                 var item = MonitorDetailLV.FocusedItem;
-                if (item != null && item.Bounds.Contains(e.Location)
-                    && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid))
+                if ( item != null && item.Bounds.Contains(e.Location)
+                    && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
                 {
                     var monitor = _monitorManager[pid];
-                    if (monitor.ResPath != null)
+                    if ( monitor.ResPath != null )
                     {
                         ProcessStartInfo psi = new()
                         {
@@ -524,6 +528,30 @@ namespace PerfMonitor
                         };
                         Process.Start(psi);
                     }
+                }
+            }
+        }
+
+        private void MarkerToolStripMenuItem_Click (object sender, EventArgs e)
+        {
+            var item = MonitorDetailLV.FocusedItem;
+            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
+            {
+                item.BeginEdit();
+            }
+        }
+
+        private void MonitorDetailLV_AfterLabelEdit (object sender, LabelEditEventArgs e)
+        {
+            if ( e.Label != null )
+            {
+                string editedText = e.Label;
+
+                var item = MonitorDetailLV.FocusedItem;
+                var ctx = (ProcessMonitorContext)item.Tag;
+                if ( ctx != null && ctx.Monitor != null )
+                {
+                    ctx.Monitor.Mark = editedText;
                 }
             }
         }
