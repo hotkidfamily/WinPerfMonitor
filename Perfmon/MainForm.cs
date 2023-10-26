@@ -72,6 +72,7 @@ namespace PerfMonitor
         private static readonly Process _proc = Process.GetCurrentProcess();
 
         private double _sysCpu = 0;
+        private string _taskList = string.Empty;
 
         private static string LogFolder
         {
@@ -105,6 +106,33 @@ namespace PerfMonitor
             }
         }
 
+        private static string ConfigFolder
+        {
+            get
+            {
+                string? oPath = null;
+                try
+                {
+                    var s = _proc.MainModule?.FileName;
+                    if ( s != null )
+                    {
+                        oPath = Path.GetDirectoryName(s);
+                    }
+                }
+                catch ( Exception ) { oPath = null; }
+
+                var tPath = Environment.CurrentDirectory;
+                oPath ??= tPath;
+
+                var output = Path.Combine(oPath, "Config");
+
+                if ( !Directory.Exists($"{output}") )
+                    Directory.CreateDirectory($"{output}");
+
+                return output;
+            }
+        }
+
         public MainForm ()
         {
             _colHeaders = _colHeaders_zh_hans;
@@ -116,6 +144,7 @@ namespace PerfMonitor
             Task.Run(QuerySystemInfo);
             _ = RefreshListView();
             labelCpuAndMem.Text = "loading...";
+            _taskList = ConfigFolder + "tasks.json";
         }
 
 
@@ -559,7 +588,7 @@ namespace PerfMonitor
 
         private void BtnHistory_Click (object sender, EventArgs e)
         {
-            string file = "";
+            string file = _taskList;
             using var history = new HistoryForm(file);
             if( history.ShowDialog() == DialogResult.OK )
             {
