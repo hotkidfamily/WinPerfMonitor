@@ -62,6 +62,7 @@ namespace PerfMonitor
 
         private static readonly string[] _colHeaders_zh_hans
             = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态", "备注" };
+        private static int _markColumnIndex = 11; // "备注" as the last element to show
 
         private static readonly string[] _colDefaultValues = new string[] { "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0", ""};
 
@@ -107,7 +108,7 @@ namespace PerfMonitor
         public MainForm ()
         {
             _colHeaders = _colHeaders_zh_hans;
-
+            _markColumnIndex = Array.IndexOf(_colHeaders, "备注");
             InitializeComponent();
             ConstructListView();
 
@@ -200,13 +201,13 @@ namespace PerfMonitor
 
                             var values = res.Info();
                             var item = MonitorDetailLV.Items[index];
-                            for ( int i = 0; i < _colHeaders.Length - 1; i++ )
+                            for ( int i = 0; i < _markColumnIndex; i++ )
                             {
                                 item.SubItems[i].Text = values[i];
                             }
 
                             if(ctx.Monitor != null && ctx.Monitor.Mark.Length > 0)
-                                item.SubItems[_colHeaders.Length-1].Text = ctx.Monitor.Mark;
+                                item.SubItems[_markColumnIndex].Text = ctx.Monitor.Mark;
 
                             if ( res.ExcuteStatus == "exit" )
                             {
