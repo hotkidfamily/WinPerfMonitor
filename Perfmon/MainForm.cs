@@ -149,9 +149,17 @@ namespace PerfMonitor
             {
                 var it = _monitorManager[status.Pid];
                 status.SysCpu = _sysCpu;
-                it.ResWriter?.WriteRecord(status);
-                it.ResWriter?.NextRecord();
-                it.ResWriter?.Flush();
+                try
+                {
+                    it.ResWriter?.WriteRecord(status);
+                    it.ResWriter?.NextRecord();
+                    it.ResWriter?.Flush();
+                }
+                catch (Exception)
+                {
+                    // ignore file 
+                }
+                
             }
         }
 
@@ -327,8 +335,10 @@ namespace PerfMonitor
                 csv.NextRecord();
 
                 MonitorDetailLV.BeginUpdate();
-                var lvi = new ListViewItem(_colDefaultValues);
-                lvi.Tag = ctx;
+                var lvi = new ListViewItem(_colDefaultValues)
+                {
+                    Tag = ctx
+                };
                 var it = MonitorDetailLV.Items.Add(lvi);
                 MonitorDetailLV.Items[it.Index].Selected = true;
                 ctx.LiveVideIndex = it.Index;
