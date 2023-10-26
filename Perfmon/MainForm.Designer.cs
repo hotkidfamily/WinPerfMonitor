@@ -72,11 +72,11 @@ namespace PerfMonitor
             // 
             labelCpuAndMem.Anchor =  AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             labelCpuAndMem.BorderStyle = BorderStyle.FixedSingle;
-            labelCpuAndMem.Location = new Point(20, 484);
-            labelCpuAndMem.Margin = new Padding(2, 1, 2, 1);
+            labelCpuAndMem.Location = new Point(13, 343);
+            labelCpuAndMem.Margin = new Padding(1, 1, 1, 1);
             labelCpuAndMem.Name = "labelCpuAndMem";
             labelCpuAndMem.ReadOnly = true;
-            labelCpuAndMem.Size = new Size(1418, 30);
+            labelCpuAndMem.Size = new Size(903, 23);
             labelCpuAndMem.TabIndex = 5;
             labelCpuAndMem.TextAlign = HorizontalAlignment.Right;
             toolTip1.SetToolTip(labelCpuAndMem, "本机状态");
@@ -91,11 +91,10 @@ namespace PerfMonitor
             MonitorDetailLV.GridLines = true;
             MonitorDetailLV.HideSelection = true;
             MonitorDetailLV.LabelEdit = true;
-            MonitorDetailLV.Location = new Point(20, 138);
-            MonitorDetailLV.Margin = new Padding(5, 4, 5, 4);
+            MonitorDetailLV.Location = new Point(13, 98);
             MonitorDetailLV.MultiSelect = false;
             MonitorDetailLV.Name = "MonitorDetailLV";
-            MonitorDetailLV.Size = new Size(1418, 313);
+            MonitorDetailLV.Size = new Size(903, 222);
             MonitorDetailLV.TabIndex = 3;
             MonitorDetailLV.UseCompatibleStateImageBehavior = false;
             MonitorDetailLV.View = View.Details;
@@ -165,19 +164,17 @@ namespace PerfMonitor
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(20, 48);
-            label1.Margin = new Padding(5, 0, 5, 0);
+            label1.Location = new Point(13, 34);
             label1.Name = "label1";
-            label1.Size = new Size(140, 24);
+            label1.Size = new Size(96, 17);
             label1.TabIndex = 4;
             label1.Text = "输入 PID 开始：";
             // 
             // textBoxPID
             // 
-            textBoxPID.Location = new Point(181, 44);
-            textBoxPID.Margin = new Padding(5, 4, 5, 4);
+            textBoxPID.Location = new Point(115, 31);
             textBoxPID.Name = "textBoxPID";
-            textBoxPID.Size = new Size(155, 30);
+            textBoxPID.Size = new Size(100, 23);
             textBoxPID.TabIndex = 1;
             toolTip1.SetToolTip(textBoxPID, "输入PID");
             textBoxPID.KeyPress += TextBoxPID_KeyPress;
@@ -185,10 +182,9 @@ namespace PerfMonitor
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(20, 107);
-            label2.Margin = new Padding(5, 0, 5, 0);
+            label2.Location = new Point(13, 76);
             label2.Name = "label2";
-            label2.Size = new Size(100, 24);
+            label2.Size = new Size(68, 17);
             label2.TabIndex = 6;
             label2.Text = "详细情况：";
             // 
@@ -200,9 +196,10 @@ namespace PerfMonitor
             BtnSetting.FlatStyle = FlatStyle.Popup;
             BtnSetting.ImageKey = "(无)";
             BtnSetting.ImeMode = ImeMode.NoControl;
-            BtnSetting.Location = new Point(69, 6);
+            BtnSetting.Location = new Point(44, 4);
+            BtnSetting.Margin = new Padding(2, 2, 2, 2);
             BtnSetting.Name = "BtnSetting";
-            BtnSetting.Size = new Size(57, 51);
+            BtnSetting.Size = new Size(36, 36);
             BtnSetting.TabIndex = 14;
             toolTip1.SetToolTip(BtnSetting, "设置");
             BtnSetting.UseVisualStyleBackColor = true;
@@ -216,9 +213,10 @@ namespace PerfMonitor
             BtnOpenFloder.FlatStyle = FlatStyle.Popup;
             BtnOpenFloder.ImageKey = "(无)";
             BtnOpenFloder.ImeMode = ImeMode.NoControl;
-            BtnOpenFloder.Location = new Point(6, 6);
+            BtnOpenFloder.Location = new Point(4, 4);
+            BtnOpenFloder.Margin = new Padding(2, 2, 2, 2);
             BtnOpenFloder.Name = "BtnOpenFloder";
-            BtnOpenFloder.Size = new Size(57, 51);
+            BtnOpenFloder.Size = new Size(36, 36);
             BtnOpenFloder.TabIndex = 10;
             toolTip1.SetToolTip(BtnOpenFloder, "打开数据文件夹");
             BtnOpenFloder.UseVisualStyleBackColor = true;
@@ -232,10 +230,10 @@ namespace PerfMonitor
             btnShotProcess.FlatStyle = FlatStyle.Popup;
             btnShotProcess.ImageKey = "(无)";
             btnShotProcess.ImeMode = ImeMode.NoControl;
-            btnShotProcess.Location = new Point(382, 34);
-            btnShotProcess.Margin = new Padding(2, 1, 2, 1);
+            btnShotProcess.Location = new Point(243, 24);
+            btnShotProcess.Margin = new Padding(1, 1, 1, 1);
             btnShotProcess.Name = "btnShotProcess";
-            btnShotProcess.Size = new Size(57, 51);
+            btnShotProcess.Size = new Size(36, 36);
             btnShotProcess.TabIndex = 0;
             toolTip1.SetToolTip(btnShotProcess, "抓取进程");
             btnShotProcess.UseVisualStyleBackColor = true;
@@ -250,26 +248,27 @@ namespace PerfMonitor
             BtnHistory.FlatStyle = FlatStyle.Popup;
             BtnHistory.ImageKey = "(无)";
             BtnHistory.ImeMode = ImeMode.NoControl;
-            BtnHistory.Location = new Point(160, 6);
-            BtnHistory.Margin = new Padding(31, 3, 3, 3);
+            BtnHistory.Location = new Point(102, 4);
+            BtnHistory.Margin = new Padding(20, 2, 2, 2);
             BtnHistory.Name = "BtnHistory";
-            BtnHistory.Size = new Size(57, 51);
+            BtnHistory.Size = new Size(36, 36);
             BtnHistory.TabIndex = 15;
             toolTip1.SetToolTip(BtnHistory, "打开历史");
             BtnHistory.UseVisualStyleBackColor = true;
+            BtnHistory.Click += BtnHistory_Click;
             // 
             // ItemContextMenuStrip
             // 
             ItemContextMenuStrip.ImageScalingSize = new Size(24, 24);
             ItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { openToolStripMenuItem, MarkerToolStripMenuItem, toolStripSeparator2, stopToolStripMenuItem, restartCaptureToolStripMenuItem, deleteCaptureToolStripMenuItem, toolStripSeparator1, freshToolStripMenuItem });
             ItemContextMenuStrip.Name = "contextMenuStrip1";
-            ItemContextMenuStrip.Size = new Size(161, 208);
+            ItemContextMenuStrip.Size = new Size(133, 196);
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Image = Properties.Resources.floppy;
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(160, 32);
+            openToolStripMenuItem.Size = new Size(132, 30);
             openToolStripMenuItem.Text = "打开结果";
             openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
@@ -277,20 +276,20 @@ namespace PerfMonitor
             // 
             MarkerToolStripMenuItem.Image = Properties.Resources.marker;
             MarkerToolStripMenuItem.Name = "MarkerToolStripMenuItem";
-            MarkerToolStripMenuItem.Size = new Size(160, 32);
+            MarkerToolStripMenuItem.Size = new Size(132, 30);
             MarkerToolStripMenuItem.Text = "备注";
             MarkerToolStripMenuItem.Click += MarkerToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(157, 6);
+            toolStripSeparator2.Size = new Size(129, 6);
             // 
             // stopToolStripMenuItem
             // 
             stopToolStripMenuItem.Image = Properties.Resources.stop;
             stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            stopToolStripMenuItem.Size = new Size(160, 32);
+            stopToolStripMenuItem.Size = new Size(132, 30);
             stopToolStripMenuItem.Text = "停止";
             stopToolStripMenuItem.Click += StopToolStripMenuItem_Click;
             // 
@@ -298,7 +297,7 @@ namespace PerfMonitor
             // 
             restartCaptureToolStripMenuItem.Image = Properties.Resources.reloading;
             restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
-            restartCaptureToolStripMenuItem.Size = new Size(160, 32);
+            restartCaptureToolStripMenuItem.Size = new Size(132, 30);
             restartCaptureToolStripMenuItem.Text = "重新采集";
             restartCaptureToolStripMenuItem.Click += RestartCaptureToolStripMenuItem_Click;
             // 
@@ -306,20 +305,20 @@ namespace PerfMonitor
             // 
             deleteCaptureToolStripMenuItem.Image = Properties.Resources.remove;
             deleteCaptureToolStripMenuItem.Name = "deleteCaptureToolStripMenuItem";
-            deleteCaptureToolStripMenuItem.Size = new Size(160, 32);
+            deleteCaptureToolStripMenuItem.Size = new Size(132, 30);
             deleteCaptureToolStripMenuItem.Text = "删除";
             deleteCaptureToolStripMenuItem.Click += DeleteCaptureToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(157, 6);
+            toolStripSeparator1.Size = new Size(129, 6);
             // 
             // freshToolStripMenuItem
             // 
             freshToolStripMenuItem.Image = Properties.Resources.refresh;
             freshToolStripMenuItem.Name = "freshToolStripMenuItem";
-            freshToolStripMenuItem.Size = new Size(160, 32);
+            freshToolStripMenuItem.Size = new Size(132, 30);
             freshToolStripMenuItem.Text = "刷新表格";
             freshToolStripMenuItem.Click += FreshToolStripMenuItem_Click;
             // 
@@ -329,18 +328,18 @@ namespace PerfMonitor
             flowLayoutPanel1.Controls.Add(BtnOpenFloder);
             flowLayoutPanel1.Controls.Add(BtnSetting);
             flowLayoutPanel1.Controls.Add(BtnHistory);
-            flowLayoutPanel1.Location = new Point(1207, 34);
-            flowLayoutPanel1.Margin = new Padding(2, 1, 2, 1);
+            flowLayoutPanel1.Location = new Point(768, 24);
+            flowLayoutPanel1.Margin = new Padding(1, 1, 1, 1);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Padding = new Padding(3);
-            flowLayoutPanel1.Size = new Size(233, 62);
+            flowLayoutPanel1.Padding = new Padding(2, 2, 2, 2);
+            flowLayoutPanel1.Size = new Size(148, 44);
             flowLayoutPanel1.TabIndex = 7;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(11F, 24F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1458, 532);
+            ClientSize = new Size(928, 377);
             Controls.Add(btnShotProcess);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label2);
@@ -349,8 +348,8 @@ namespace PerfMonitor
             Controls.Add(MonitorDetailLV);
             Controls.Add(labelCpuAndMem);
             Icon = (Icon) resources.GetObject("$this.Icon");
-            Margin = new Padding(2, 1, 2, 1);
-            MinimumSize = new Size(1465, 550);
+            Margin = new Padding(1, 1, 1, 1);
+            MinimumSize = new Size(938, 401);
             Name = "MainForm";
             Text = "PerfMonitor";
             FormClosing += MainForm_FormClosing;

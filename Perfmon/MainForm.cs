@@ -206,7 +206,7 @@ namespace PerfMonitor
                                 item.SubItems[i].Text = values[i];
                             }
 
-                            if(ctx.Monitor != null && ctx.Monitor.Mark.Length > 0)
+                            if ( ctx.Monitor != null && ctx.Monitor.Mark.Length > 0 )
                                 item.SubItems[_markColumnIndex].Text = ctx.Monitor.Mark;
 
                             if ( res.ExcuteStatus == "exit" )
@@ -554,6 +554,15 @@ namespace PerfMonitor
                 {
                     ctx.Monitor.Mark = editedText;
                 }
+            }
+        }
+
+        private void BtnHistory_Click (object sender, EventArgs e)
+        {
+            string file = "";
+            using var history = new HistoryForm(file);
+            if( history.ShowDialog() == DialogResult.OK )
+            {
             }
         }
     }
