@@ -409,8 +409,8 @@ namespace PerfMonitor
 
         private void BtnSetting_Click (object sender, EventArgs e)
         {
-            using var setting = new SettingForm();
-            setting.ShowDialog();
+            //using var setting = new SettingForm();
+            //setting.ShowDialog();
         }
 
         private void MonitorDetailLV_MouseClick (object sender, MouseEventArgs e)
