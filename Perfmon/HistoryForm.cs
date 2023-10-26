@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PerfMonitor.Library;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,21 +13,9 @@ namespace PerfMonitor
 {
     public partial class HistoryForm : Form
     {
-        internal class HistoryTask
-        {
-            private string resPath;
-            private string mark;
-
-            public string ResPath { get => resPath; set => resPath = value; }
-            public string Mark { get => mark; set => mark = value; }
-        }
-
-        private HistoryTask result = default!;
-
-        internal HistoryTask Result { get => result; set => result = value; }
-
         private readonly string[] _columns = new string[] { "PID", "结果", "备注"};
         private readonly int[] _columnsWidth = new int[] { 100, 200, 100};
+        private readonly HistoryController _hostory;
 
         public HistoryForm (string jsonConfig)
         {
@@ -43,6 +32,46 @@ namespace PerfMonitor
                 };
                 LVHistory.Columns.Add(ch);
             }
+            _hostory = new(jsonConfig);
+            _hostory.Read();
+
+            LVHistory.BeginUpdate();
+            foreach ( var res in _hostory.History )
+            {
+                var lvi = new ListViewItem(res.Info())
+                {
+                    Tag = res
+                };
+                LVHistory.Items.Add(lvi);
+            }
+            LVHistory.EndUpdate();
+        }
+
+        private void LVHistory_MouseClick (object sender, MouseEventArgs e)
+        {
+            if ( e.Button == MouseButtons.Right )
+            {
+                var item = LVHistory.FocusedItem;
+                if ( item != null && item.Bounds.Contains(e.Location) )
+                {
+                    HistoryMenuStrip.Show(Cursor.Position);
+                }
+            }
+        }
+
+        private void OpenToolStripMenuItem_Click (object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteToolStripMenuItem_Click (object sender, EventArgs e)
+        {
+
+        }
+
+        private void ModifyMarkerToolStripMenuItem_Click (object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using Microsoft.Diagnostics.Tracing.Parsers.AspNet;
 using Microsoft.Diagnostics.Tracing.Parsers.Clr;
+using PerfMonitor.Library;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -16,6 +17,8 @@ namespace PerfMonitor
     {
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
+        private readonly HistoryController _hostory;
+
         internal enum MonitorStatus : uint
         {
             MonitorStatusMonitoring = 0,
@@ -144,7 +147,9 @@ namespace PerfMonitor
             Task.Run(QuerySystemInfo);
             _ = RefreshListView();
             labelCpuAndMem.Text = "loading...";
-            _taskList = ConfigFolder + "tasks.json";
+            _taskList = Path.Combine(ConfigFolder + "\\tasks.json");
+            var _taskList2 = Path.Combine(ConfigFolder + "\\tasks2.json");
+            _hostory = new(_taskList2);
         }
 
 
@@ -379,6 +384,8 @@ namespace PerfMonitor
                 MonitorDetailLV.EndUpdate();
 
                 _monitorManager.Add(pid, ctx);
+                _hostory.AddItem(pid, resPath, "no beazhu");
+                _hostory.Write();
             }
         }
 
