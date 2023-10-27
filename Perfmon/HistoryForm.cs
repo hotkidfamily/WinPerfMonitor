@@ -1,20 +1,12 @@
 ﻿using PerfMonitor.Library;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace PerfMonitor
 {
     public partial class HistoryForm : Form
     {
-        private readonly string[] _columns = new string[] { "PID", "日期", "备注", "结果"};
-        private readonly int[] _columnsWidth = new int[] { 100, 100, 200, 200};
+        private readonly string[] _columns = new string[] { "PID", "日期", "备注", "结果" };
+        private readonly int[] _columnsWidth = new int[] { 100, 100, 200, 200 };
         private readonly HistoryController _history;
 
         public HistoryForm (object history)
@@ -33,7 +25,7 @@ namespace PerfMonitor
                 LVHistory.Columns.Add(ch);
             }
 
-            _history = (HistoryController)history;
+            _history = (HistoryController) history;
             LVHistory.BeginUpdate();
             foreach ( var res in _history.History )
             {
@@ -60,17 +52,33 @@ namespace PerfMonitor
 
         private void OpenToolStripMenuItem_Click (object sender, EventArgs e)
         {
+            var item = LVHistory.FocusedItem;
+            if ( item != null )
+            {
+                HistoryItem v = (HistoryItem)item.Tag;
 
+                ProcessStartInfo psi = new()
+                {
+                    FileName = v.ResPath,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
+            }
         }
 
         private void DeleteToolStripMenuItem_Click (object sender, EventArgs e)
         {
-
+            var item = LVHistory.FocusedItem;
+            if ( item != null )
+            {
+                HistoryItem v = (HistoryItem)item.Tag;
+                _history.RemoveItem(v);
+                LVHistory.Items.Remove(item);
+            }
         }
 
         private void ModifyMarkerToolStripMenuItem_Click (object sender, EventArgs e)
         {
-
         }
     }
 }

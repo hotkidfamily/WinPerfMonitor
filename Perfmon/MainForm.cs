@@ -11,7 +11,7 @@ namespace PerfMonitor
     {
         private static int _phyMemTotal = 0;
         private static readonly List<RunStatusItem> _monitorResult = new();
-        private readonly HistoryController _hostory;
+        private readonly HistoryController _historyController;
 
         internal enum MonitorStatus : uint
         {
@@ -143,10 +143,8 @@ namespace PerfMonitor
             _ = RefreshListView();
             labelCpuAndMem.Text = "loading...";
             _taskList = Path.Combine(ConfigFolder + "\\tasks.json");
-            _hostory = new(_taskList);
-            _hostory.Read();
-            /*var _taskList2 = Path.Combine(ConfigFolder + "\\tasks2.json");
-            _hostory = new(_taskList2);*/
+            _historyController = new(_taskList);
+            _historyController.Read();
         }
 
         private void BtnShotProcess_MouseDown (object sender, MouseEventArgs e)
@@ -379,8 +377,8 @@ namespace PerfMonitor
                 MonitorDetailLV.EndUpdate();
 
                 _monitorManager.Add(pid, ctx);
-                _hostory.AddItem(pid, resPath, "no beazhu");
-                _hostory.Write();
+                _historyController.AddItem(pid, resPath, "no beazhu");
+                _historyController.Write();
             }
         }
 
@@ -590,7 +588,7 @@ namespace PerfMonitor
 
         private void BtnHistory_Click (object sender, EventArgs e)
         {
-            using var history = new HistoryForm(_hostory);
+            using var history = new HistoryForm(_historyController);
             if ( history.ShowDialog() == DialogResult.OK )
             {
             }

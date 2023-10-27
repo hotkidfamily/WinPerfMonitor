@@ -61,6 +61,12 @@ namespace PerfMonitor.Library
                 Date = $"{DateTime.Now:yyyy.MMdd.HHmm.ss}",
             };
             History.Add(item);
+            Write();
+        }
+        public void RemoveItem (HistoryItem item)
+        {
+            History.Remove(item);
+            Write();
         }
 
         public void Write()
