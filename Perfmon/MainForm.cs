@@ -28,6 +28,7 @@ namespace PerfMonitor
             public string? ResPath;
             public Thread? VisualThread;
             public MonitorStatus MntStatus;
+            public HistoryItem? history;
             public bool IsDisposed = false;
 
             public void Dispose ()
@@ -377,7 +378,8 @@ namespace PerfMonitor
                 MonitorDetailLV.EndUpdate();
 
                 _monitorManager.Add(pid, ctx);
-                _historyController.AddItem(pid, resPath, "No Marker...");
+                var his = _historyController.AddItem(pid, resPath, "No Marker...");
+                ctx.history = his;
             }
         }
 
@@ -581,6 +583,7 @@ namespace PerfMonitor
                 if ( ctx != null && ctx.Monitor != null )
                 {
                     ctx.Monitor.Mark = editedText;
+                    ctx.history!.Marker = editedText;
                 }
             }
         }

@@ -51,7 +51,7 @@ namespace PerfMonitor.Library
             _path = path;
         }
 
-        public void AddItem (uint pid, string respath, string marker)
+        public HistoryItem AddItem (uint pid, string respath, string marker)
         {
             var item = new HistoryItem()
             {
@@ -62,6 +62,7 @@ namespace PerfMonitor.Library
             };
             History.Add(item);
             Write();
+            return item;
         }
 
         public void RemoveItem (HistoryItem item)
