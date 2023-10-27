@@ -20,6 +20,8 @@ namespace PerfMonitor.Library
         [JsonPropertyName("ResPath")]
         public string ResPath { get => resPath; set => resPath = value; }
 
+        public bool Running = false;
+
         public string[] Info ()
         {
             return new string[] {
@@ -59,6 +61,7 @@ namespace PerfMonitor.Library
                 ResPath = respath,
                 Marker = marker,
                 Date = $"{DateTime.Now:yyyy.MMdd.HHmm.ss}",
+                Running = true,
             };
             History.Add(item);
             Write();

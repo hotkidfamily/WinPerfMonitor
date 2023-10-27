@@ -524,6 +524,7 @@ namespace PerfMonitor
                     {
                         ProcessMonitorContext v2 = (ProcessMonitorContext)MonitorDetailLV.Items[i].Tag;
                         v2.LiveVideIndex = i;
+                        v2.history!.Running = false;
                     }
                 }
             }

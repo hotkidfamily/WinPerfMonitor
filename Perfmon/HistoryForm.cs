@@ -73,8 +73,11 @@ namespace PerfMonitor
             if ( item != null )
             {
                 HistoryItem v = (HistoryItem)item.Tag;
-                _history.RemoveItem(v);
-                LVHistory.Items.Remove(item);
+                if(!v.Running)
+                {
+                    _history.RemoveItem(v);
+                    LVHistory.Items.Remove(item);
+                }
             }
         }
 
