@@ -7,9 +7,9 @@ namespace PerfMonitor.Library
     internal class HistoryItem
     {
         private uint pid;
-        private string marker;
-        private string date;
-        private string resPath;
+        private string marker = string.Empty;
+        private string date = string.Empty;
+        private string resPath = string.Empty;
 
         [JsonPropertyName("Pid")]
         public uint Pid { get => pid; set => pid = value; }

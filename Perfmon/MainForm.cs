@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using PerfMonitor.Library;
+using PerfMonitor.Properties;
 using System.Diagnostics;
 using System.Globalization;
 using System.Management;
@@ -146,6 +147,7 @@ namespace PerfMonitor
             _taskList = Path.Combine(ConfigFolder + "\\tasks.json");
             _historyController = new(_taskList);
             _historyController.Read();
+            this.Text += $" {Resources.AppVersion}";
         }
 
         private void BtnShotProcess_MouseDown (object sender, MouseEventArgs e)
