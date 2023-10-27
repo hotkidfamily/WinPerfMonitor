@@ -13,11 +13,11 @@ namespace PerfMonitor
 {
     public partial class HistoryForm : Form
     {
-        private readonly string[] _columns = new string[] { "PID", "结果", "备注"};
-        private readonly int[] _columnsWidth = new int[] { 100, 200, 100};
-        private readonly HistoryController _hostory;
+        private readonly string[] _columns = new string[] { "PID", "日期", "备注", "结果"};
+        private readonly int[] _columnsWidth = new int[] { 100, 100, 200, 200};
+        private readonly HistoryController _history;
 
-        public HistoryForm (string jsonConfig)
+        public HistoryForm (object history)
         {
             InitializeComponent();
             LVHistory.Columns.Clear();
@@ -32,11 +32,10 @@ namespace PerfMonitor
                 };
                 LVHistory.Columns.Add(ch);
             }
-            _hostory = new(jsonConfig);
-            _hostory.Read();
 
+            _history = (HistoryController)history;
             LVHistory.BeginUpdate();
-            foreach ( var res in _hostory.History )
+            foreach ( var res in _history.History )
             {
                 var lvi = new ListViewItem(res.Info())
                 {

@@ -23,7 +23,7 @@ namespace PerfMonitor.Library
         public string[] Info ()
         {
             return new string[] {
-                $"{Pid}", $"{Marker}", $"{Date}", $"{ResPath}"
+                $"{Pid}", $"{Date}",  $"{Marker}", $"{ResPath}"
             };
         }
     }

@@ -1,14 +1,8 @@
 ﻿using CsvHelper;
-using Microsoft.Diagnostics.Tracing.Parsers.AspNet;
-using Microsoft.Diagnostics.Tracing.Parsers.Clr;
 using PerfMonitor.Library;
-using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Management;
-using System.Reflection;
-using System.Windows.Forms;
 using Windows.Win32;
 
 namespace PerfMonitor
@@ -65,9 +59,10 @@ namespace PerfMonitor
 
         private static readonly string[] _colHeaders_zh_hans
             = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态", "备注" };
+
         private static int _markColumnIndex = 11; // "备注" as the last element to show
 
-        private static readonly string[] _colDefaultValues = new string[] { "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0", ""};
+        private static readonly string[] _colDefaultValues = new string[] { "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0", "" };
 
         private readonly string[] _colHeaders = default!;
         private static readonly int[] _colSize = new int[] { 100, 140, 80, 100, 100, 100, 100, 100, 100, 120, 100, 200 };
@@ -148,10 +143,11 @@ namespace PerfMonitor
             _ = RefreshListView();
             labelCpuAndMem.Text = "loading...";
             _taskList = Path.Combine(ConfigFolder + "\\tasks.json");
-            var _taskList2 = Path.Combine(ConfigFolder + "\\tasks2.json");
-            _hostory = new(_taskList2);
+            _hostory = new(_taskList);
+            _hostory.Read();
+            /*var _taskList2 = Path.Combine(ConfigFolder + "\\tasks2.json");
+            _hostory = new(_taskList2);*/
         }
-
 
         private void BtnShotProcess_MouseDown (object sender, MouseEventArgs e)
         {
@@ -191,9 +187,8 @@ namespace PerfMonitor
                 }
                 catch ( Exception )
                 {
-                    // ignore file 
+                    // ignore file
                 }
-
             }
         }
 
@@ -595,9 +590,8 @@ namespace PerfMonitor
 
         private void BtnHistory_Click (object sender, EventArgs e)
         {
-            string file = _taskList;
-            using var history = new HistoryForm(file);
-            if( history.ShowDialog() == DialogResult.OK )
+            using var history = new HistoryForm(_hostory);
+            if ( history.ShowDialog() == DialogResult.OK )
             {
             }
         }
