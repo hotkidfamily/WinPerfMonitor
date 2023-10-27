@@ -596,10 +596,12 @@ namespace PerfMonitor
         private void MonitorDetailLV_KeyDown (object sender, KeyEventArgs e)
         {
             var item = MonitorDetailLV.FocusedItem;
-            if(e.KeyCode == Keys.F2 && item != null )
+            if ( e.KeyCode == Keys.F2 && item != null )
             {
                 item.BeginEdit();
-            }else if (e.KeyCode == Keys.F5) {
+            }
+            else if ( e.KeyCode == Keys.F5 )
+            {
                 MonitorDetailLV.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
                 MonitorDetailLV.BeginUpdate();

@@ -263,13 +263,13 @@ namespace PerfMonitor
             ItemContextMenuStrip.ImageScalingSize = new Size(24, 24);
             ItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { openToolStripMenuItem, MarkerToolStripMenuItem, toolStripSeparator2, stopToolStripMenuItem, restartCaptureToolStripMenuItem, deleteCaptureToolStripMenuItem, toolStripSeparator1, freshToolStripMenuItem });
             ItemContextMenuStrip.Name = "contextMenuStrip1";
-            ItemContextMenuStrip.Size = new Size(133, 196);
+            ItemContextMenuStrip.Size = new Size(189, 218);
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Image = Properties.Resources.floppy;
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(132, 30);
+            openToolStripMenuItem.Size = new Size(188, 30);
             openToolStripMenuItem.Text = "打开结果";
             openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
@@ -277,20 +277,20 @@ namespace PerfMonitor
             // 
             MarkerToolStripMenuItem.Image = Properties.Resources.marker;
             MarkerToolStripMenuItem.Name = "MarkerToolStripMenuItem";
-            MarkerToolStripMenuItem.Size = new Size(132, 30);
-            MarkerToolStripMenuItem.Text = "备注";
+            MarkerToolStripMenuItem.Size = new Size(188, 30);
+            MarkerToolStripMenuItem.Text = "备注(F2)";
             MarkerToolStripMenuItem.Click += MarkerToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(129, 6);
+            toolStripSeparator2.Size = new Size(185, 6);
             // 
             // stopToolStripMenuItem
             // 
             stopToolStripMenuItem.Image = Properties.Resources.stop;
             stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            stopToolStripMenuItem.Size = new Size(132, 30);
+            stopToolStripMenuItem.Size = new Size(188, 30);
             stopToolStripMenuItem.Text = "停止";
             stopToolStripMenuItem.Click += StopToolStripMenuItem_Click;
             // 
@@ -298,7 +298,7 @@ namespace PerfMonitor
             // 
             restartCaptureToolStripMenuItem.Image = Properties.Resources.reloading;
             restartCaptureToolStripMenuItem.Name = "restartCaptureToolStripMenuItem";
-            restartCaptureToolStripMenuItem.Size = new Size(132, 30);
+            restartCaptureToolStripMenuItem.Size = new Size(188, 30);
             restartCaptureToolStripMenuItem.Text = "重新采集";
             restartCaptureToolStripMenuItem.Click += RestartCaptureToolStripMenuItem_Click;
             // 
@@ -306,21 +306,21 @@ namespace PerfMonitor
             // 
             deleteCaptureToolStripMenuItem.Image = Properties.Resources.remove;
             deleteCaptureToolStripMenuItem.Name = "deleteCaptureToolStripMenuItem";
-            deleteCaptureToolStripMenuItem.Size = new Size(132, 30);
+            deleteCaptureToolStripMenuItem.Size = new Size(188, 30);
             deleteCaptureToolStripMenuItem.Text = "删除";
             deleteCaptureToolStripMenuItem.Click += DeleteCaptureToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(129, 6);
+            toolStripSeparator1.Size = new Size(185, 6);
             // 
             // freshToolStripMenuItem
             // 
             freshToolStripMenuItem.Image = Properties.Resources.refresh;
             freshToolStripMenuItem.Name = "freshToolStripMenuItem";
-            freshToolStripMenuItem.Size = new Size(132, 30);
-            freshToolStripMenuItem.Text = "刷新表格";
+            freshToolStripMenuItem.Size = new Size(188, 30);
+            freshToolStripMenuItem.Text = "调整表格(F5)";
             freshToolStripMenuItem.Click += FreshToolStripMenuItem_Click;
             // 
             // flowLayoutPanel1

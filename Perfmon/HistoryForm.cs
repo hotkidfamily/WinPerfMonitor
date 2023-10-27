@@ -107,7 +107,7 @@ namespace PerfMonitor
             {
                 item.BeginEdit();
             }
-            else if(e.KeyCode == Keys.F5 )
+            else if ( e.KeyCode == Keys.F5 )
             {
                 LVHistory.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
@@ -118,6 +118,18 @@ namespace PerfMonitor
                 }
                 LVHistory.EndUpdate();
             }
+        }
+
+        private void FreshToolStripMenuItem_Click (object sender, EventArgs e)
+        {
+            LVHistory.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            LVHistory.BeginUpdate();
+            for ( int i = 0; i <= LVHistory.Columns.Count - 1; i++ )
+            {
+                LVHistory.Columns[i].Width += 20;
+            }
+            LVHistory.EndUpdate();
         }
     }
 }

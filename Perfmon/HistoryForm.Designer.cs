@@ -35,6 +35,7 @@
             DeleteToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             ModifyMarkerToolStripMenuItem = new ToolStripMenuItem();
+            FreshToolStripMenuItem = new ToolStripMenuItem();
             HistoryMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -57,15 +58,15 @@
             // 
             // HistoryMenuStrip
             // 
-            HistoryMenuStrip.Items.AddRange(new ToolStripItem[] { OpenToolStripMenuItem, DeleteToolStripMenuItem, toolStripSeparator1, ModifyMarkerToolStripMenuItem });
+            HistoryMenuStrip.Items.AddRange(new ToolStripItem[] { OpenToolStripMenuItem, DeleteToolStripMenuItem, toolStripSeparator1, ModifyMarkerToolStripMenuItem, FreshToolStripMenuItem });
             HistoryMenuStrip.Name = "contextMenuStrip1";
-            HistoryMenuStrip.Size = new Size(125, 76);
+            HistoryMenuStrip.Size = new Size(146, 98);
             // 
             // OpenToolStripMenuItem
             // 
             OpenToolStripMenuItem.Image = Properties.Resources.floppy;
             OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-            OpenToolStripMenuItem.Size = new Size(124, 22);
+            OpenToolStripMenuItem.Size = new Size(145, 22);
             OpenToolStripMenuItem.Text = "打开";
             OpenToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
@@ -73,22 +74,30 @@
             // 
             DeleteToolStripMenuItem.Image = Properties.Resources.remove;
             DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
-            DeleteToolStripMenuItem.Size = new Size(124, 22);
+            DeleteToolStripMenuItem.Size = new Size(145, 22);
             DeleteToolStripMenuItem.Text = "删除";
             DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(121, 6);
+            toolStripSeparator1.Size = new Size(142, 6);
             // 
             // ModifyMarkerToolStripMenuItem
             // 
             ModifyMarkerToolStripMenuItem.Image = Properties.Resources.marker;
             ModifyMarkerToolStripMenuItem.Name = "ModifyMarkerToolStripMenuItem";
-            ModifyMarkerToolStripMenuItem.Size = new Size(124, 22);
-            ModifyMarkerToolStripMenuItem.Text = "修改备注";
+            ModifyMarkerToolStripMenuItem.Size = new Size(145, 22);
+            ModifyMarkerToolStripMenuItem.Text = "修改备注(F2)";
             ModifyMarkerToolStripMenuItem.Click += ModifyMarkerToolStripMenuItem_Click;
+            // 
+            // FreshToolStripMenuItem
+            // 
+            FreshToolStripMenuItem.Image = Properties.Resources.refresh;
+            FreshToolStripMenuItem.Name = "FreshToolStripMenuItem";
+            FreshToolStripMenuItem.Size = new Size(145, 22);
+            FreshToolStripMenuItem.Text = "调整表格(F5)";
+            FreshToolStripMenuItem.Click += FreshToolStripMenuItem_Click;
             // 
             // HistoryForm
             // 
@@ -113,5 +122,6 @@
         private ToolStripMenuItem DeleteToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem ModifyMarkerToolStripMenuItem;
+        private ToolStripMenuItem FreshToolStripMenuItem;
     }
 }

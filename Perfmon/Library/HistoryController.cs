@@ -73,16 +73,8 @@ namespace PerfMonitor.Library
         public void Write()
         {
             string json = JsonSerializer.Serialize(this);
-            if( File.Exists(_path) )
-            {
-                using var sw = new StreamWriter(_path, false);
-                sw.Write(json);
-            }
-            else
-            {
-                using var sw = new StreamWriter(new FileStream(_path, FileMode.CreateNew, FileAccess.Write, FileShare.Read));
-                sw.Write(json);
-            }
+            using var sw = new StreamWriter(_path, false);
+            sw.Write(json);
         }
 
         public void Read ()
