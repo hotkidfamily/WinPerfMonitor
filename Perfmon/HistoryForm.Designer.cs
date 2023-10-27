@@ -40,8 +40,10 @@
             // 
             // LVHistory
             // 
+            LVHistory.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             LVHistory.FullRowSelect = true;
             LVHistory.GridLines = true;
+            LVHistory.LabelEdit = true;
             LVHistory.Location = new Point(11, 11);
             LVHistory.Margin = new Padding(2);
             LVHistory.Name = "LVHistory";
@@ -49,6 +51,8 @@
             LVHistory.TabIndex = 0;
             LVHistory.UseCompatibleStateImageBehavior = false;
             LVHistory.View = View.Details;
+            LVHistory.AfterLabelEdit += LVHistory_AfterLabelEdit;
+            LVHistory.KeyDown += LVHistory_KeyDown;
             LVHistory.MouseClick += LVHistory_MouseClick;
             // 
             // HistoryMenuStrip

@@ -73,7 +73,7 @@ namespace PerfMonitor
             labelCpuAndMem.Anchor =  AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             labelCpuAndMem.BorderStyle = BorderStyle.FixedSingle;
             labelCpuAndMem.Location = new Point(13, 343);
-            labelCpuAndMem.Margin = new Padding(1, 1, 1, 1);
+            labelCpuAndMem.Margin = new Padding(1);
             labelCpuAndMem.Name = "labelCpuAndMem";
             labelCpuAndMem.ReadOnly = true;
             labelCpuAndMem.Size = new Size(903, 23);
@@ -99,6 +99,7 @@ namespace PerfMonitor
             MonitorDetailLV.UseCompatibleStateImageBehavior = false;
             MonitorDetailLV.View = View.Details;
             MonitorDetailLV.AfterLabelEdit += MonitorDetailLV_AfterLabelEdit;
+            MonitorDetailLV.KeyDown += MonitorDetailLV_KeyDown;
             MonitorDetailLV.MouseClick += MonitorDetailLV_MouseClick;
             MonitorDetailLV.MouseDoubleClick += MonitorDetailLV_MouseDoubleClick;
             MonitorDetailLV.MouseDown += MonitorDetailLV_MouseDown;
@@ -197,7 +198,7 @@ namespace PerfMonitor
             BtnSetting.ImageKey = "(无)";
             BtnSetting.ImeMode = ImeMode.NoControl;
             BtnSetting.Location = new Point(44, 4);
-            BtnSetting.Margin = new Padding(2, 2, 2, 2);
+            BtnSetting.Margin = new Padding(2);
             BtnSetting.Name = "BtnSetting";
             BtnSetting.Size = new Size(36, 36);
             BtnSetting.TabIndex = 14;
@@ -214,7 +215,7 @@ namespace PerfMonitor
             BtnOpenFloder.ImageKey = "(无)";
             BtnOpenFloder.ImeMode = ImeMode.NoControl;
             BtnOpenFloder.Location = new Point(4, 4);
-            BtnOpenFloder.Margin = new Padding(2, 2, 2, 2);
+            BtnOpenFloder.Margin = new Padding(2);
             BtnOpenFloder.Name = "BtnOpenFloder";
             BtnOpenFloder.Size = new Size(36, 36);
             BtnOpenFloder.TabIndex = 10;
@@ -231,7 +232,7 @@ namespace PerfMonitor
             btnShotProcess.ImageKey = "(无)";
             btnShotProcess.ImeMode = ImeMode.NoControl;
             btnShotProcess.Location = new Point(243, 24);
-            btnShotProcess.Margin = new Padding(1, 1, 1, 1);
+            btnShotProcess.Margin = new Padding(1);
             btnShotProcess.Name = "btnShotProcess";
             btnShotProcess.Size = new Size(36, 36);
             btnShotProcess.TabIndex = 0;
@@ -329,9 +330,9 @@ namespace PerfMonitor
             flowLayoutPanel1.Controls.Add(BtnSetting);
             flowLayoutPanel1.Controls.Add(BtnHistory);
             flowLayoutPanel1.Location = new Point(768, 24);
-            flowLayoutPanel1.Margin = new Padding(1, 1, 1, 1);
+            flowLayoutPanel1.Margin = new Padding(1);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Padding = new Padding(2, 2, 2, 2);
+            flowLayoutPanel1.Padding = new Padding(2);
             flowLayoutPanel1.Size = new Size(148, 44);
             flowLayoutPanel1.TabIndex = 7;
             // 
@@ -348,7 +349,7 @@ namespace PerfMonitor
             Controls.Add(MonitorDetailLV);
             Controls.Add(labelCpuAndMem);
             Icon = (Icon) resources.GetObject("$this.Icon");
-            Margin = new Padding(1, 1, 1, 1);
+            Margin = new Padding(1);
             MinimumSize = new Size(938, 401);
             Name = "MainForm";
             Text = "PerfMonitor";

@@ -377,8 +377,7 @@ namespace PerfMonitor
                 MonitorDetailLV.EndUpdate();
 
                 _monitorManager.Add(pid, ctx);
-                _historyController.AddItem(pid, resPath, "no beazhu");
-                _historyController.Write();
+                _historyController.AddItem(pid, resPath, "No Marker...");
             }
         }
 
@@ -591,6 +590,24 @@ namespace PerfMonitor
             using var history = new HistoryForm(_historyController);
             if ( history.ShowDialog() == DialogResult.OK )
             {
+            }
+        }
+
+        private void MonitorDetailLV_KeyDown (object sender, KeyEventArgs e)
+        {
+            var item = MonitorDetailLV.FocusedItem;
+            if(e.KeyCode == Keys.F2 && item != null )
+            {
+                item.BeginEdit();
+            }else if (e.KeyCode == Keys.F5) {
+                MonitorDetailLV.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+                MonitorDetailLV.BeginUpdate();
+                for ( int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++ )
+                {
+                    MonitorDetailLV.Columns[i].Width += 20;
+                }
+                MonitorDetailLV.EndUpdate();
             }
         }
     }

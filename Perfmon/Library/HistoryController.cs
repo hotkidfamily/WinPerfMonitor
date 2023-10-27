@@ -23,7 +23,7 @@ namespace PerfMonitor.Library
         public string[] Info ()
         {
             return new string[] {
-                $"{Pid}", $"{Date}",  $"{Marker}", $"{ResPath}"
+                $"{Marker}", $"{Pid}", $"{Date}", $"{ResPath}"
             };
         }
     }
@@ -63,6 +63,7 @@ namespace PerfMonitor.Library
             History.Add(item);
             Write();
         }
+
         public void RemoveItem (HistoryItem item)
         {
             History.Remove(item);
@@ -72,9 +73,9 @@ namespace PerfMonitor.Library
         public void Write()
         {
             string json = JsonSerializer.Serialize(this);
-            if ( File.Exists(_path) )
+            if( File.Exists(_path) )
             {
-                using var sw = new StreamWriter(new FileStream(_path, FileMode.Open, FileAccess.Write, FileShare.Read));
+                using var sw = new StreamWriter(_path, false);
                 sw.Write(json);
             }
             else
