@@ -234,8 +234,8 @@ namespace PerfMonitor
                                 item.SubItems[i].Text = values[i];
                             }
 
-                            if ( ctx.Monitor != null && ctx.Monitor.Mark.Length > 0 )
-                                item.SubItems[_markColumnIndex].Text = ctx.Monitor.Mark;
+                            if ( ctx.history != null)
+                                item.SubItems[_markColumnIndex].Text = ctx.history.Marker;
 
                             if ( res.ExcuteStatus == "exit" )
                             {
