@@ -55,6 +55,7 @@
             LVHistory.AfterLabelEdit += LVHistory_AfterLabelEdit;
             LVHistory.KeyDown += LVHistory_KeyDown;
             LVHistory.MouseClick += LVHistory_MouseClick;
+            LVHistory.MouseDoubleClick += LVHistory_MouseDoubleClick;
             // 
             // HistoryMenuStrip
             // 

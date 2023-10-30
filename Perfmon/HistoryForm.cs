@@ -1,5 +1,6 @@
 ﻿using PerfMonitor.Library;
 using System.Diagnostics;
+using System.IO;
 using static PerfMonitor.MainForm;
 
 namespace PerfMonitor
@@ -9,6 +10,7 @@ namespace PerfMonitor
         private readonly string[] _columns = new string[] { "备注", "PID", "日期", "结果" };
         private readonly int[] _columnsWidth = new int[] { 100, 100, 200, 200 };
         private readonly HistoryController _history;
+        private Thread? _visualThread;
 
         public HistoryForm (object history)
         {
@@ -73,7 +75,7 @@ namespace PerfMonitor
             if ( item != null )
             {
                 HistoryItem v = (HistoryItem)item.Tag;
-                if(!v.Running)
+                if ( !v.Running )
                 {
                     _history.RemoveItem(v);
                     LVHistory.Items.Remove(item);
@@ -133,6 +135,31 @@ namespace PerfMonitor
                 LVHistory.Columns[i].Width += 20;
             }
             LVHistory.EndUpdate();
+        }
+
+        private void LVHistory_MouseDoubleClick (object sender, MouseEventArgs e)
+        {
+            var item = LVHistory.FocusedItem;
+            if ( item != null )
+            {
+                var ctx = (HistoryItem)item.Tag;
+                if ( _visualThread == null && ctx != null && !ctx.Running )
+                {
+                    var helpThread = new Thread(new ThreadStart(() =>
+                    {
+                        string desc = $" - {ctx.Pid}";
+                        var visual = new VisualForm(ctx.ResPath, desc);
+                        visual.FormClosed += (s, e) =>
+                        {
+                            _visualThread = null;
+                        };
+                        visual.ShowDialog();
+                    }));
+                    helpThread.SetApartmentState(ApartmentState.STA);
+                    helpThread.Start();
+                    _visualThread = helpThread;
+                }
+            }
         }
     }
 }

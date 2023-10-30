@@ -421,7 +421,7 @@ namespace PerfMonitor
                     string path = it.ResPath ?? "";
                     if (
                         path != null
-                        && ((it.VisualThread == null) || !it.VisualThread.IsAlive) // fix: already running form
+                        && (it.VisualThread == null) // fix: already running form
                         && (it.LiveVideIndex == info.Item.Index) // fix: a monitor recapture after removed, then item be double cliked
                         )
                     {
@@ -429,6 +429,10 @@ namespace PerfMonitor
                         {
                             string desc = it.Monitor?.Descriptor() ?? "invalid";
                             var visual = new VisualForm(path, desc);
+                            visual.FormClosed += (s, e) =>
+                            {
+                                it.VisualThread = null;
+                            };
                             visual.ShowDialog();
                         }));
                         helpThread.SetApartmentState(ApartmentState.STA);
