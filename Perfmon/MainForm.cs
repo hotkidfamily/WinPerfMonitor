@@ -195,7 +195,7 @@ namespace PerfMonitor
 
         private void ConstructListView ()
         {
-            MonitorDetailLV.Columns.Clear();
+            LVMonitorDetail.Columns.Clear();
 
             for ( int i = 0; i < _colSize.Length; i++ )
             {
@@ -205,7 +205,7 @@ namespace PerfMonitor
                     TextAlign = HorizontalAlignment.Left,
                     Text = _colHeaders?[i],
                 };
-                MonitorDetailLV.Columns.Add(ch);
+                LVMonitorDetail.Columns.Add(ch);
             }
         }
 
@@ -221,7 +221,7 @@ namespace PerfMonitor
                 }
                 if ( ress.Count > 0 )
                 {
-                    MonitorDetailLV.BeginUpdate();
+                    LVMonitorDetail.BeginUpdate();
                     foreach ( RunStatusItem res in ress )
                     {
                         if ( _monitorManager.ContainsKey(res.Pid) )
@@ -230,7 +230,7 @@ namespace PerfMonitor
                             var index = ctx.LiveVideIndex;
 
                             var values = res.Info();
-                            var item = MonitorDetailLV.Items[index];
+                            var item = LVMonitorDetail.Items[index];
                             for ( int i = 0; i < _markColumnIndex; i++ )
                             {
                                 item.SubItems[i].Text = values[i];
@@ -247,7 +247,7 @@ namespace PerfMonitor
                             }
                         }
                     }
-                    MonitorDetailLV.EndUpdate();
+                    LVMonitorDetail.EndUpdate();
                 }
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
             }
@@ -369,15 +369,15 @@ namespace PerfMonitor
                 csv.WriteHeader<RunStatusItem>();
                 csv.NextRecord();
 
-                MonitorDetailLV.BeginUpdate();
+                LVMonitorDetail.BeginUpdate();
                 var lvi = new ListViewItem(_colDefaultValues)
                 {
                     Tag = ctx
                 };
-                var it = MonitorDetailLV.Items.Add(lvi);
-                MonitorDetailLV.Items[it.Index].Selected = true;
+                var it = LVMonitorDetail.Items.Add(lvi);
+                LVMonitorDetail.Items[it.Index].Selected = true;
                 ctx.LiveVideIndex = it.Index;
-                MonitorDetailLV.EndUpdate();
+                LVMonitorDetail.EndUpdate();
 
                 _monitorManager.Add(pid, ctx);
                 var his = _historyController.AddItem(pid, resPath, "No Marker...");
@@ -411,7 +411,7 @@ namespace PerfMonitor
 
         private void MonitorDetailLV_MouseDoubleClick (object sender, MouseEventArgs e)
         {
-            ListViewHitTestInfo info = MonitorDetailLV.HitTest(e.X, e.Y);
+            ListViewHitTestInfo info = LVMonitorDetail.HitTest(e.X, e.Y);
             ListViewItem item = info.Item;
             if ( uint.TryParse(item.Text, out uint pid) )
             {
@@ -453,7 +453,7 @@ namespace PerfMonitor
         {
             if ( e.Button == MouseButtons.Right )
             {
-                var item = MonitorDetailLV.FocusedItem;
+                var item = LVMonitorDetail.FocusedItem;
                 if ( item != null && item.Bounds.Contains(e.Location) )
                 {
                     ItemContextMenuStrip.Show(Cursor.Position);
@@ -463,7 +463,7 @@ namespace PerfMonitor
 
         private void OpenToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            var item = MonitorDetailLV.FocusedItem;
+            var item = LVMonitorDetail.FocusedItem;
             if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var path = _monitorManager[pid].ResPath;
@@ -481,7 +481,7 @@ namespace PerfMonitor
 
         private void StopToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            var item = MonitorDetailLV.FocusedItem;
+            var item = LVMonitorDetail.FocusedItem;
             if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var v = _monitorManager[pid];
@@ -494,7 +494,7 @@ namespace PerfMonitor
 
         private void RestartCaptureToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            var item = MonitorDetailLV.FocusedItem;
+            var item = LVMonitorDetail.FocusedItem;
             if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 ProcessMonitorContext v = (ProcessMonitorContext)item.Tag;
@@ -504,10 +504,10 @@ namespace PerfMonitor
 
                     _monitorManager.Remove(pid);
                     item.Tag = null;
-                    MonitorDetailLV.Items.RemoveAt(item.Index);
-                    for ( int i = 0; i < MonitorDetailLV.Items.Count; i++ )
+                    LVMonitorDetail.Items.RemoveAt(item.Index);
+                    for ( int i = 0; i < LVMonitorDetail.Items.Count; i++ )
                     {
-                        ProcessMonitorContext v2 = (ProcessMonitorContext)MonitorDetailLV.Items[i].Tag;
+                        ProcessMonitorContext v2 = (ProcessMonitorContext)LVMonitorDetail.Items[i].Tag;
                         v2.LiveVideIndex = i;
                     }
                     CreateNewMonitor(pid);
@@ -517,7 +517,7 @@ namespace PerfMonitor
 
         private void DeleteCaptureToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            var item = MonitorDetailLV.FocusedItem;
+            var item = LVMonitorDetail.FocusedItem;
             if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var v = _monitorManager[pid];
@@ -525,10 +525,10 @@ namespace PerfMonitor
                 {
                     v.Dispose();
                     _monitorManager.Remove(pid);
-                    MonitorDetailLV.Items.RemoveAt(item.Index);
-                    for ( int i = 0; i < MonitorDetailLV.Items.Count; i++ )
+                    LVMonitorDetail.Items.RemoveAt(item.Index);
+                    for ( int i = 0; i < LVMonitorDetail.Items.Count; i++ )
                     {
-                        ProcessMonitorContext v2 = (ProcessMonitorContext)MonitorDetailLV.Items[i].Tag;
+                        ProcessMonitorContext v2 = (ProcessMonitorContext)LVMonitorDetail.Items[i].Tag;
                         v2.LiveVideIndex = i;
                         v2.history!.Running = false;
                     }
@@ -538,21 +538,21 @@ namespace PerfMonitor
 
         private void FreshToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            MonitorDetailLV.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            LVMonitorDetail.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-            MonitorDetailLV.BeginUpdate();
-            for ( int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++ )
+            LVMonitorDetail.BeginUpdate();
+            for ( int i = 0; i <= LVMonitorDetail.Columns.Count - 1; i++ )
             {
-                MonitorDetailLV.Columns[i].Width += 20;
+                LVMonitorDetail.Columns[i].Width += 20;
             }
-            MonitorDetailLV.EndUpdate();
+            LVMonitorDetail.EndUpdate();
         }
 
         private void MonitorDetailLV_MouseDown (object sender, MouseEventArgs e)
         {
             if ( e.Button == MouseButtons.Middle )
             {
-                var item = MonitorDetailLV.FocusedItem;
+                var item = LVMonitorDetail.FocusedItem;
                 if ( item != null && item.Bounds.Contains(e.Location)
                     && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
                 {
@@ -572,7 +572,7 @@ namespace PerfMonitor
 
         private void MarkerToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            var item = MonitorDetailLV.FocusedItem;
+            var item = LVMonitorDetail.FocusedItem;
             if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 item.BeginEdit();
@@ -585,7 +585,7 @@ namespace PerfMonitor
             {
                 string editedText = e.Label;
 
-                var item = MonitorDetailLV.FocusedItem;
+                var item = LVMonitorDetail.FocusedItem;
                 var ctx = (ProcessMonitorContext)item.Tag;
                 if ( ctx != null && ctx.Monitor != null )
                 {
@@ -605,21 +605,21 @@ namespace PerfMonitor
 
         private void MonitorDetailLV_KeyDown (object sender, KeyEventArgs e)
         {
-            var item = MonitorDetailLV.FocusedItem;
+            var item = LVMonitorDetail.FocusedItem;
             if ( e.KeyCode == Keys.F2 && item != null )
             {
                 item.BeginEdit();
             }
             else if ( e.KeyCode == Keys.F5 )
             {
-                MonitorDetailLV.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                LVMonitorDetail.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-                MonitorDetailLV.BeginUpdate();
-                for ( int i = 0; i <= MonitorDetailLV.Columns.Count - 1; i++ )
+                LVMonitorDetail.BeginUpdate();
+                for ( int i = 0; i <= LVMonitorDetail.Columns.Count - 1; i++ )
                 {
-                    MonitorDetailLV.Columns[i].Width += 20;
+                    LVMonitorDetail.Columns[i].Width += 20;
                 }
-                MonitorDetailLV.EndUpdate();
+                LVMonitorDetail.EndUpdate();
             }
         }
     }

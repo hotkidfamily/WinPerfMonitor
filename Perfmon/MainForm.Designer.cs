@@ -33,7 +33,7 @@ namespace PerfMonitor
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             labelCpuAndMem = new TextBox();
-            MonitorDetailLV = new ListView();
+            LVMonitorDetail = new ListView();
             PID = new ColumnHeader();
             procName = new ColumnHeader();
             cpuUsage = new ColumnHeader();
@@ -83,26 +83,26 @@ namespace PerfMonitor
             // 
             // MonitorDetailLV
             // 
-            MonitorDetailLV.Activation = ItemActivation.OneClick;
-            MonitorDetailLV.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            MonitorDetailLV.BorderStyle = BorderStyle.FixedSingle;
-            MonitorDetailLV.Columns.AddRange(new ColumnHeader[] { PID, procName, cpuUsage, vMem, phyMem, totalMem, downLink, upLink, totalLink, runningSeconds, monitorStatus, markder });
-            MonitorDetailLV.FullRowSelect = true;
-            MonitorDetailLV.GridLines = true;
-            MonitorDetailLV.HideSelection = true;
-            MonitorDetailLV.LabelEdit = true;
-            MonitorDetailLV.Location = new Point(13, 98);
-            MonitorDetailLV.MultiSelect = false;
-            MonitorDetailLV.Name = "MonitorDetailLV";
-            MonitorDetailLV.Size = new Size(903, 222);
-            MonitorDetailLV.TabIndex = 3;
-            MonitorDetailLV.UseCompatibleStateImageBehavior = false;
-            MonitorDetailLV.View = View.Details;
-            MonitorDetailLV.AfterLabelEdit += MonitorDetailLV_AfterLabelEdit;
-            MonitorDetailLV.KeyDown += MonitorDetailLV_KeyDown;
-            MonitorDetailLV.MouseClick += MonitorDetailLV_MouseClick;
-            MonitorDetailLV.MouseDoubleClick += MonitorDetailLV_MouseDoubleClick;
-            MonitorDetailLV.MouseDown += MonitorDetailLV_MouseDown;
+            LVMonitorDetail.Activation = ItemActivation.OneClick;
+            LVMonitorDetail.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            LVMonitorDetail.BorderStyle = BorderStyle.FixedSingle;
+            LVMonitorDetail.Columns.AddRange(new ColumnHeader[] { PID, procName, cpuUsage, vMem, phyMem, totalMem, downLink, upLink, totalLink, runningSeconds, monitorStatus, markder });
+            LVMonitorDetail.FullRowSelect = true;
+            LVMonitorDetail.GridLines = true;
+            LVMonitorDetail.HideSelection = true;
+            LVMonitorDetail.LabelEdit = true;
+            LVMonitorDetail.Location = new Point(13, 98);
+            LVMonitorDetail.MultiSelect = false;
+            LVMonitorDetail.Name = "MonitorDetailLV";
+            LVMonitorDetail.Size = new Size(903, 222);
+            LVMonitorDetail.TabIndex = 3;
+            LVMonitorDetail.UseCompatibleStateImageBehavior = false;
+            LVMonitorDetail.View = View.Details;
+            LVMonitorDetail.AfterLabelEdit += MonitorDetailLV_AfterLabelEdit;
+            LVMonitorDetail.KeyDown += MonitorDetailLV_KeyDown;
+            LVMonitorDetail.MouseClick += MonitorDetailLV_MouseClick;
+            LVMonitorDetail.MouseDoubleClick += MonitorDetailLV_MouseDoubleClick;
+            LVMonitorDetail.MouseDown += MonitorDetailLV_MouseDown;
             // 
             // PID
             // 
@@ -346,7 +346,7 @@ namespace PerfMonitor
             Controls.Add(label2);
             Controls.Add(textBoxPID);
             Controls.Add(label1);
-            Controls.Add(MonitorDetailLV);
+            Controls.Add(LVMonitorDetail);
             Controls.Add(labelCpuAndMem);
             Icon = (Icon) resources.GetObject("$this.Icon");
             Margin = new Padding(1);
@@ -362,7 +362,7 @@ namespace PerfMonitor
 
         #endregion
         private TextBox labelCpuAndMem;
-        private ListView MonitorDetailLV;
+        private ListView LVMonitorDetail;
         private Label label1;
         private TextBox textBoxPID;
         private Label label2;
