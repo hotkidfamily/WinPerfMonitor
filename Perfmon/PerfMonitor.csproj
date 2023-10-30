@@ -12,7 +12,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
 	<SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
 	<SelfContained>false</SelfContained>
-	<RuntimeIdentifier>win-x86</RuntimeIdentifier>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>

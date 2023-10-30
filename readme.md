@@ -12,6 +12,7 @@
 执行![image](doc/monitoring.png)
 菜单![image](doc/menu.png)
 可视化![image](doc/visual.png)
+历史![image](doc/history.png)
 
 ## Install 
 
