@@ -85,7 +85,6 @@ namespace PerfMonitor
 
     internal class ProcessMonitor : IDisposable
     {
-        private string mark = "";
         private readonly uint _pid = 0;
 
         private readonly int _interval = 1000;
@@ -101,8 +100,6 @@ namespace PerfMonitor
         private readonly NetspeedTrace _netspeedDetail = new();
         private readonly NetspeedTrace _netspeedDetailOld = new();
         private readonly string _desc = "invalid process desc";
-
-        public string Mark { get => mark; set => mark = value; }
 
         void ProcessExitEventHandler(object? sender, EventArgs e)
         {

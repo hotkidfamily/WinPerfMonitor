@@ -59,15 +59,9 @@ namespace PerfMonitor
 
         private readonly Dictionary<uint, ProcessMonitorContext> _monitorManager = new();
 
-        private static readonly string[] _colHeaders_zh_hans
-            = new string[] { "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态", "备注" };
-
-        private static int _markColumnIndex = 11; // "备注" as the last element to show
-
-        private static readonly string[] _colDefaultValues = new string[] { "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0", "" };
-
-        private readonly string[] _colHeaders = default!;
-        private static readonly int[] _colSize = new int[] { 100, 140, 80, 100, 100, 100, 100, 100, 100, 120, 100, 200 };
+        private readonly string[] _colHeaders = new string[] { "测试内容", "PID", "进程名", "CPU", "虚拟内存", "物理内存", "总内存", "上行", "下行", "流量", "运行时间", "状态", };
+        private static readonly string[] _colDefaultValues = new string[] { "0", "0", "Attaching Process", "0", "0", "0", "0", "0", "0", "0", "0 s", "0" };
+        private static readonly int[] _colSize = new int[] { 200, 100, 140, 80, 100, 100, 100, 100, 100, 100, 120, 100 };
 
         private static readonly Process _proc = Process.GetCurrentProcess();
 
@@ -135,8 +129,6 @@ namespace PerfMonitor
 
         public MainForm ()
         {
-            _colHeaders = _colHeaders_zh_hans;
-            _markColumnIndex = Array.IndexOf(_colHeaders, "备注");
             InitializeComponent();
             ConstructListView();
 
@@ -231,13 +223,13 @@ namespace PerfMonitor
 
                             var values = res.Info();
                             var item = LVMonitorDetail.Items[index];
-                            for ( int i = 0; i < _markColumnIndex; i++ )
+                            for ( int i = 1; i < _colHeaders.Length; i++ )
                             {
-                                item.SubItems[i].Text = values[i];
+                                item.SubItems[i].Text = values[i-1];
                             }
 
                             if ( ctx.history != null)
-                                item.SubItems[_markColumnIndex].Text = ctx.history.Marker;
+                                item.SubItems[0].Text = ctx.history.Marker;
 
                             if ( res.ExcuteStatus == "exit" )
                             {
@@ -380,7 +372,7 @@ namespace PerfMonitor
                 LVMonitorDetail.EndUpdate();
 
                 _monitorManager.Add(pid, ctx);
-                var his = _historyController.AddItem(pid, resPath, "No Marker...");
+                var his = _historyController.AddItem(pid, resPath, "无说明...");
                 ctx.history = his;
             }
         }
@@ -413,7 +405,7 @@ namespace PerfMonitor
         {
             ListViewHitTestInfo info = LVMonitorDetail.HitTest(e.X, e.Y);
             ListViewItem item = info.Item;
-            if ( uint.TryParse(item.Text, out uint pid) )
+            if ( uint.TryParse(item.SubItems[1].Text, out uint pid) )
             {
                 if ( _monitorManager.ContainsKey(pid) )
                 {
@@ -464,7 +456,7 @@ namespace PerfMonitor
         private void OpenToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = LVMonitorDetail.FocusedItem;
-            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
+            if ( item != null && uint.TryParse(item.SubItems[1].Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var path = _monitorManager[pid].ResPath;
                 if ( path != null )
@@ -482,7 +474,7 @@ namespace PerfMonitor
         private void StopToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = LVMonitorDetail.FocusedItem;
-            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
+            if ( item != null && uint.TryParse(item.SubItems[1].Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var v = _monitorManager[pid];
                 v.Stop();
@@ -495,7 +487,7 @@ namespace PerfMonitor
         private void RestartCaptureToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = LVMonitorDetail.FocusedItem;
-            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
+            if ( item != null && uint.TryParse(item.SubItems[1].Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 ProcessMonitorContext v = (ProcessMonitorContext)item.Tag;
                 if ( v != null && v.IsStop() )
@@ -518,7 +510,7 @@ namespace PerfMonitor
         private void DeleteCaptureToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = LVMonitorDetail.FocusedItem;
-            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
+            if ( item != null && uint.TryParse(item.SubItems[1].Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 var v = _monitorManager[pid];
                 if ( v.IsStop() )
@@ -554,7 +546,7 @@ namespace PerfMonitor
             {
                 var item = LVMonitorDetail.FocusedItem;
                 if ( item != null && item.Bounds.Contains(e.Location)
-                    && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
+                    && uint.TryParse(item.SubItems[1].Text, out uint pid) && _monitorManager.ContainsKey(pid) )
                 {
                     var monitor = _monitorManager[pid];
                     if ( monitor.ResPath != null )
@@ -573,7 +565,7 @@ namespace PerfMonitor
         private void MarkerToolStripMenuItem_Click (object sender, EventArgs e)
         {
             var item = LVMonitorDetail.FocusedItem;
-            if ( item != null && uint.TryParse(item.Text, out uint pid) && _monitorManager.ContainsKey(pid) )
+            if ( item != null && uint.TryParse(item.SubItems[1].Text, out uint pid) && _monitorManager.ContainsKey(pid) )
             {
                 item.BeginEdit();
             }
@@ -587,10 +579,10 @@ namespace PerfMonitor
 
                 var item = LVMonitorDetail.FocusedItem;
                 var ctx = (ProcessMonitorContext)item.Tag;
-                if ( ctx != null && ctx.Monitor != null )
+                if ( ctx != null)
                 {
-                    ctx.Monitor.Mark = editedText;
                     ctx.history!.Marker = editedText;
+                    _historyController.Write();
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace PerfMonitor
 {
     public partial class HistoryForm : Form
     {
-        private readonly string[] _columns = new string[] { "备注", "PID", "日期", "结果" };
+        private readonly string[] _columns = new string[] { "测试内容", "PID", "日期", "结果" };
         private readonly int[] _columnsWidth = new int[] { 100, 100, 200, 200 };
         private readonly HistoryController _history;
         private Thread? _visualThread;
