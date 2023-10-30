@@ -49,6 +49,15 @@ namespace PerfMonitor
                 if ( item != null && item.Bounds.Contains(e.Location) )
                 {
                     HistoryMenuStrip.Show(Cursor.Position);
+                    var ctx = (HistoryItem)item.Tag;
+                    if ( ctx != null && ctx.Running )
+                    {
+                        DeleteToolStripMenuItem.Visible = false;
+                    }
+                    else
+                    {
+                        DeleteToolStripMenuItem.Visible = true;
+                    }
                 }
             }
         }
@@ -71,8 +80,8 @@ namespace PerfMonitor
 
         private void DeleteToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            var item = LVHistory.FocusedItem;
-            if ( item != null )
+            var items = LVHistory.SelectedItems;
+            foreach ( ListViewItem item in items )
             {
                 HistoryItem v = (HistoryItem)item.Tag;
                 if ( !v.Running )
