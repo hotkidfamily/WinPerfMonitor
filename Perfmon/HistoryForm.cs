@@ -39,6 +39,8 @@ namespace PerfMonitor
                 LVHistory.Items.Add(lvi);
             }
             LVHistory.EndUpdate();
+
+            this.Text = $"History Viewer {Properties.Resources.AppVersion}";
         }
 
         private void LVHistory_MouseClick (object sender, MouseEventArgs e)

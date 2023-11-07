@@ -517,12 +517,16 @@ namespace PerfMonitor
                 {
                     v.Dispose();
                     _monitorManager.Remove(pid);
+                    var v1 = (ProcessMonitorContext)item.Tag;
+
+                    if(v1 != null && v1.history != null)
+                        v1.history.Running = true;
+
                     LVMonitorDetail.Items.RemoveAt(item.Index);
                     for ( int i = 0; i < LVMonitorDetail.Items.Count; i++ )
                     {
                         ProcessMonitorContext v2 = (ProcessMonitorContext)LVMonitorDetail.Items[i].Tag;
                         v2.LiveVideIndex = i;
-                        v2.history!.Running = false;
                     }
                 }
             }
