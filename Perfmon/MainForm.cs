@@ -520,7 +520,7 @@ namespace PerfMonitor
                     var v1 = (ProcessMonitorContext)item.Tag;
 
                     if(v1 != null && v1.history != null)
-                        v1.history.Running = true;
+                        v1.history.Running = false;
 
                     LVMonitorDetail.Items.RemoveAt(item.Index);
                     for ( int i = 0; i < LVMonitorDetail.Items.Count; i++ )
